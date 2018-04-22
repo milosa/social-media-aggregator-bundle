@@ -1,0 +1,38 @@
+{
+  "name": "milosa/social-media-aggregator",
+  "description": "Combine different social media types into single feed",
+  "keywords": ["social media", "twitter", "facebook", "youtube"],
+  "minimum-stability": "stable",
+  "license": "MPL-2.0",
+  "type": "symfony-bundle",
+  "version": "0.0.1",
+  "authors": [
+    {
+      "name": "Sander Haanstra",
+      "email": "sander3@gmail.com"
+    }
+  ],
+  "require-dev": {
+    "phpunit/phpunit": "^7.1",
+    "matthiasnoback/symfony-dependency-injection-test": "^3.0",
+    "matthiasnoback/symfony-config-test": "^4.0",
+    "phpspec/prophecy": "~1.0"
+  },
+  "require": {
+    "abraham/twitteroauth": "^0.7.4",
+    "twig/twig" : "^2.4",
+    "symfony/twig-bundle": "^4.0",
+    "symfony/dependency-injection": "^4.0",
+    "symfony/framework-bundle": "^4.0"
+  },
+  "autoload" : {
+    "psr-4" : {
+      "Milosa\\SocialMediaAggregator\\" : "src/"
+    }
+  },
+  "autoload-dev" : {
+    "psr-4" : {
+      "Milosa\\SocialMediaAggregatorTests\\": "tests/"
+    }
+  }
+}

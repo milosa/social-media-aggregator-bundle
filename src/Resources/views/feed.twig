@@ -1,0 +1,8 @@
+    <h1>Feed</h1>
+<ul>
+{% for message in messages %}
+    {% block message %}
+     <li>{%- include "@MilosaSocialMediaAggregator/"~ message.getTemplate() -%}</li>
+    {% endblock %}
+{% endfor %}
+</ul>
