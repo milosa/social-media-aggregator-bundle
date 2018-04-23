@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Milosa\SocialMediaAggregatorTests;
 
-use Milosa\SocialMediaAggregator\Message;
+use Milosa\SocialMediaAggregatorBundle\Message;
 use PHPUnit\Framework\TestCase;
 
 class MessageTest extends TestCase

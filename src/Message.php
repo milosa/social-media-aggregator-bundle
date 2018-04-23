@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Milosa\SocialMediaAggregator;
+namespace Milosa\SocialMediaAggregatorBundle;
 
 class Message
 {
@@ -45,6 +45,11 @@ class Message
      * @var string
      */
     private $screenName;
+
+    /**
+     * @var string
+     */
+    private $authorThumbnail;
 
     public function __construct(string $template = null)
     {
@@ -167,5 +172,15 @@ class Message
     public function getScreenName(): string
     {
         return $this->screenName;
+    }
+
+    public function setAuthorThumbnail(string $thumbnailURL): void
+    {
+        $this->authorThumbnail = $thumbnailURL;
+    }
+
+    public function getAuthorThumbnail(): string
+    {
+        return $this->authorThumbnail;
     }
 }

@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Milosa\SocialMediaAggregatorTests\Sites;
 
 use Abraham\TwitterOAuth\TwitterOAuth;
-use Milosa\SocialMediaAggregator\Message;
-use Milosa\SocialMediaAggregator\Sites\Fetcher;
-use Milosa\SocialMediaAggregator\Sites\TwitterFetcher;
+use Milosa\SocialMediaAggregatorBundle\Message;
+use Milosa\SocialMediaAggregatorBundle\Sites\Fetcher;
+use Milosa\SocialMediaAggregatorBundle\Sites\TwitterFetcher;
 use Prophecy\Argument;
 
 class TwitterFetcherTest extends FetcherTestCase
@@ -44,6 +44,7 @@ class TwitterFetcherTest extends FetcherTestCase
         $expected[0]->setScreenName('twitterapi');
         $expected[0]->setAuthorURL('https://twitter.com/twitterapi');
         $expected[0]->setAuthorDescription("The Real Twitter API. I tweet about API changes, service issues and happily answer questions about Twitter and our API. Don't get an answer? It's on my website.");
+        $expected[0]->setAuthorThumbnail('https://pbs.twimg.com/profile_images/2284174872/7df3h38zabcvjylnyfe3_normal.png');
 
         $expected[1] = new Message();
         $expected[1]->setTemplate('twitter.twig');
@@ -54,6 +55,7 @@ class TwitterFetcherTest extends FetcherTestCase
         $expected[1]->setScreenName('twitterapi');
         $expected[1]->setAuthorURL('https://twitter.com/twitterapi');
         $expected[1]->setAuthorDescription("The Real Twitter API. I tweet about API changes, service issues and happily answer questions about Twitter and our API. Don't get an answer? It's on my website.");
+        $expected[1]->setAuthorThumbnail('https://pbs.twimg.com/profile_images/2284174872/7df3h38zabcvjylnyfe3_normal.png');
 
         $this->assertMessage($expected[0], $result[0]);
         $this->assertMessage($expected[1], $result[1]);

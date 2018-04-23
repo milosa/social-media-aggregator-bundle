@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Milosa\SocialMediaAggregator\DependencyInjection;
+namespace Milosa\SocialMediaAggregatorBundle\DependencyInjection;
 
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -28,9 +28,4 @@ class MilosaSocialMediaAggregatorExtension extends Extension
         $container->setParameter('milosa_social_media_aggregator.twitter_numtweets', $config['twitter']['number_of_tweets']);
         $container->setParameter('milosa_social_media_aggregator.twitter_account', $config['twitter']['account_to_fetch']);
     }
-
-//    public function getAlias(): string
-//    {
-//        return 'milosa_social';
-//    }
 }

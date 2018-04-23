@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Milosa\SocialMediaAggregator\DependencyInjection;
+namespace Milosa\SocialMediaAggregatorBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;

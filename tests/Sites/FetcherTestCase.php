@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Milosa\SocialMediaAggregatorTests\Sites;
 
-use Milosa\SocialMediaAggregator\Message;
-use Milosa\SocialMediaAggregator\Sites\Fetcher;
+use Milosa\SocialMediaAggregatorBundle\Message;
+use Milosa\SocialMediaAggregatorBundle\Sites\Fetcher;
 use PHPUnit\Framework\TestCase;
 
 abstract class FetcherTestCase extends TestCase

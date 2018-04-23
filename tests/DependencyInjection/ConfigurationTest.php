@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Milosa\SocialMediaAggregatorTests\DependencyInjection;
 
 use Matthias\SymfonyConfigTest\PhpUnit\ConfigurationTestCaseTrait;
-use Milosa\SocialMediaAggregator\DependencyInjection\Configuration;
+use Milosa\SocialMediaAggregatorBundle\DependencyInjection\Configuration;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 

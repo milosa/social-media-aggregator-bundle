@@ -2,11 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Milosa\SocialMediaAggregator;
+namespace Milosa\SocialMediaAggregatorBundle;
 
 use Twig_Environment;
-use Twig_Extension_Debug;
-use Twig_Loader_Filesystem;
 
 class Renderer
 {
@@ -79,7 +77,7 @@ class Renderer
         self::checkTwig();
         self::checkTemplate($message);
 
-        return self::$twig->render('@MilosaSocialMediaAggregator/'.$message->getTemplate(),
+        return self::$twig->render('@MilosaSocialMediaAggregatorBundle/'.$message->getTemplate(),
             [
                 'message' => $message,
             ]);
@@ -87,12 +85,15 @@ class Renderer
 
     public static function initialize(Twig_Environment $twig): void
     {
-//        if (self::$twig === null) {
-//            self::$twig = new Twig_Environment(new Twig_Loader_Filesystem(__DIR__ . '/Resources/views'), ['debug' => true]);
-//
-//            self::$twig->addExtension(new Twig_Extension_Debug());
-//        }
         self::$twig = $twig;
+    }
+
+    public static function renderMessagesNew(array $messages): string
+    {
+        return self::$twig->render('@MilosaSocialMediaAggregatorBundle/feed.twig',
+            [
+                'messages' => $messages,
+            ]);
     }
 
     private static function checkTwig(): void
@@ -100,14 +101,6 @@ class Renderer
         if (self::$twig === null) {
             throw new \RuntimeException('Twig not loaded in Renderer');
         }
-    }
-
-    public static function renderMessagesNew(array $messages): string
-    {
-        return self::$twig->render('@MilosaSocialMediaAggregator/feed.twig',
-            [
-                'messages' => $messages,
-            ]);
     }
 
     /**

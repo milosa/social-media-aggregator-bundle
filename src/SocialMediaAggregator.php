@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Milosa\SocialMediaAggregator;
+namespace Milosa\SocialMediaAggregatorBundle;
 
-use Milosa\SocialMediaAggregator\Sites\Fetcher;
+use Milosa\SocialMediaAggregatorBundle\Sites\Fetcher;
 
 class SocialMediaAggregator
 {
@@ -14,7 +14,7 @@ class SocialMediaAggregator
     private $fetchers;
 
     /**
-     * SocialMediaAggregator constructor.
+     * SocialMediaAggregatorBundle constructor.
      *
      * @param Fetcher[] $fetchers
      */

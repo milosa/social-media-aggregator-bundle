@@ -2,23 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Milosa\SocialMediaAggregator\Sites;
+namespace Milosa\SocialMediaAggregatorBundle\Sites;
 
-use Milosa\SocialMediaAggregator\Message;
+use Milosa\SocialMediaAggregatorBundle\Message;
 
 class YoutubeFetcher extends Fetcher
 {
     public function __construct()
     {
     }
-
-//    /**
-//     * @return Message[]
-//     */
-//    public function getData(): array
-//    {
-//        return [new Message(), new Message()];
-//    }
 
     public function getData(): array
     {

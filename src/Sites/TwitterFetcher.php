@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Milosa\SocialMediaAggregator\Sites;
+namespace Milosa\SocialMediaAggregatorBundle\Sites;
 
 use Abraham\TwitterOAuth\TwitterOAuth;
-use Milosa\SocialMediaAggregator\Message;
+use Milosa\SocialMediaAggregatorBundle\Message;
 
 class TwitterFetcher extends Fetcher
 {
@@ -70,6 +70,7 @@ class TwitterFetcher extends Fetcher
         $message->setAuthorDescription($value->user->description);
         $message->setScreenName($value->user->screen_name);
         $message->setTemplate('twitter.twig');
+        $message->setAuthorThumbnail($value->user->profile_image_url_https);
 
         return $message;
     }

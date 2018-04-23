@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Milosa\SocialMediaAggregator\Sites;
+namespace Milosa\SocialMediaAggregatorBundle\Sites;
 
-use Milosa\SocialMediaAggregator\Message;
+use Milosa\SocialMediaAggregatorBundle\Message;
 
 abstract class Fetcher
 {

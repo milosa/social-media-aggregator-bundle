@@ -14,22 +14,22 @@
             <argument>%milosa_social_media_aggregator.twitter_oauth_token_secret%</argument>
         </service>
         
-        <service id="Milosa\SocialMediaAggregator\Sites\TwitterFetcher">
+        <service id="Milosa\SocialMediaAggregatorBundle\Sites\TwitterFetcher">
             <argument type="service" id="Abraham\TwitterOAuth\TwitterOAuth"/>
             <argument>%milosa_social_media_aggregator.twitter_account%</argument>
             <argument>%milosa_social_media_aggregator.twitter_numtweets%</argument>
         </service>
+        <service id="twig.extension.date" class="Twig_Extensions_Extension_Date">
+            <tag name="twig.extension"/>
+        </service>
 
-
-
-
-        <service id="Milosa\SocialMediaAggregator\SocialMediaAggregator" public="true">
+        <service id="Milosa\SocialMediaAggregatorBundle\SocialMediaAggregator" public="true">
             <argument type="collection">
-                <argument type="service" id="Milosa\SocialMediaAggregator\Sites\TwitterFetcher"/>
+                <argument type="service" id="Milosa\SocialMediaAggregatorBundle\Sites\TwitterFetcher"/>
             </argument>
         </service>
 
-        <service id="Milosa\SocialMediaAggregator\Renderer" public="true">
+        <service id="Milosa\SocialMediaAggregatorBundle\Renderer" public="true">
             <call method="initialize">
                 <argument type="service" id="twig"/>
             </call>

@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Milosa\SocialMediaAggregatorTests\Sites;
 
-use Milosa\SocialMediaAggregator\Message;
-use Milosa\SocialMediaAggregator\Sites\Fetcher;
-use Milosa\SocialMediaAggregator\Sites\YoutubeFetcher;
+use Milosa\SocialMediaAggregatorBundle\Message;
+use Milosa\SocialMediaAggregatorBundle\Sites\Fetcher;
+use Milosa\SocialMediaAggregatorBundle\Sites\YoutubeFetcher;
 
 class YoutubeFetcherTest extends FetcherTestCase
 {
