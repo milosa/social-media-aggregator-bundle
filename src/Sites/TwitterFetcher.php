@@ -62,7 +62,7 @@ class TwitterFetcher extends Fetcher
     private function createMessage(\stdClass $value): Message
     {
         $message = new Message();
-        $message->setBody($value->text);
+        $message->setBody($this->linkifyText($value->text));
         $message->setURL('https://twitter.com/statuses/'.$value->id);
         $message->setDate(\DateTime::createFromFormat('D M d H:i:s O Y', $value->created_at));
         $message->setAuthor($value->user->name);
@@ -73,5 +73,29 @@ class TwitterFetcher extends Fetcher
         $message->setAuthorThumbnail($value->user->profile_image_url_https);
 
         return $message;
+    }
+
+    private function linkifyText(string $text): string
+    {
+        $text = $this->safeReplace($text, "/\B(?<![=\/])#([\w]+[a-z]+([0-9]+)?)/i", '#');
+
+        return $this->safeReplace($text, "/\B@(\w+(?!\/))\b/i", '@');
+    }
+
+    /**
+     * @param string $text
+     * @param string $regex
+     * @param string $prefix
+     * @param int    $index
+     *
+     * @return string
+     */
+    private function safeReplace(string $text, string $regex, string $prefix, int $index = 1): string
+    {
+        return preg_replace_callback($regex, function ($matches) use ($prefix, $index) {
+            $name = htmlentities($matches[$index], ENT_QUOTES | ENT_HTML5, 'UTF-8');
+
+            return '<a href="https://twitter.com/'.$name.'">'.$prefix.$name.'</a>';
+        }, $text);
     }
 }

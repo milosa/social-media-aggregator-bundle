@@ -1,6 +1,6 @@
 <article>
     <h1><a href="{{ message.authorURL }}" target="_blank"><img src="{{ message.authorThumbnail|replace({'_normal.': '_mini.'}) }}" alt="Profile image of {{ message.author }}"> {{ message.author }}</a></h1>
     <p class="twitter--author-name">@{{ message.screenName }}</p>
-    <p>{{ message.body }}</p>
+    <p class="twitter--message-body">{{ message.body|raw }}</p>
     <p><a href="{{ message.URL }}" target="_blank">{{ message.date|time_diff }}</a></p>
 </article>
