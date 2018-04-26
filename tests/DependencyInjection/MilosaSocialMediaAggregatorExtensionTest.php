@@ -41,7 +41,6 @@ class MilosaSocialMediaAggregatorExtensionTest extends AbstractExtensionTestCase
         $this->assertContainerBuilderHasService('Milosa\SocialMediaAggregatorBundle\Sites\TwitterFetcher');
         $this->assertContainerBuilderHasService('twig.extension.date');
         $this->assertContainerBuilderHasService('Milosa\SocialMediaAggregatorBundle\SocialMediaAggregator');
-        $this->assertContainerBuilderHasService('Milosa\SocialMediaAggregatorBundle\Renderer');
     }
 
     protected function getMinimalConfiguration()

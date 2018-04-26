@@ -28,11 +28,5 @@
                 <argument type="service" id="Milosa\SocialMediaAggregatorBundle\Sites\TwitterFetcher"/>
             </argument>
         </service>
-
-        <service id="Milosa\SocialMediaAggregatorBundle\Renderer" public="true">
-            <call method="initialize">
-                <argument type="service" id="twig"/>
-            </call>
-        </service>
     </services>
 </container>
