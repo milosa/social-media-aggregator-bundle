@@ -26,15 +26,20 @@ class SocialMediaAggregator
     /**
      * @param int $count
      *
+     * @throws \Exception
+     *
      * @return Message[]
      *
      * @todo Rename this method to possibly: run(), runFetchers(), execute()?
-     * @todo Throw exception if no fetchers are available?
      * @todo Only return $count messages
      */
     public function getMessages(int $count): array
     {
         $messages = [];
+
+        if (\count($this->fetchers) === 0) {
+            throw new \RuntimeException('Tried to run getData without fetchers');
+        }
 
         foreach ($this->fetchers as $fetcher) {
             $messages = array_merge($messages, $fetcher->getData());

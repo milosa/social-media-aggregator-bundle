@@ -27,32 +27,57 @@ class AggregatorTest extends TestCase
         $this->assertInstanceOf(SocialMediaAggregator::class, $this->aggregator);
     }
 
+    /**
+     * @expectedException \RuntimeException
+     * @expectedExceptionMessage Tried to run getData without fetchers
+     */
+    public function testWhenNoFetchersThrowsException(): void
+    {
+        $this->aggregator->getMessages(1);
+    }
+
     public function testAggregatorSortsMessages(): void
     {
-        $messagesUnordered = [
-            $this->getMessageWithDate(new \DateTime('2017-04-01')),
-            $this->getMessageWithDate(new \DateTime('2017-05-01')),
-            $this->getMessageWithDate(new \DateTime('2016-04-01')),
-            $this->getMessageWithDate(new \DateTime('2016-05-01')),
-            $this->getMessageWithDate(new \DateTime('2015-04-01')),
-            $this->getMessageWithDate(new \DateTime('2015-05-01')),
-        ];
-        $messagesOrdered = [
-            $this->getMessageWithDate(new \DateTime('2017-05-01')),
-            $this->getMessageWithDate(new \DateTime('2017-04-01')),
-            $this->getMessageWithDate(new \DateTime('2016-05-01')),
-            $this->getMessageWithDate(new \DateTime('2016-04-01')),
-            $this->getMessageWithDate(new \DateTime('2015-05-01')),
-            $this->getMessageWithDate(new \DateTime('2015-04-01')),
-        ];
+        $messages = $this->createSortedAndUnsortedMessageArray();
         $fetcherProphecy = $this->prophesize(TwitterFetcher::class);
-        $fetcherProphecy->getData()->willReturn($messagesUnordered);
+        $fetcherProphecy->getData()->willReturn($messages[0]);
         $this->aggregator->addFetcher($fetcherProphecy->reveal());
 
         //fixme: count is unused
         $result = $this->aggregator->getMessages(6);
 
-        $this->assertEquals($messagesOrdered, $result);
+        $this->assertEquals($messages[1], $result);
+    }
+
+    /**
+     * @return Message[][]
+     */
+    private function createSortedAndUnsortedMessageArray(): array
+    {
+        $datesInOrder = [
+            new \DateTime('2017-05-01'),
+            new \DateTime('2017-04-01'),
+            new \DateTime('2016-05-01'),
+            new \DateTime('2016-04-01'),
+            new \DateTime('2015-05-01'),
+            new \DateTime('2015-05-01'),
+            new \DateTime('2015-04-01 10:00:10'),
+            new \DateTime('2015-04-01 10:00:05'),
+            new \DateTime('2015-04-01 08:00:30'),
+        ];
+
+        $randomOrder = [4, 3, 6, 0, 7, 2, 1, 8, 5];
+        $messagesUnordered = [];
+        $messagesOrdered = [];
+        $max = \count($datesInOrder);
+
+        for($i = 0; $i < $max; $i++)
+        {
+            $messagesUnordered[] = $this->getMessageWithDate($datesInOrder[$randomOrder[$i]]);
+            $messagesOrdered[] = $this->getMessageWithDate($datesInOrder[$i]);
+        }
+
+        return [$messagesUnordered, $messagesOrdered];
     }
 
     public function testCanAddFetchers(): void

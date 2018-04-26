@@ -38,7 +38,7 @@ class TwitterFetcherTest extends FetcherTestCase
         $expected[0] = new Message();
         $expected[0]->setDate(new \DateTime('2018-01-18 18:47:36'));
         $expected[0]->setTemplate('twitter.twig');
-        $expected[0]->setBody('Dit is een test text');
+        $expected[0]->setBody('This is a test');
         $expected[0]->setURL('https://twitter.com/statuses/850007368138018817');
         $expected[0]->setAuthor('Twitter API');
         $expected[0]->setScreenName('twitterapi');
@@ -49,7 +49,7 @@ class TwitterFetcherTest extends FetcherTestCase
         $expected[1] = new Message();
         $expected[1]->setTemplate('twitter.twig');
         $expected[1]->setDate(new \DateTime('2018-01-18 07:38:10'));
-        $expected[1]->setBody('Een test text dit is');
+        $expected[1]->setBody('This is another test which mentions <a href="https://twitter.com/someone">@someone</a> and uses a <a href="https://twitter.com/hashtag">#hashtag</a>');
         $expected[1]->setURL('https://twitter.com/statuses/848930551989915648');
         $expected[1]->setAuthor('Twitter API');
         $expected[1]->setScreenName('twitterapi');
