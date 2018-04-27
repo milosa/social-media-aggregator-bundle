@@ -31,14 +31,16 @@ class MilosaSocialMediaAggregatorExtension extends Extension
         $container->setParameter('milosa_social_media_aggregator.twitter_numtweets', $config['twitter']['number_of_tweets']);
         $container->setParameter('milosa_social_media_aggregator.twitter_account', $config['twitter']['account_to_fetch']);
 
-        $this->configureCaching($container);
+        if ($config['twitter']['enable_cache'] === true) {
+            $this->configureCaching($container, $config['twitter']['cache_lifetime']);
+        }
     }
 
-    protected function configureCaching(ContainerBuilder $container): void
+    protected function configureCaching(ContainerBuilder $container, int $lifetime): void
     {
         $cacheDefinition = new Definition(FilesystemAdapter::class, [
             'milosa_social',
-            3600,
+            $lifetime,
             '%kernel.root_dir%/../var/tmp',
             ]);
 

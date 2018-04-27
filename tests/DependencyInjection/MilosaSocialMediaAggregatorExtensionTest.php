@@ -43,6 +43,19 @@ class MilosaSocialMediaAggregatorExtensionTest extends AbstractExtensionTestCase
         $this->assertContainerBuilderHasService('Milosa\SocialMediaAggregatorBundle\SocialMediaAggregator');
     }
 
+    /**
+     * @test
+     */
+    public function after_loading_with_cache_enabled_the_correct_services_have_been_defined()
+    {
+        $this->load(['twitter' => ['enable_cache' => true]]);
+        $this->assertContainerBuilderHasService('Abraham\TwitterOAuth\TwitterOAuth');
+        $this->assertContainerBuilderHasService('Milosa\SocialMediaAggregatorBundle\Sites\TwitterFetcher');
+        $this->assertContainerBuilderHasService('twig.extension.date');
+        $this->assertContainerBuilderHasService('Milosa\SocialMediaAggregatorBundle\SocialMediaAggregator');
+        $this->assertContainerBuilderHasService('milosa_social_media_aggregator.cache');
+    }
+
     protected function getMinimalConfiguration()
     {
         return ['twitter' => [
@@ -52,7 +65,7 @@ class MilosaSocialMediaAggregatorExtensionTest extends AbstractExtensionTestCase
                 'oauth_token' => 'test_token',
                 'oauth_token_secret' => 'test_secret_token',
             ],
-            'fetch_interval' => 720,
+            'cache_lifetime' => 720,
             'template' => 'twitter.twig',
             'show_images' => true,
             'hashtag_links' => true,

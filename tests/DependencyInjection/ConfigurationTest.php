@@ -47,7 +47,7 @@ class ConfigurationTest extends TestCase
                         'oauth_token' => 'test_token',
                         'oauth_token_secret' => 'test_secret_token',
                     ],
-                    'fetch_interval' => 720,
+                    'cache_lifetime' => 720,
                     'template' => 'twitter.twig',
                     'show_images' => true,
                     'hashtag_links' => true,
@@ -93,12 +93,13 @@ class ConfigurationTest extends TestCase
                     'oauth_token' => 'test_token',
                     'oauth_token_secret' => 'test_secret_token',
                 ],
-             'fetch_interval' => 60,
              'template' => 'twitter.twig',
              'show_images' => true,
              'hashtag_links' => true,
              'account_to_fetch' => 'realDonaldTrump',
              'number_of_tweets' => 10,
+             'enable_cache' => false,
+             'cache_lifetime' => 3600,
              ],
             ]
         );
