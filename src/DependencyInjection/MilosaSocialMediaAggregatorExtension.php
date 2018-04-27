@@ -4,10 +4,13 @@ declare(strict_types=1);
 
 namespace Milosa\SocialMediaAggregatorBundle\DependencyInjection;
 
+use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Extension\Extension;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
+use Symfony\Component\DependencyInjection\Reference;
 
 class MilosaSocialMediaAggregatorExtension extends Extension
 {
@@ -27,5 +30,20 @@ class MilosaSocialMediaAggregatorExtension extends Extension
         $container->setParameter('milosa_social_media_aggregator.twitter_oauth_token_secret', $config['twitter']['auth_data']['oauth_token_secret']);
         $container->setParameter('milosa_social_media_aggregator.twitter_numtweets', $config['twitter']['number_of_tweets']);
         $container->setParameter('milosa_social_media_aggregator.twitter_account', $config['twitter']['account_to_fetch']);
+
+        $this->configureCaching($container);
+    }
+
+    protected function configureCaching(ContainerBuilder $container): void
+    {
+        $cacheDefinition = new Definition(FilesystemAdapter::class, [
+            'milosa_social',
+            3600,
+            '%kernel.root_dir%/../var/tmp',
+            ]);
+
+        $container->setDefinition('milosa_social_media_aggregator.cache', $cacheDefinition);
+        $fetcherDefinition = $container->getDefinition('Milosa\SocialMediaAggregatorBundle\Sites\TwitterFetcher');
+        $fetcherDefinition->addMethodCall('setCache', [new Reference('milosa_social_media_aggregator.cache')]);
     }
 }

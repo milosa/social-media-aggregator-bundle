@@ -13,7 +13,7 @@ Symfony Bundle to combine messages from different social media platforms into on
 * Sorting of messages*
   * Sorting by date*
   * Sorting by platform (e.g. first show youtube items, then show twitter)*
-* Caching*
+* Caching
 
 *= Not implemented yet.
   

@@ -16,15 +16,40 @@ class MessageTest extends TestCase
 
     public function testMessageReturnsRightValues(): void
     {
-        $message = new Message();
+        $message = new Message('test');
         $message->setBody('test body');
         $message->setDate(new \DateTime('1947-07-08'));
         $message->setTemplate('test template');
         $message->setURL('google.com');
+        $message->setAuthor('John doe');
+        $message->setAuthorURL('johndoe.com');
+        $message->setAuthorDescription('This is John Doe!');
+        $message->setAuthorThumbnail('https://johndoe.com/johnny.jpg');
+        $message->setScreenName('johnny_2018');
 
         $this->assertSame('test body', $message->getBody());
         $this->assertEquals(new \DateTime('1947-07-08'), $message->getDate());
         $this->assertSame('test template', $message->getTemplate());
         $this->assertSame('google.com', $message->getURL());
+        $this->assertSame('John doe', $message->getAuthor());
+        $this->assertSame('johndoe.com', $message->getAuthorURL());
+        $this->assertSame('This is John Doe!', $message->getAuthorDescription());
+        $this->assertSame('https://johndoe.com/johnny.jpg', $message->getAuthorThumbnail());
+        $this->assertSame('johnny_2018', $message->getScreenName());
+        $this->assertSame('test', $message->getFetchSource());
+    }
+
+    public function testMessageDefaultsToNoSource(): void
+    {
+        $message = new Message();
+
+        $this->assertNull($message->getFetchSource());
+    }
+
+    public function testMessageTemplateCanBeSetFromConstructor(): void
+    {
+        $message = new Message(null, 'test.twig');
+
+        $this->assertSame('test.twig', $message->getTemplate());
     }
 }

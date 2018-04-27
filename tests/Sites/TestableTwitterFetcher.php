@@ -15,6 +15,6 @@ class TestableTwitterFetcher extends TwitterFetcher
     {
         parent::__construct($OAuth, $screenName, $count);
 
-        $this->data = self::getDecodedTwitterJson();
+        $this->data = self::decodeSampleTwitterMessages();
     }
 }

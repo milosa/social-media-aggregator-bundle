@@ -9,6 +9,8 @@ use Milosa\SocialMediaAggregatorBundle\Message;
 use Milosa\SocialMediaAggregatorBundle\Sites\Fetcher;
 use Milosa\SocialMediaAggregatorBundle\Sites\TwitterFetcher;
 use Prophecy\Argument;
+use Prophecy\Prophecy\ObjectProphecy;
+use Symfony\Component\Cache\Adapter\ArrayAdapter;
 
 class TwitterFetcherTest extends FetcherTestCase
 {
@@ -63,14 +65,59 @@ class TwitterFetcherTest extends FetcherTestCase
 
     public function testRealFetcherCallsAPIWithCorrectParameters(): void
     {
-        $oauthProphecy = $this->prophesize(TwitterOAuth::class);
+        $oauthProphecy = $this->getOauthProphecy(self::decodeSampleTwitterMessages());
         $oauthProphecy->get(
             Argument::exact('statuses/user_timeline'),
             Argument::exact(['screen_name' => 'twitterapi', 'count' => 2]))->shouldBeCalledTimes(1);
-        $oauthProphecy->getLastBody()->shouldBeCalledTimes(1)->willReturn(self::getDecodedTwitterJson());
+        $oauthProphecy->getLastBody()->shouldBeCalledTimes(1);
 
         $fetcher = new TwitterFetcher($oauthProphecy->reveal(), 'twitterapi', 2);
         $fetcher->getData();
+    }
+
+    public function testAfterGettingMessageFromGetDataItShowsAPIAsSource(): void
+    {
+        $oauthProphecy = $this->getOauthProphecy(self::decodeSampleTwitterMessages());
+
+        $fetcher = new TwitterFetcher($oauthProphecy->reveal(), 'twitterapi', 2);
+        $results = $fetcher->getData();
+
+        $this->assertSame('API', $results[0]->getFetchSource());
+        $this->assertSame('API', $results[1]->getFetchSource());
+    }
+
+    public function testAfterGettingMessagesForSecondTimeItShowsCacheAsSource(): void
+    {
+        $cache = new ArrayAdapter();
+        $oauthProphecy1 = $this->getOauthProphecy(self::decodeSampleTwitterMessages());
+        $oauthProphecy1->getLastBody()->shouldBeCalledTimes(1);
+
+        $fetcher1 = new TwitterFetcher($oauthProphecy1->reveal(), 'twitterapi', 2);
+        $fetcher1->setCache($cache);
+        $fetcher1->getData();
+
+        $oauthProphecy2 = $this->getOauthProphecy();
+        $oauthProphecy2->getLastBody(Argument::cetera())->shouldNotBeCalled();
+        $oauthProphecy2->get(Argument::cetera())->shouldNotBeCalled();
+
+        $fetcher2 = new TwitterFetcher($oauthProphecy2->reveal(), 'twitterapi', 2);
+        $fetcher2->setCache($cache);
+        $results = $fetcher2->getData();
+
+        $this->assertSame('cache', $results[0]->getFetchSource());
+        $this->assertSame('cache', $results[1]->getFetchSource());
+    }
+
+    private function getOauthProphecy(array $getLastBodyReturnValue = null): ObjectProphecy
+    {
+        $prophecy = $this->prophesize(TwitterOAuth::class);
+        $prophecy->getLastBody(Argument::cetera())->shouldBeCalled(Argument::cetera());
+        $prophecy->get(Argument::cetera())->shouldBeCalled();
+        if ($getLastBodyReturnValue !== null) {
+            $prophecy->getLastBody(Argument::cetera())->willReturn($getLastBodyReturnValue);
+        }
+
+        return $prophecy;
     }
 
     /**

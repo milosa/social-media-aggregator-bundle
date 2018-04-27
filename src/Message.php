@@ -51,11 +51,18 @@ class Message
      */
     private $authorThumbnail;
 
-    public function __construct(string $template = null)
+    /**
+     * @var string
+     */
+    private $fetchSource;
+
+    public function __construct(string $fetchSource = null, string $template = null)
     {
         if ($template !== null) {
             $this->template = $template;
         }
+
+        $this->fetchSource = $fetchSource;
     }
 
     /**
@@ -182,5 +189,10 @@ class Message
     public function getAuthorThumbnail(): string
     {
         return $this->authorThumbnail;
+    }
+
+    public function getFetchSource(): ?string
+    {
+        return $this->fetchSource;
     }
 }

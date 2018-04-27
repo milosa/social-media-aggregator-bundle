@@ -6,7 +6,7 @@ namespace Milosa\SocialMediaAggregatorTests\Sites;
 
 trait TestDataTrait
 {
-    public static function getDecodedTwitterJson(): array
+    public static function decodeSampleTwitterMessages(): array
     {
         $messageText1 = 'This is a test';
         $messageText2 = 'This is another test which mentions @someone and uses a #hashtag';

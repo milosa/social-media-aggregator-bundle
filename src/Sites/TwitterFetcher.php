@@ -9,6 +9,7 @@ use Milosa\SocialMediaAggregatorBundle\Message;
 
 class TwitterFetcher extends Fetcher
 {
+    private const CACHE_KEY = 'twitter_messages';
     /**
      * @var TwitterOAuth
      */
@@ -49,19 +50,48 @@ class TwitterFetcher extends Fetcher
 
     private function getTimeLine()
     {
+        if ($this->cache === null) {
+            return $this->getTimeLineFromAPI();
+        }
+
+        $cacheItem = $this->cache->getItem(self::CACHE_KEY);
+
+        if (!$cacheItem->isHit()) {
+            $messages = $this->getTimeLineFromAPI();
+            $cacheItem->set($messages);
+            $this->cache->save($cacheItem);
+        } else {
+            $messages = $this->injectSource($cacheItem->get(), 'cache');
+        }
+
+        return $messages;
+    }
+
+    private function getTimeLineFromAPI()
+    {
         $this->oauth->get('statuses/user_timeline', ['screen_name' => $this->fetchScreenName, 'count' => $this->numberOfMessages]);
 
-        return $this->oauth->getLastBody();
+        return $this->injectSource($this->oauth->getLastBody(), 'API');
+    }
+
+    private function injectSource(array $messages, string $source): array
+    {
+        foreach ($messages as &$message) {
+            $message->fetchSource = $source;
+        }
+
+        return $messages;
     }
 
     /**
      * @param $value
+     * @param string $source
      *
      * @return Message
      */
     private function createMessage(\stdClass $value): Message
     {
-        $message = new Message();
+        $message = new Message($value->fetchSource ?? null);
         $message->setBody($this->linkifyText($value->text));
         $message->setURL('https://twitter.com/statuses/'.$value->id);
         $message->setDate(\DateTime::createFromFormat('D M d H:i:s O Y', $value->created_at));

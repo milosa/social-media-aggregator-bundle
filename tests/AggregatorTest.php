@@ -71,8 +71,7 @@ class AggregatorTest extends TestCase
         $messagesOrdered = [];
         $max = \count($datesInOrder);
 
-        for($i = 0; $i < $max; $i++)
-        {
+        for ($i = 0; $i < $max; ++$i) {
             $messagesUnordered[] = $this->getMessageWithDate($datesInOrder[$randomOrder[$i]]);
             $messagesOrdered[] = $this->getMessageWithDate($datesInOrder[$i]);
         }
