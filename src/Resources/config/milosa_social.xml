@@ -19,6 +19,14 @@
             <argument>%milosa_social_media_aggregator.twitter_account%</argument>
             <argument>%milosa_social_media_aggregator.twitter_numtweets%</argument>
         </service>
+        <service id="Milosa\SocialMediaAggregatorBundle\Sites\YoutubeFetcher">
+            <argument type="service">
+                <service class="GuzzleHttp\Client" public="false"></service>
+            </argument>
+            <argument>%milosa_social_media_aggregator.youtube_channel_id%</argument>
+            <argument>%milosa_social_media_aggregator.youtube_number_of_items%</argument>
+            <argument>%milosa_social_media_aggregator.youtube_api_key%</argument>
+        </service>
         <service id="twig.extension.date" class="Twig_Extensions_Extension_Date">
             <tag name="twig.extension"/>
         </service>
@@ -26,6 +34,7 @@
         <service id="Milosa\SocialMediaAggregatorBundle\SocialMediaAggregator" public="true">
             <argument type="collection">
                 <argument type="service" id="Milosa\SocialMediaAggregatorBundle\Sites\TwitterFetcher"/>
+                <argument type="service" id="Milosa\SocialMediaAggregatorBundle\Sites\YoutubeFetcher"/>
             </argument>
         </service>
     </services>

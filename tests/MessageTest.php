@@ -26,6 +26,8 @@ class MessageTest extends TestCase
         $message->setAuthorDescription('This is John Doe!');
         $message->setAuthorThumbnail('https://johndoe.com/johnny.jpg');
         $message->setScreenName('johnny_2018');
+        $message->setTitle('test_title');
+        $message->setId('test_id');
 
         $this->assertSame('test body', $message->getBody());
         $this->assertEquals(new \DateTime('1947-07-08'), $message->getDate());
@@ -37,6 +39,8 @@ class MessageTest extends TestCase
         $this->assertSame('https://johndoe.com/johnny.jpg', $message->getAuthorThumbnail());
         $this->assertSame('johnny_2018', $message->getScreenName());
         $this->assertSame('test', $message->getFetchSource());
+        $this->assertSame('test_title', $message->getTitle());
+        $this->assertSame('test_id', $message->getId());
     }
 
     public function testMessageDefaultsToNoSource(): void

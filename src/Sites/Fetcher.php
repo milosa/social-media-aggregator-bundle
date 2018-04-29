@@ -25,4 +25,13 @@ abstract class Fetcher
     {
         $this->cache = $adapter;
     }
+
+    protected function injectSource(array $messages, string $source): array
+    {
+        foreach ($messages as $message) {
+            $message->fetchSource = $source;
+        }
+
+        return $messages;
+    }
 }

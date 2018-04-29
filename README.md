@@ -8,7 +8,7 @@ Symfony Bundle to combine messages from different social media platforms into on
 * Easy way to get messages from various social media platforms. Such as:
   * Twitter
   * Facebook*
-  * Youtube*
+  * Youtube
 * Twig integration*
 * Sorting of messages*
   * Sorting by date*
@@ -37,3 +37,9 @@ Add `milosa_social_media_aggregator` to your configuration.
             account_to_fetch: FamilyGuyonFOX
             template: twitter.twig
             fetch_interval: 120
+        youtube:
+            auth_data: '%env(YOUTUBE_API_KEY)%'
+        enable_cache: true
+        cache_lifetime: 3600
+        number_of_items: 2
+        channel_id: UCLA_DiR1FfKNvjuUpBHmylQ

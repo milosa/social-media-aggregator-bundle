@@ -74,15 +74,6 @@ class TwitterFetcher extends Fetcher
         return $this->injectSource($this->oauth->getLastBody(), 'API');
     }
 
-    private function injectSource(array $messages, string $source): array
-    {
-        foreach ($messages as &$message) {
-            $message->fetchSource = $source;
-        }
-
-        return $messages;
-    }
-
     /**
      * @param $value
      * @param string $source
@@ -91,7 +82,7 @@ class TwitterFetcher extends Fetcher
      */
     private function createMessage(\stdClass $value): Message
     {
-        $message = new Message($value->fetchSource ?? null);
+        $message = new Message($value->fetchSource ?? null, 'twitter.twig');
         $message->setBody($this->linkifyText($value->text));
         $message->setURL('https://twitter.com/statuses/'.$value->id);
         $message->setDate(\DateTime::createFromFormat('D M d H:i:s O Y', $value->created_at));
@@ -99,7 +90,6 @@ class TwitterFetcher extends Fetcher
         $message->setAuthorURL('https://twitter.com/'.$value->user->screen_name);
         $message->setAuthorDescription($value->user->description);
         $message->setScreenName($value->user->screen_name);
-        $message->setTemplate('twitter.twig');
         $message->setAuthorThumbnail($value->user->profile_image_url_https);
 
         return $message;

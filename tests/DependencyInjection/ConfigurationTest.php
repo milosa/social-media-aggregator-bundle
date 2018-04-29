@@ -36,39 +36,19 @@ class ConfigurationTest extends TestCase
         );
     }
 
+    public function testIfYoutubeIsProvidedOmittingRequiredValuesIsInvalid(): void
+    {
+        $this->assertConfigurationIsInvalid(
+            [
+                ['youtube' => []],
+            ]
+        );
+    }
+
     public function testProvidingValidDataIsValid(): void
     {
-        $this->assertConfigurationIsValid(
-            [
-                ['twitter' => [
-                    'auth_data' => [
-                        'consumer_key' => 'test_key',
-                        'consumer_secret' => 'test_secret',
-                        'oauth_token' => 'test_token',
-                        'oauth_token_secret' => 'test_secret_token',
-                    ],
-                    'cache_lifetime' => 720,
-                    'template' => 'twitter.twig',
-                    'show_images' => true,
-                    'hashtag_links' => true,
-                    'account_to_fetch' => 'realDonaldTrump',
-                ],
-            ],
-        ]);
-
-        $this->assertConfigurationIsValid(
-            [
-                ['twitter' => [
-                    'auth_data' => [
-                        'consumer_key' => 'test_key',
-                        'consumer_secret' => 'test_secret',
-                        'oauth_token' => 'test_token',
-                        'oauth_token_secret' => 'test_secret_token',
-                    ],
-                    'account_to_fetch' => 'realDonaldTrump',
-                ],
-            ],
-        ]);
+        $this->assertValidTwitterConfig();
+        $this->assertValidYoutubeConfig();
     }
 
     public function testDefaultValues(): void
@@ -103,5 +83,61 @@ class ConfigurationTest extends TestCase
              ],
             ]
         );
+    }
+
+    private function assertValidTwitterConfig(): void
+    {
+        $this->assertConfigurationIsValid(
+            [
+                [
+                    'twitter' => [
+                        'auth_data' => [
+                            'consumer_key' => 'test_key',
+                            'consumer_secret' => 'test_secret',
+                            'oauth_token' => 'test_token',
+                            'oauth_token_secret' => 'test_secret_token',
+                        ],
+                        'cache_lifetime' => 720,
+                        'template' => 'twitter.twig',
+                        'show_images' => true,
+                        'hashtag_links' => true,
+                        'account_to_fetch' => 'realDonaldTrump',
+                    ],
+                ],
+            ],
+            'twitter');
+
+        $this->assertConfigurationIsValid(
+            [
+                [
+                    'twitter' => [
+                        'auth_data' => [
+                            'consumer_key' => 'test_key',
+                            'consumer_secret' => 'test_secret',
+                            'oauth_token' => 'test_token',
+                            'oauth_token_secret' => 'test_secret_token',
+                        ],
+                        'account_to_fetch' => 'realDonaldTrump',
+                    ],
+                ],
+            ],
+            'twitter');
+    }
+
+    private function assertValidYoutubeConfig(): void
+    {
+        $this->assertConfigurationIsValid([
+            ['youtube' => [
+                    'auth_data' => [
+                        'api_key' => 'test_key',
+                    ],
+                    'channel_id' => 'UCUtWNBWbFL9We-cdXkiAuJA',
+                    'template' => 'youtube.twig',
+                    'enable_cache' => true,
+                    'cache_lifetime' => 3600,
+                    'number_of_items' => 5,
+                ],
+            ],
+        ], 'youtube');
     }
 }

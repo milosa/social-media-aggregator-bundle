@@ -56,6 +56,16 @@ class Message
      */
     private $fetchSource;
 
+    /**
+     * @var string
+     */
+    private $title;
+
+    /**
+     * @var string
+     */
+    private $id;
+
     public function __construct(string $fetchSource = null, string $template = null)
     {
         if ($template !== null) {
@@ -194,5 +204,25 @@ class Message
     public function getFetchSource(): ?string
     {
         return $this->fetchSource;
+    }
+
+    public function setTitle(string $title): void
+    {
+        $this->title = $title;
+    }
+
+    public function getTitle(): ?string
+    {
+        return $this->title;
+    }
+
+    public function setId(string $id): void
+    {
+        $this->id = $id;
+    }
+
+    public function getId(): ?string
+    {
+        return $this->id;
     }
 }
