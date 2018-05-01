@@ -38,8 +38,9 @@ Add `milosa_social_media_aggregator` to your configuration.
             template: twitter.twig
             fetch_interval: 120
         youtube:
-            auth_data: '%env(YOUTUBE_API_KEY)%'
-        enable_cache: true
-        cache_lifetime: 3600
-        number_of_items: 2
-        channel_id: UCLA_DiR1FfKNvjuUpBHmylQ
+            auth_data: 
+                api_key: '%env(YOUTUBE_API_KEY)%'
+            enable_cache: true
+            cache_lifetime: 3600
+            number_of_items: 2
+            channel_id: UCLA_DiR1FfKNvjuUpBHmylQ
