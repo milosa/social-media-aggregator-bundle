@@ -1,1 +1,7 @@
-<iframe type="text/html" width="640" height="385" src="https://www.youtube.com/embed/{{ message.id }}" frameborder="0"></iframe>
+<article>
+    <h1><a href="https://www.youtube.com/watch?v={{ message.id }}" target="_blank">{{ message.title }}</a></h1>
+    <p class="author-name"><a href="{{ message.authorURL }}" target="_blank">{{ message.author }}</a></p>
+    <iframe class="youtube-embed" type="text/html" width="640" height="385" src="https://www.youtube.com/embed/{{ message.id }}" frameborder="0"></iframe>
+    <p><a href="{{ message.URL }}" target="_blank" title="{{ message.date|date('D M j Y, H:i:s') }}">{{ message.date|time_diff }}</a></p>
+    <p>{{ message.fetchSource }}</p>
+</article>
