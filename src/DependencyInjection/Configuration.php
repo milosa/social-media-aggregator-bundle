@@ -18,7 +18,7 @@ class Configuration implements ConfigurationInterface
             //->isRequired()
             ->children()
                 ->arrayNode('twitter')
-                    ->addDefaultsIfNotSet()
+//                    ->addDefaultsIfNotSet()
                     ->children()
                         ->arrayNode('auth_data')
                             ->addDefaultsIfNotSet()
@@ -57,7 +57,7 @@ class Configuration implements ConfigurationInterface
                     ->end()//children
                 ->end() //twitter
                 ->arrayNode('youtube')
-                    ->addDefaultsIfNotSet()
+//                    ->addDefaultsIfNotSet()
                     ->children()
                         ->arrayNode('auth_data')
                             ->addDefaultsIfNotSet()

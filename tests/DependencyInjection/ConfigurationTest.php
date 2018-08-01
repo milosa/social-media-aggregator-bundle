@@ -54,15 +54,15 @@ class ConfigurationTest extends TestCase
     public function testDefaultValues(): void
     {
         $this->assertProcessedConfigurationEquals(
-            [
-                ['twitter' => [
-                    'auth_data' => [
-                        'consumer_key' => 'test_key',
-                        'consumer_secret' => 'test_secret',
-                        'oauth_token' => 'test_token',
-                        'oauth_token_secret' => 'test_secret_token',
+        [
+            ['twitter' => [
+                'auth_data' => [
+                    'consumer_key' => 'test_key',
+                    'consumer_secret' => 'test_secret',
+                    'oauth_token' => 'test_token',
+                    'oauth_token_secret' => 'test_secret_token',
                     ],
-                    'account_to_fetch' => 'realDonaldTrump',
+                'account_to_fetch' => 'realDonaldTrump',
                 ],
             ],
         ],
@@ -81,8 +81,29 @@ class ConfigurationTest extends TestCase
              'enable_cache' => false,
              'cache_lifetime' => 3600,
              ],
-            ]
-        );
+         ]);
+
+        $this->assertProcessedConfigurationEquals(
+        [
+            ['youtube' => [
+                'auth_data' => [
+                    'api_key' => 'test_key',
+                    ],
+                'channel_id' => 'test_id',
+                ],
+            ],
+        ],
+        ['youtube' => [
+            'auth_data' => [
+                'api_key' => 'test_key',
+                ],
+            'channel_id' => 'test_id',
+            'enable_cache' => false,
+            'cache_lifetime' => 3600,
+            'number_of_items' => 10,
+            'template' => 'youtube.twig',
+            ],
+        ]);
     }
 
     private function assertValidTwitterConfig(): void
