@@ -1,10 +1,15 @@
 article { font-family: Arial, Helvetica, sans-serif; margin-bottom: 2em; }
 ul {list-style-type: none; }
-h1 { font-size: 1.2rem; margin-bottom: 0.25rem;}
+h1 { font-size: 1.2rem; margin-bottom: 0.25rem; display: inline-block;}
 
 a { color: #000; text-decoration: none; }
 .twitter--message-body a {text-decoration: underline;}
 .twitter--message-body a:hover {text-decoration: none;}
 .author-name, .author-name a { font-size: 0.8rem; color: gray; margin: 0; }
 .youtube-embed { margin-top: 1em; }
-li { border-bottom: 1px solid #ccc; }
+li { border-bottom: 1px solid #ccc; display: inline-block;}
+.retweeted-by, .retweeted-by a { font-size: 0.8rem; color: #999;}
+.time:before
+{
+    content: "\00b7";
+}

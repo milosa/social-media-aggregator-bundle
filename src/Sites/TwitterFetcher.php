@@ -6,6 +6,11 @@ namespace Milosa\SocialMediaAggregatorBundle\Sites;
 
 use Abraham\TwitterOAuth\TwitterOAuth;
 use Milosa\SocialMediaAggregatorBundle\Message;
+use Milosa\SocialMediaAggregatorBundle\Sites\Twitter\HashTagParser;
+use Milosa\SocialMediaAggregatorBundle\Sites\Twitter\MentionParser;
+use Milosa\SocialMediaAggregatorBundle\Sites\Twitter\PhotoParser;
+use Milosa\SocialMediaAggregatorBundle\Sites\Twitter\TwitterMessage;
+use Milosa\SocialMediaAggregatorBundle\Sites\Twitter\URLParser;
 
 class TwitterFetcher extends Fetcher
 {
@@ -69,7 +74,7 @@ class TwitterFetcher extends Fetcher
 
     private function getTimeLineFromAPI()
     {
-        $this->oauth->get('statuses/user_timeline', ['screen_name' => $this->fetchScreenName, 'count' => $this->numberOfMessages]);
+        $this->oauth->get('statuses/user_timeline', ['screen_name' => $this->fetchScreenName, 'count' => $this->numberOfMessages, 'tweet_mode' => 'extended']);
 
         return $this->injectSource($this->oauth->getLastBody(), 'API');
     }
@@ -82,8 +87,9 @@ class TwitterFetcher extends Fetcher
      */
     private function createMessage(\stdClass $value): Message
     {
-        $message = new Message($value->fetchSource ?? null, 'twitter.twig');
-        $message->setBody($this->linkifyText($value->text));
+        $message = new TwitterMessage($value->fetchSource ?? null, 'twitter.twig');
+
+        $message->setBody($value->full_text);
         $message->setURL('https://twitter.com/statuses/'.$value->id);
         $message->setDate(\DateTime::createFromFormat('D M d H:i:s O Y', $value->created_at));
         $message->setAuthor($value->user->name);
@@ -92,30 +98,23 @@ class TwitterFetcher extends Fetcher
         $message->setScreenName($value->user->screen_name);
         $message->setAuthorThumbnail($value->user->profile_image_url_https);
 
+        $parsedText = HashTagParser::parse($value->full_text);
+        $parsedText = MentionParser::parse($parsedText);
+
+        if (isset($value->entities->media) && isset($value->entities->media[0]) && $value->entities->media[0]->type === 'photo') {
+            PhotoParser::addMedia($value->entities->media);
+            $parsedText = PhotoParser::parse($parsedText);
+        }
+
+        URLParser::addMedia($value->entities->urls);
+        $parsedText = URLParser::parse($parsedText);
+
+        $message->setParsedBody($parsedText);
+
+        if (isset($value->retweeted_status)) {
+            $message->setRetweet($this->createMessage($value->retweeted_status));
+        }
+
         return $message;
-    }
-
-    private function linkifyText(string $text): string
-    {
-        $text = $this->safeReplace($text, "/\B(?<![=\/])#([\w]+[a-z]+([0-9]+)?)/i", '#');
-
-        return $this->safeReplace($text, "/\B@(\w+(?!\/))\b/i", '@');
-    }
-
-    /**
-     * @param string $text
-     * @param string $regex
-     * @param string $prefix
-     * @param int    $index
-     *
-     * @return string
-     */
-    private function safeReplace(string $text, string $regex, string $prefix, int $index = 1): string
-    {
-        return preg_replace_callback($regex, function ($matches) use ($prefix, $index) {
-            $name = htmlentities($matches[$index], ENT_QUOTES | ENT_HTML5, 'UTF-8');
-
-            return '<a href="https://twitter.com/'.$name.'">'.$prefix.$name.'</a>';
-        }, $text);
     }
 }

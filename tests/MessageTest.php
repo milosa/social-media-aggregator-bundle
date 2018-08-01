@@ -28,6 +28,7 @@ class MessageTest extends TestCase
         $message->setScreenName('johnny_2018');
         $message->setTitle('test_title');
         $message->setId('test_id');
+        $message->setParsedBody('test body');
 
         $this->assertSame('test body', $message->getBody());
         $this->assertEquals(new \DateTime('1947-07-08'), $message->getDate());
@@ -41,6 +42,7 @@ class MessageTest extends TestCase
         $this->assertSame('test', $message->getFetchSource());
         $this->assertSame('test_title', $message->getTitle());
         $this->assertSame('test_id', $message->getId());
+        $this->assertSame('test body', $message->getParsedBody());
     }
 
     public function testMessageDefaultsToNoSource(): void

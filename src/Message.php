@@ -66,6 +66,22 @@ class Message
      */
     private $id;
 
+    /**
+     * @var Media[]
+     */
+    private $media = [];
+
+    /**
+     * @var string
+     */
+    private $parsedBody;
+
+    /**
+     * Message constructor.
+     *
+     * @param string|null $fetchSource
+     * @param string|null $template
+     */
     public function __construct(string $fetchSource = null, string $template = null)
     {
         if ($template !== null) {
@@ -224,5 +240,15 @@ class Message
     public function getId(): ?string
     {
         return $this->id;
+    }
+
+    public function setParsedBody(string $body): void
+    {
+        $this->parsedBody = $body;
+    }
+
+    public function getParsedBody(): string
+    {
+        return $this->parsedBody;
     }
 }

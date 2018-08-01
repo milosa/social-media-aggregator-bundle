@@ -1,7 +1,11 @@
+{% if message.retweet is not null %}
+{% set displayMessage = message.retweet %}
+{% else %}
+{% set displayMessage = message %}
+{% endif %}
 <article>
-    <h1><a href="{{ message.authorURL }}" target="_blank"><img src="{{ message.authorThumbnail|replace({'_normal.': '_mini.'}) }}" alt="Profile image of {{ message.author }}"> {{ message.author }}</a></h1>
-    <p class="author-name">@{{ message.screenName }}</p>
-    <p class="twitter--message-body">{{ message.body|raw }}</p>
-    <p><a href="{{ message.URL }}" target="_blank" title="{{ message.date|date('D M j Y, H:i:s') }}">{{ message.date|time_diff }}</a></p>
-    <p>{{ message.fetchSource }}</p>
+    {% if message.retweet is not null %}<p class="retweeted-by"><a href="{{ message.authorURL }}">{{ message.author }}</a> retweeted</p> {% endif %}
+    <a href="{{ displayMessage.authorURL }}" target="_blank"><h1><img src="{{ displayMessage.authorThumbnail|replace({'_normal.': '_mini.'}) }}" alt="Profile image of {{ displayMessage.author }}"> {{ displayMessage.author }}</h1> <span class="author-name">@{{ displayMessage.screenName }}</span></a> <small class="time"> <a href="{{ displayMessage.URL }}" target="_blank" title="{{ displayMessage.date|date('D M j Y, H:i:s') }}">{{ displayMessage.date|time_diff }}</a></small>
+    <p class="twitter--message-body">{{ displayMessage.parsedBody|raw }}</p>
+    {#<p>{{ displayMessage.fetchSource }}</p>#}
 </article>
