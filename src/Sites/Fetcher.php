@@ -19,7 +19,7 @@ abstract class Fetcher
     /**
      * @return Message[]
      */
-    abstract public function getData(): array;
+    abstract public function fetch(): array;
 
     public function setCache(AdapterInterface $adapter): void
     {

@@ -4,23 +4,16 @@ declare(strict_types=1);
 
 namespace Milosa\SocialMediaAggregatorBundle\Sites\Twitter;
 
-use Milosa\SocialMediaAggregatorBundle\MediaParser;
+use Milosa\SocialMediaAggregatorBundle\Parser;
 
-class URLParser implements MediaParser
+class URLParser implements Parser
 {
-    private static $media;
-
-    public static function addMedia(array $media): void
-    {
-        self::$media = $media;
-    }
-
-    public static function parse(string $context): string
+    public static function parse(string $context, array $media = []): string
     {
         $returnContext = $context;
 
-        foreach (self::$media as $url) {
-            $returnContext = str_replace($url->url, '<a href="'.$url->expanded_url.'">'.$url->display_url.'</a>', $returnContext);
+        foreach ($media as $url) {
+            $returnContext = str_replace($url->url, '<a href="'.$url->expanded_url.'" rel="noopener noreferrer">'.$url->display_url.'</a>', $returnContext);
         }
 
         return $returnContext;

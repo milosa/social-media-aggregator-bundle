@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 namespace Milosa\SocialMediaAggregatorTests;
 
+use Milosa\SocialMediaAggregatorBundle\Handler;
 use Milosa\SocialMediaAggregatorBundle\Message;
+use Milosa\SocialMediaAggregatorBundle\MessageFactory;
 use Milosa\SocialMediaAggregatorBundle\Sites\Fetcher;
-use Milosa\SocialMediaAggregatorBundle\Sites\TwitterFetcher;
 use Milosa\SocialMediaAggregatorBundle\SocialMediaAggregator;
 use PHPUnit\Framework\TestCase;
 
-class AggregatorTest extends TestCase
+class SocialMediaAggregatorTest extends TestCase
 {
     /**
      * @var SocialMediaAggregator
@@ -22,32 +23,58 @@ class AggregatorTest extends TestCase
         $this->aggregator = new SocialMediaAggregator();
     }
 
-    public function testCanCreateAggregator(): void
+    public function testWhenInstantiatingAggregatorItHasNoHandlers(): void
     {
-        $this->assertInstanceOf(SocialMediaAggregator::class, $this->aggregator);
+        $this->assertCount(0, $this->aggregator->getHandlers());
     }
 
     /**
      * @expectedException \RuntimeException
-     * @expectedExceptionMessage Tried to run getData without fetchers
+     * @expectedExceptionMessage No handlers available
      */
-    public function testWhenNoFetchersThrowsException(): void
+    public function testWithoutHandlersItThrowsException(): void
     {
-        $this->aggregator->getMessages(1);
+        $this->aggregator->getMessages();
     }
 
-    public function testAggregatorSortsMessages(): void
+    public function testCanAddHandler(): void
+    {
+        $this->aggregator->addHandler($this->prophesize(Handler::class)->reveal());
+
+        $this->assertCount(1, $this->aggregator->getHandlers());
+    }
+
+    public function testWhenCallingGetMessagesCallsGetMessagesOnHandler(): void
+    {
+        $handler = $this->prophesize(Handler::class)
+            ->willBeConstructedWith([
+                $this->prophesize(Fetcher::class)->reveal(),
+                MessageFactory::class,
+            ]);
+
+        $handler
+            ->getMessages()
+            ->willReturn([])
+            ->shouldBeCalledTimes(1);
+
+        $this->aggregator->addHandler($handler->reveal());
+        $this->aggregator->getMessages();
+    }
+
+    public function testAggregatorSortsMessagesProperly(): void
     {
         $messages = $this->createSortedAndUnsortedMessageArray();
-        $fetcherProphecy = $this->prophesize(TwitterFetcher::class);
-        $fetcherProphecy->getData()->willReturn($messages[0]);
-        $this->aggregator->addFetcher($fetcherProphecy->reveal());
+        $handler = $this->prophesize(Handler::class);
 
-        //fixme: count is unused
-        $result = $this->aggregator->getMessages(6);
+        $handler->getMessages()->willReturn($messages[0])->shouldBeCalledTimes(1);
 
+        $this->aggregator->addHandler($handler->reveal());
+
+        $result = $this->aggregator->getMessages();
         $this->assertEquals($messages[1], $result);
     }
+
+    //todo: test return value type. Rendered template or array of message objects
 
     /**
      * @return Message[][]
@@ -77,14 +104,6 @@ class AggregatorTest extends TestCase
         }
 
         return [$messagesUnordered, $messagesOrdered];
-    }
-
-    public function testCanAddFetchers(): void
-    {
-        $this->aggregator->addFetcher($this->createMock(Fetcher::class));
-        $this->aggregator->addFetcher($this->createMock(Fetcher::class));
-
-        $this->assertCount(2, $this->aggregator->getFetchers());
     }
 
     private function getMessageWithDate(\DateTime $date): Message

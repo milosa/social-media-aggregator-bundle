@@ -4,58 +4,42 @@ declare(strict_types=1);
 
 namespace Milosa\SocialMediaAggregatorBundle;
 
-use Milosa\SocialMediaAggregatorBundle\Sites\Fetcher;
-
 class SocialMediaAggregator
 {
     /**
-     * @var Fetcher[]
+     * @var Handler[]
      */
-    private $fetchers;
+    private $handlers = [];
 
     /**
-     * SocialMediaAggregatorBundle constructor.
-     *
-     * @param Fetcher[] $fetchers
+     * @return Handler[]
      */
-    public function __construct(array $fetchers = [])
+    public function getHandlers(): array
     {
-        $this->fetchers = $fetchers;
+        return $this->handlers;
     }
 
     /**
-     * @param int $count
-     *
-     * @throws \Exception
-     *
      * @return Message[]
-     *
-     * @todo Rename this method to possibly: run(), runFetchers(), execute()?
-     * @todo Only return $count messages
      */
-    public function getMessages(int $count): array
+    public function getMessages(): array
     {
+        if (\count($this->handlers) === 0) {
+            throw new \RuntimeException('No handlers available');
+        }
+
         $messages = [];
 
-        if (\count($this->fetchers) === 0) {
-            throw new \RuntimeException('Tried to run getData without fetchers');
+        foreach ($this->handlers as $handler) {
+            $messages = array_merge($messages, $handler->getMessages());
         }
 
-        foreach ($this->fetchers as $fetcher) {
-            $messages = array_merge($messages, $fetcher->getData());
-        }
-
-        return  $this->sortMessages($messages);
+        return $this->sortMessages($messages);
     }
 
-    public function addFetcher(Fetcher $fetcher): void
+    public function addHandler(Handler $handler): void
     {
-        $this->fetchers[] = $fetcher;
-    }
-
-    public function getFetchers(): array
-    {
-        return $this->fetchers;
+        $this->handlers[] = $handler;
     }
 
     private function sortMessages(array $messages): array

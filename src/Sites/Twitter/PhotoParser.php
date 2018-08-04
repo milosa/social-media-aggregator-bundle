@@ -4,25 +4,26 @@ declare(strict_types=1);
 
 namespace Milosa\SocialMediaAggregatorBundle\Sites\Twitter;
 
-use Milosa\SocialMediaAggregatorBundle\MediaParser;
+use Milosa\SocialMediaAggregatorBundle\Parser;
 
-class PhotoParser implements MediaParser
+class PhotoParser implements Parser
 {
-    /**
-     * @var array
-     */
-    private static $media;
+    private static $size = 'thumb';
+    private static $allowedSizes = ['thumb', 'small', 'medium', 'large'];
 
-    public static function addMedia(array $media): void
+    public static function setSize(string $size): void
     {
-        self::$media = $media;
+        if (!in_array($size, self::$allowedSizes, true)) {
+            throw new \InvalidArgumentException('Invalid size given');
+        }
+        self::$size = $size;
     }
 
-    public static function parse(string $context): string
+    public static function parse(string $context, array $media = []): string
     {
         $returnContext = $context;
-        if (\count(self::$media) > 0 && self::$media[0]->type === 'photo') {
-            $returnContext = str_replace(self::$media[0]->url, '<img src="'.self::$media[0]->media_url_https.':small"/>', $context);
+        if (\count($media) > 0 && $media[0]->type === 'photo') {
+            $returnContext = str_replace($media[0]->url, '<img src="'.$media[0]->media_url_https.':'.self::$size.'"/>', $context);
         }
 
         return $returnContext;

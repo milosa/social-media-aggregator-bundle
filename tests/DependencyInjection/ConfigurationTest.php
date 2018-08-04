@@ -80,6 +80,7 @@ class ConfigurationTest extends TestCase
              'number_of_tweets' => 10,
              'enable_cache' => false,
              'cache_lifetime' => 3600,
+             'image_size' => 'thumb',
              ],
          ]);
 
@@ -105,6 +106,11 @@ class ConfigurationTest extends TestCase
             ],
         ]);
     }
+
+//    public function assertGeneralDefaultConfig(): void
+//    {
+//        $this->assertProcessedConfigurationEquals([], [])
+//    }
 
     private function assertValidTwitterConfig(): void
     {

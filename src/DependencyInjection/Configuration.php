@@ -54,6 +54,10 @@ class Configuration implements ConfigurationInterface
                         ->booleanNode('hashtag_links')
                             ->defaultTrue()
                         ->end()
+                        ->enumNode('image_size')
+                            ->values(['thumb', 'large', 'medium', 'small'])
+                            ->defaultValue('thumb')
+                        ->end()
                     ->end()//children
                 ->end() //twitter
                 ->arrayNode('youtube')

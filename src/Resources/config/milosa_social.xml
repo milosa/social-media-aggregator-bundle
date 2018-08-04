@@ -14,12 +14,13 @@
             <argument>%milosa_social_media_aggregator.twitter_oauth_token_secret%</argument>
         </service>
         
-        <service id="Milosa\SocialMediaAggregatorBundle\Sites\TwitterFetcher">
+        <service id="Milosa\SocialMediaAggregatorBundle\Sites\Twitter\TwitterFetcher">
             <argument type="service" id="Abraham\TwitterOAuth\TwitterOAuth"/>
             <argument>%milosa_social_media_aggregator.twitter_account%</argument>
             <argument>%milosa_social_media_aggregator.twitter_numtweets%</argument>
+            <argument>%milosa_social_media_aggregator.twitter_image_size%</argument>
         </service>
-        <service id="Milosa\SocialMediaAggregatorBundle\Sites\YoutubeFetcher">
+        <service id="Milosa\SocialMediaAggregatorBundle\Sites\Youtube\YoutubeFetcher">
             <argument type="service">
                 <service class="GuzzleHttp\Client" public="false"></service>
             </argument>
@@ -33,9 +34,19 @@
 
         <service id="Milosa\SocialMediaAggregatorBundle\SocialMediaAggregator" public="true">
             <argument type="collection">
-                <argument type="service" id="Milosa\SocialMediaAggregatorBundle\Sites\TwitterFetcher"/>
-                <argument type="service" id="Milosa\SocialMediaAggregatorBundle\Sites\YoutubeFetcher"/>
+                <argument type="service" id="Milosa\SocialMediaAggregatorBundle\Sites\Twitter\TwitterFetcher"/>
+                <argument type="service" id="Milosa\SocialMediaAggregatorBundle\Sites\Youtube\YoutubeFetcher"/>
             </argument>
+        </service>
+
+        <service id="twitter_handler" class="Milosa\SocialMediaAggregatorBundle\Handler">
+            <argument type="service" id="Milosa\SocialMediaAggregatorBundle\Sites\Twitter\TwitterFetcher" />
+            <argument type="string">Milosa\SocialMediaAggregatorBundle\Sites\Twitter\TwitterMessageFactory</argument>
+        </service>
+
+        <service id="youtube_handler" class="Milosa\SocialMediaAggregatorBundle\Handler">
+            <argument type="service" id="Milosa\SocialMediaAggregatorBundle\Sites\Youtube\YoutubeFetcher" />
+            <argument type="string">Milosa\SocialMediaAggregatorBundle\Sites\Youtube\YoutubeMessageFactory</argument>
         </service>
     </services>
 </container>

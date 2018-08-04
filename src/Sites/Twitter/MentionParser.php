@@ -10,7 +10,7 @@ class MentionParser implements Parser
 {
     use SafeReplace;
 
-    public static function parse(string $context): string
+    public static function parse(string $context, array $media = []): string
     {
         return self::safeReplace($context, "/\B@(\w+(?!\/))\b/i", '@');
     }

@@ -30,6 +30,7 @@ class MilosaSocialMediaAggregatorExtension extends Extension
         $container->setParameter('milosa_social_media_aggregator.twitter_oauth_token_secret', $config['twitter']['auth_data']['oauth_token_secret']);
         $container->setParameter('milosa_social_media_aggregator.twitter_numtweets', $config['twitter']['number_of_tweets']);
         $container->setParameter('milosa_social_media_aggregator.twitter_account', $config['twitter']['account_to_fetch']);
+        $container->setParameter('milosa_social_media_aggregator.twitter_image_size', $config['twitter']['image_size']);
         $container->setParameter('milosa_social_media_aggregator.youtube_api_key', $config['youtube']['auth_data']['api_key']);
         $container->setParameter('milosa_social_media_aggregator.youtube_channel_id', $config['youtube']['channel_id']);
         $container->setParameter('milosa_social_media_aggregator.youtube_number_of_items', $config['youtube']['number_of_items']);
@@ -41,6 +42,10 @@ class MilosaSocialMediaAggregatorExtension extends Extension
         if ($config['youtube']['enable_cache'] === true) {
             $this->configureYoutubeCaching($container, $config['youtube']['cache_lifetime']);
         }
+
+        $aggregatorDefinition = $container->getDefinition('Milosa\SocialMediaAggregatorBundle\SocialMediaAggregator');
+        $aggregatorDefinition->addMethodCall('addHandler', [new Reference('twitter_handler')]);
+        $aggregatorDefinition->addMethodCall('addHandler', [new Reference('youtube_handler')]);
     }
 
     protected function configureTwitterCaching(ContainerBuilder $container, int $lifetime): void
@@ -52,7 +57,7 @@ class MilosaSocialMediaAggregatorExtension extends Extension
             ]);
 
         $container->setDefinition('milosa_social_media_aggregator.twitter_cache', $cacheDefinition);
-        $fetcherDefinition = $container->getDefinition('Milosa\SocialMediaAggregatorBundle\Sites\TwitterFetcher');
+        $fetcherDefinition = $container->getDefinition('Milosa\SocialMediaAggregatorBundle\Sites\Twitter\TwitterFetcher');
         $fetcherDefinition->addMethodCall('setCache', [new Reference('milosa_social_media_aggregator.twitter_cache')]);
     }
 
@@ -65,7 +70,7 @@ class MilosaSocialMediaAggregatorExtension extends Extension
             ]);
 
         $container->setDefinition('milosa_social_media_aggregator.youtube_cache', $cacheDefinition);
-        $fetcherDefinition = $container->getDefinition('Milosa\SocialMediaAggregatorBundle\Sites\YoutubeFetcher');
+        $fetcherDefinition = $container->getDefinition('Milosa\SocialMediaAggregatorBundle\Sites\Youtube\YoutubeFetcher');
         $fetcherDefinition->addMethodCall('setCache', [new Reference('milosa_social_media_aggregator.youtube_cache')]);
     }
 }

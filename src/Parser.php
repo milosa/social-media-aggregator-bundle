@@ -6,5 +6,5 @@ namespace Milosa\SocialMediaAggregatorBundle;
 
 interface Parser
 {
-    public static function parse(string $context): string;
+    public static function parse(string $context, array $media = []): string;
 }
