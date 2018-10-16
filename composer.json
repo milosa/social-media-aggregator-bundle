@@ -27,7 +27,8 @@
     "twig/extensions": "^1.5",
     "guzzlehttp/guzzle": "~6.0",
     "guzzlehttp/psr7": "~1.4",
-    "ext-json": "*"
+    "ext-json": "*",
+    "symfony/flex": "^1.1"
   },
   "autoload" : {
     "psr-4" : {
@@ -37,6 +38,12 @@
   "autoload-dev" : {
     "psr-4" : {
       "Milosa\\SocialMediaAggregatorTests\\": "tests/"
+    }
+  },
+  "scripts": {
+    "auto-scripts": {
+      "cache:clear": "symfony-cmd",
+      "assets:install %PUBLIC_DIR%": "symfony-cmd"
     }
   }
 }

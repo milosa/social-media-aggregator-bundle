@@ -81,9 +81,10 @@ class SocialMediaAggregatorTest extends TestCase
      */
     private function createSortedAndUnsortedMessageArray(): array
     {
+        $equalDate = new \DateTime('2017-05-01'); //to make sure the equal dates logic is covered
         $datesInOrder = [
-            new \DateTime('2017-05-01'),
-            new \DateTime('2017-04-01'),
+            $equalDate,
+            $equalDate,
             new \DateTime('2016-05-01'),
             new \DateTime('2016-04-01'),
             new \DateTime('2015-05-01'),

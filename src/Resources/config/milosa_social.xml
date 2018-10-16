@@ -14,13 +14,13 @@
             <argument>%milosa_social_media_aggregator.twitter_oauth_token_secret%</argument>
         </service>
         
-        <service id="Milosa\SocialMediaAggregatorBundle\Sites\Twitter\TwitterFetcher">
+        <service id="milosa_social.fetcher.twitter" class="Milosa\SocialMediaAggregatorBundle\Sites\Twitter\TwitterFetcher">
             <argument type="service" id="Abraham\TwitterOAuth\TwitterOAuth"/>
             <argument>%milosa_social_media_aggregator.twitter_account%</argument>
             <argument>%milosa_social_media_aggregator.twitter_numtweets%</argument>
             <argument>%milosa_social_media_aggregator.twitter_image_size%</argument>
         </service>
-        <service id="Milosa\SocialMediaAggregatorBundle\Sites\Youtube\YoutubeFetcher">
+        <service id="milosa_social.fetcher.youtube" class="Milosa\SocialMediaAggregatorBundle\Sites\Youtube\YoutubeFetcher">
             <argument type="service">
                 <service class="GuzzleHttp\Client" public="false"></service>
             </argument>
@@ -32,20 +32,21 @@
             <tag name="twig.extension"/>
         </service>
 
-        <service id="Milosa\SocialMediaAggregatorBundle\SocialMediaAggregator" public="true">
+        <service id="milosa_social.aggregator" class="Milosa\SocialMediaAggregatorBundle\SocialMediaAggregator" public="true">
             <argument type="collection">
-                <argument type="service" id="Milosa\SocialMediaAggregatorBundle\Sites\Twitter\TwitterFetcher"/>
-                <argument type="service" id="Milosa\SocialMediaAggregatorBundle\Sites\Youtube\YoutubeFetcher"/>
+                <argument type="service" id="milosa_social.fetcher.twitter"/>
+                <argument type="service" id="milosa_social.fetcher.youtube"/>
             </argument>
         </service>
+        <service id="Milosa\SocialMediaAggregatorBundle\SocialMediaAggregator" alias="milosa_social.aggregator" public="true" />
 
-        <service id="twitter_handler" class="Milosa\SocialMediaAggregatorBundle\Handler">
-            <argument type="service" id="Milosa\SocialMediaAggregatorBundle\Sites\Twitter\TwitterFetcher" />
+        <service id="milosa_social.handler.twitter" class="Milosa\SocialMediaAggregatorBundle\Handler">
+            <argument type="service" id="milosa_social.fetcher.twitter" />
             <argument type="string">Milosa\SocialMediaAggregatorBundle\Sites\Twitter\TwitterMessageFactory</argument>
         </service>
 
-        <service id="youtube_handler" class="Milosa\SocialMediaAggregatorBundle\Handler">
-            <argument type="service" id="Milosa\SocialMediaAggregatorBundle\Sites\Youtube\YoutubeFetcher" />
+        <service id="milosa_social.handler.youtube" class="Milosa\SocialMediaAggregatorBundle\Handler">
+            <argument type="service" id="milosa_social.fetcher.youtube" />
             <argument type="string">Milosa\SocialMediaAggregatorBundle\Sites\Youtube\YoutubeMessageFactory</argument>
         </service>
     </services>

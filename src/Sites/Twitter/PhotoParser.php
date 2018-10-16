@@ -13,7 +13,7 @@ class PhotoParser implements Parser
 
     public static function setSize(string $size): void
     {
-        if (!in_array($size, self::$allowedSizes, true)) {
+        if (!\in_array($size, self::$allowedSizes, true)) {
             throw new \InvalidArgumentException('Invalid size given');
         }
         self::$size = $size;
