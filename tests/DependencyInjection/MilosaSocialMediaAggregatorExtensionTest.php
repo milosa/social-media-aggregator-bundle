@@ -31,9 +31,9 @@ class MilosaSocialMediaAggregatorExtensionTest extends AbstractExtensionTestCase
     {
         $this->load();
         $this->assertContainerBuilderHasService('Abraham\TwitterOAuth\TwitterOAuth');
-        $this->assertContainerBuilderHasService('milosa_social.fetcher.twitter');
+        $this->assertContainerBuilderHasService('milosa_social_media_aggregator.fetcher.twitter');
         $this->assertContainerBuilderHasService('twig.extension.date');
-        $this->assertContainerBuilderHasService('milosa_social.aggregator');
+        $this->assertContainerBuilderHasService('milosa_social_media_aggregator.aggregator');
     }
 
     /**
@@ -43,10 +43,10 @@ class MilosaSocialMediaAggregatorExtensionTest extends AbstractExtensionTestCase
     {
         $this->load(['twitter' => ['enable_cache' => true], 'youtube' => ['enable_cache' => true]]);
         $this->assertContainerBuilderHasService('Abraham\TwitterOAuth\TwitterOAuth');
-        $this->assertContainerBuilderHasService('milosa_social.fetcher.twitter');
-        $this->assertContainerBuilderHasService('milosa_social.fetcher.youtube');
+        $this->assertContainerBuilderHasService('milosa_social_media_aggregator.fetcher.twitter');
+        $this->assertContainerBuilderHasService('milosa_social_media_aggregator.fetcher.youtube');
         $this->assertContainerBuilderHasService('twig.extension.date');
-        $this->assertContainerBuilderHasService('milosa_social.aggregator');
+        $this->assertContainerBuilderHasService('milosa_social_media_aggregator.aggregator');
         $this->assertContainerBuilderHasService('milosa_social_media_aggregator.twitter_cache');
         $this->assertContainerBuilderHasService('milosa_social_media_aggregator.youtube_cache');
     }

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Milosa\SocialMediaAggregatorTests;
 
-use Milosa\SocialMediaAggregatorBundle\Message;
+use Milosa\SocialMediaAggregatorBundle\Aggregator\Message;
 use PHPUnit\Framework\TestCase;
 
 class MessageTest extends TestCase
@@ -24,6 +24,7 @@ class MessageTest extends TestCase
         $message->setTitle('test_title');
         $message->setId('test_id');
         $message->setParsedBody('test body');
+        $message->setNetwork('TEST');
 
         $this->assertSame('test body', $message->getBody());
         $this->assertEquals(new \DateTime('1947-07-08'), $message->getDate());
@@ -38,6 +39,7 @@ class MessageTest extends TestCase
         $this->assertSame('test_title', $message->getTitle());
         $this->assertSame('test_id', $message->getId());
         $this->assertSame('test body', $message->getParsedBody());
+        $this->assertSame('TEST', $message->getNetwork());
     }
 
     public function testMessageDefaultsToNoSource(): void

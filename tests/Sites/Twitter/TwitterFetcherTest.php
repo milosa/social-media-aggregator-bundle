@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Milosa\SocialMediaAggregatorTests\Sites\Twitter;
 
 use Abraham\TwitterOAuth\TwitterOAuth;
-use Milosa\SocialMediaAggregatorBundle\Sites\Twitter\TwitterFetcher;
+use Milosa\SocialMediaAggregatorBundle\Aggregator\Sites\Twitter\TwitterFetcher;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use Psr\Cache\CacheItemInterface;

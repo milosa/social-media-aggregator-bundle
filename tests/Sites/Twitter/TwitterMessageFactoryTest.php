@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Milosa\SocialMediaAggregatorTests\Sites\Twitter;
 
-use Milosa\SocialMediaAggregatorBundle\Sites\Twitter\TwitterMessage;
-use Milosa\SocialMediaAggregatorBundle\Sites\Twitter\TwitterMessageFactory;
+use Milosa\SocialMediaAggregatorBundle\Aggregator\Sites\Twitter\TwitterMessage;
+use Milosa\SocialMediaAggregatorBundle\Aggregator\Sites\Twitter\TwitterMessageFactory;
 use PHPUnit\Framework\TestCase;
 
 class TwitterMessageFactoryTest extends TestCase
@@ -40,6 +40,7 @@ class TwitterMessageFactoryTest extends TestCase
         $expected->setAuthorURL('https://twitter.com/unclebobmartin');
         $expected->setAuthorDescription('Software Craftsman');
         $expected->setAuthorThumbnail('https://pbs.twimg.com/profile_images/1102364992/clean_code_72_color_normal.png');
+        $expected->setNetwork('twitter');
 
         $this->assertEquals($expected, $message);
     }
@@ -58,6 +59,7 @@ class TwitterMessageFactoryTest extends TestCase
         $expected->setAuthorURL('https://twitter.com/FamilyGuyonFOX');
         $expected->setAuthorDescription("OFFICIAL TWITTER FOR #FamilyGuy. We're back for Season 17 on September 30!");
         $expected->setAuthorThumbnail('https://pbs.twimg.com/profile_images/917922823028346880/ClMRZwyy_normal.jpg');
+        $expected->setNetwork('twitter');
 
         $this->assertEquals($expected, $message);
     }
@@ -77,6 +79,7 @@ class TwitterMessageFactoryTest extends TestCase
         $expected->setAuthorURL('https://twitter.com/FamilyGuyonFOX');
         $expected->setAuthorDescription("OFFICIAL TWITTER FOR #FamilyGuy. We're back for Season 17 on September 30!");
         $expected->setAuthorThumbnail('https://pbs.twimg.com/profile_images/917922823028346880/ClMRZwyy_normal.jpg');
+        $expected->setNetwork('twitter');
 
         $this->assertEquals($expected, $message);
     }
@@ -96,6 +99,7 @@ class TwitterMessageFactoryTest extends TestCase
         $expected->setAuthorURL('https://twitter.com/unclebobmartin');
         $expected->setAuthorDescription('Software Craftsman');
         $expected->setAuthorThumbnail('https://pbs.twimg.com/profile_images/1102364992/clean_code_72_color_normal.png');
+        $expected->setNetwork('twitter');
 
         $retweet = new TwitterMessage('API', 'twitter.twig');
         $retweet->setDate(new \DateTime('2018-08-27 12:29:09'));
@@ -108,6 +112,7 @@ class TwitterMessageFactoryTest extends TestCase
         $retweet->setAuthorURL('https://twitter.com/danielbmarkham');
         $retweet->setAuthorDescription('I help technology workers lead happier and more productive lives. Wrote the book on making stuff people want wth minimal overhead by optimizing information flow');
         $retweet->setAuthorThumbnail('https://pbs.twimg.com/profile_images/1024056768375091201/0RzP6S26_normal.jpg');
+        $retweet->setNetwork('twitter');
 
         $expected->setRetweet($retweet);
 

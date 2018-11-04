@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Milosa\SocialMediaAggregatorTests\Sites\Twitter;
 
-use Milosa\SocialMediaAggregatorBundle\Sites\Twitter\TwitterMessage;
+use Milosa\SocialMediaAggregatorBundle\Aggregator\Sites\Twitter\TwitterMessage;
 use PHPUnit\Framework\TestCase;
 
 class TwitterMessageTest extends TestCase

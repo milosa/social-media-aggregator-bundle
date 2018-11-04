@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Milosa\SocialMediaAggregatorTests\Sites\Twitter;
 
-use Milosa\SocialMediaAggregatorBundle\Sites\Twitter\URLParser;
+use Milosa\SocialMediaAggregatorBundle\Aggregator\Sites\Twitter\URLParser;
 use PHPUnit\Framework\TestCase;
 
 class URLParserTest extends TestCase

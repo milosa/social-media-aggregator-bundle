@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Milosa\SocialMediaAggregatorTests\Sites\Youtube;
 
-use Milosa\SocialMediaAggregatorBundle\Sites\Youtube\YoutubeMessage;
-use Milosa\SocialMediaAggregatorBundle\Sites\Youtube\YoutubeMessageFactory;
+use Milosa\SocialMediaAggregatorBundle\Aggregator\Sites\Youtube\YoutubeMessage;
+use Milosa\SocialMediaAggregatorBundle\Aggregator\Sites\Youtube\YoutubeMessageFactory;
 use PHPUnit\Framework\TestCase;
 
 class YoutubeMessageFactoryTest extends TestCase
@@ -35,6 +35,7 @@ class YoutubeMessageFactoryTest extends TestCase
         $expected->setAuthor('NASA');
         $expected->setAuthorURL('https://www.youtube.com/channel/UCLA_DiR1FfKNvjuUpBHmylQ');
         $expected->setId('UGozHiOXfCI');
+        $expected->setNetwork('youtube');
 
         $this->assertEquals($expected, $message);
     }

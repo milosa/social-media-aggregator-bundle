@@ -13,7 +13,9 @@
 
     <filter>
         <whitelist>
-            <directory>src/</directory>
+            <directory>Aggregator/</directory>
+            <directory>Controller/</directory>
+            <directory>DependencyInjection/</directory>
             <exclude>
                 <directory>vendor/</directory>
                 <directory>tests/</directory>

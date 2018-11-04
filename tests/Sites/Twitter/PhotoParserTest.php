@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Milosa\SocialMediaAggregatorTests\Sites\Twitter;
 
-use Milosa\SocialMediaAggregatorBundle\Sites\Twitter\PhotoParser;
+use Milosa\SocialMediaAggregatorBundle\Aggregator\Sites\Twitter\PhotoParser;
 use PHPUnit\Framework\TestCase;
 
 class PhotoParserTest extends TestCase

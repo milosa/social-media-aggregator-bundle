@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Milosa\SocialMediaAggregatorTests;
 
-use Milosa\SocialMediaAggregatorBundle\Handler;
-use Milosa\SocialMediaAggregatorBundle\Message;
-use Milosa\SocialMediaAggregatorBundle\MessageFactory;
-use Milosa\SocialMediaAggregatorBundle\Sites\Fetcher;
-use Milosa\SocialMediaAggregatorBundle\SocialMediaAggregator;
+use Milosa\SocialMediaAggregatorBundle\Aggregator\Handler;
+use Milosa\SocialMediaAggregatorBundle\Aggregator\Message;
+use Milosa\SocialMediaAggregatorBundle\Aggregator\MessageFactory;
+use Milosa\SocialMediaAggregatorBundle\Aggregator\Sites\Fetcher;
+use Milosa\SocialMediaAggregatorBundle\Aggregator\SocialMediaAggregator;
 use PHPUnit\Framework\TestCase;
 
 class SocialMediaAggregatorTest extends TestCase

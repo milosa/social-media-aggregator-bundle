@@ -28,12 +28,16 @@
     "guzzlehttp/guzzle": "~6.0",
     "guzzlehttp/psr7": "~1.4",
     "ext-json": "*",
-    "symfony/flex": "^1.1"
+    "symfony/flex": "^1.1",
+    "symfony/webpack-encore-pack": "^1.0"
   },
   "autoload" : {
     "psr-4" : {
-      "Milosa\\SocialMediaAggregatorBundle\\" : "src/"
-    }
+      "Milosa\\SocialMediaAggregatorBundle\\" : ""
+    },
+    "exclude-from-classmap": [
+      "/tests/"
+    ]
   },
   "autoload-dev" : {
     "psr-4" : {

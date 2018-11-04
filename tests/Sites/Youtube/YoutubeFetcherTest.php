@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Milosa\SocialMediaAggregatorTests\Sites\Youtube;
 
 use GuzzleHttp\Client;
-use Milosa\SocialMediaAggregatorBundle\Sites\Youtube\YoutubeFetcher;
+use Milosa\SocialMediaAggregatorBundle\Aggregator\Sites\Youtube\YoutubeFetcher;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use Psr\Cache\CacheItemInterface;

@@ -4,12 +4,11 @@ declare(strict_types=1);
 
 namespace Milosa\SocialMediaAggregatorTests;
 
-use Milosa\SocialMediaAggregatorBundle\Handler;
-use Milosa\SocialMediaAggregatorBundle\Message;
-use Milosa\SocialMediaAggregatorBundle\MessageFactory;
-use Milosa\SocialMediaAggregatorBundle\Sites\Fetcher;
+use Milosa\SocialMediaAggregatorBundle\Aggregator\Handler;
+use Milosa\SocialMediaAggregatorBundle\Aggregator\Message;
+use Milosa\SocialMediaAggregatorBundle\Aggregator\MessageFactory;
+use Milosa\SocialMediaAggregatorBundle\Aggregator\Sites\Fetcher;
 use PHPUnit\Framework\TestCase;
-use Prophecy\Argument;
 use Prophecy\Prophecy\ObjectProphecy;
 
 class HandlerTest extends TestCase
@@ -18,9 +17,6 @@ class HandlerTest extends TestCase
     {
         $fetcherProphecy = $this->getFetcherProphecy();
         $fetcherProphecy->fetch()->willReturn([])->shouldBeCalledTimes(1);
-
-//        $factoryProphecy = $this->getFactoryProphecy();
-//        $factoryProphecy->createMessage(Argument::any())->shouldNotBeCalled();
 
         $handler = new Handler(
             $fetcherProphecy->reveal(),
