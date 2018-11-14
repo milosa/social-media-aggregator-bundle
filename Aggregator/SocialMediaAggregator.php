@@ -4,12 +4,18 @@ declare(strict_types=1);
 
 namespace Milosa\SocialMediaAggregatorBundle\Aggregator;
 
+use Twig\Loader\ChainLoader;
+
 class SocialMediaAggregator
 {
     /**
      * @var Handler[]
      */
     private $handlers = [];
+
+//    public function __construct(ChainLoader)
+//    {
+//    }
 
     /**
      * @return Handler[]

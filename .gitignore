@@ -5,6 +5,8 @@
 /app/logs/*
 !app/cache/.gitkeep
 !app/logs/.gitkeep
+/bin
+composer.lock
 
 # Email spool folder
 /app/spool/*
