@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Milosa\SocialMediaAggregatorBundle\Aggregator;
 
-use Milosa\SocialMediaAggregatorBundle\Aggregator\Sites\Fetcher;
-
 class Handler
 {
     /**

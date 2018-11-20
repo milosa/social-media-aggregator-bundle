@@ -16,20 +16,18 @@
     "matthiasnoback/symfony-dependency-injection-test": "^3.0",
     "matthiasnoback/symfony-config-test": "^4.0",
     "phpspec/prophecy": "~1.0",
-    "phpstan/phpstan": "^0.10.5"
+    "phpstan/phpstan": "^0.10.5",
+    "symfony/webpack-encore-pack": "^1.0"
   },
   "require": {
+    "php": "^7.2",
     "twig/twig" : "^2.4",
     "symfony/twig-bundle": "^4.0",
     "symfony/dependency-injection": "^4.0",
     "symfony/framework-bundle": "^4.0",
     "symfony/cache": "^4.0",
     "twig/extensions": "^1.5",
-    "guzzlehttp/guzzle": "~6.0",
-    "guzzlehttp/psr7": "~1.4",
-    "ext-json": "*",
-    "symfony/flex": "^1.1",
-    "symfony/webpack-encore-pack": "^1.0"
+    "symfony/flex": "^1.1"
   },
   "autoload" : {
     "psr-4" : {

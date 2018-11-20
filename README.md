@@ -21,6 +21,28 @@ Symfony Bundle to combine messages from different social media platforms into on
 
 `composer require milosa/social-media-aggregator-bundle`
 
+### Installation of a plugin
+In your Symfony application, find kernel.php. Replace the `registerBundles` method with:
+
+        public function registerBundles()
+        {
+            $contents = require $this->getProjectDir().'/config/bundles.php';
+            foreach ($contents as $class => $envs) {
+                if (isset($envs['all']) || isset($envs[$this->environment])) {
+                    if($class === \Milosa\SocialMediaAggregatorBundle\MilosaSocialMediaAggregatorBundle::class)
+                    {
+                        //Each plugin class needs to be added to the array below 
+                        yield new $class([
+                            new \Milosa\SocialMediaAggregatorBundle\Twitter\TwitterPlugin(),
+                        ]);
+                    }
+                    else {
+                        yield new $class();
+                    }
+                }
+            }
+        }
+
 ## Usage
 
 This bundle needs plugins in order to do something.

@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Milosa\SocialMediaAggregatorTests;
 
+use Milosa\SocialMediaAggregatorBundle\Aggregator\Fetcher;
 use Milosa\SocialMediaAggregatorBundle\Aggregator\Handler;
 use Milosa\SocialMediaAggregatorBundle\Aggregator\Message;
 use Milosa\SocialMediaAggregatorBundle\Aggregator\MessageFactory;
-use Milosa\SocialMediaAggregatorBundle\Aggregator\Sites\Fetcher;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Prophecy\ObjectProphecy;
 

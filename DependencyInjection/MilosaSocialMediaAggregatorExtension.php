@@ -53,20 +53,6 @@ class MilosaSocialMediaAggregatorExtension extends Extension implements PrependE
 
     public function getConfiguration(array $config, ContainerBuilder $container)
     {
-        return new Configuration($this->getAlias(), $container->getParameter('kernel.debug'), $this->plugins);
+        return new Configuration($this->plugins);
     }
-
-//    protected function configureYoutubeCaching(ContainerBuilder $container, int $lifetime): void
-//    {
-//        $cacheDefinition = new Definition(FilesystemAdapter::class, [
-//            'milosa_social',
-//            $lifetime,
-//            '%kernel.cache_dir%',
-//            ]);
-//
-////        $cacheDefinition->setTags(['name' => 'cache.pool']);
-//        $container->setDefinition('milosa_social_media_aggregator.youtube_cache', $cacheDefinition)->addTag('cache.pool');
-//        $fetcherDefinition = $container->getDefinition('milosa_social_media_aggregator.fetcher.youtube');
-//        $fetcherDefinition->addMethodCall('setCache', [new Reference('milosa_social_media_aggregator.youtube_cache')]);
-//    }
 }
