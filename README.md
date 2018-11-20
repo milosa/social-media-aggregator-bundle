@@ -23,24 +23,9 @@ Symfony Bundle to combine messages from different social media platforms into on
 
 ## Usage
 
-Add `milosa_social_media_aggregator` to your configuration.
+This bundle needs plugins in order to do something.
 
-### Sample config file
-    milosa_social_media_aggregator:
-        twitter:
-            auth_data:
-                consumer_key: '%env(TWITTER_CONSUMER_KEY)%'
-                consumer_secret: '%env(TWITTER_CONSUMER_SECRET)%'
-                oauth_token: '%env(TWITTER_OAUTH_TOKEN)%'
-                oauth_token_secret: '%env(TWITTER_OAUTH_TOKEN_SECRET)%'
-            number_of_tweets: 20
-            account_to_fetch: FamilyGuyonFOX
-            template: twitter.twig
-            fetch_interval: 120
-        youtube:
-            auth_data: 
-                api_key: '%env(YOUTUBE_API_KEY)%'
-            enable_cache: true
-            cache_lifetime: 3600
-            number_of_items: 2
-            channel_id: UCLA_DiR1FfKNvjuUpBHmylQ
+## Plugins
+
+* [Twitter Plugin](https://github.com/milosa/social-media-aggregator-twitter-plugin)
+* [Youtube Plugin](https://github.com/milosa/social-media-aggregator-youtube-plugin)
