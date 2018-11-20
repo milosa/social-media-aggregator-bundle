@@ -2,9 +2,8 @@
 
 declare(strict_types=1);
 
-namespace Milosa\SocialMediaAggregatorBundle\Aggregator\Sites;
+namespace Milosa\SocialMediaAggregatorBundle\Aggregator;
 
-use Milosa\SocialMediaAggregatorBundle\Aggregator\Message;
 use Symfony\Component\Cache\Adapter\AdapterInterface;
 
 abstract class Fetcher
