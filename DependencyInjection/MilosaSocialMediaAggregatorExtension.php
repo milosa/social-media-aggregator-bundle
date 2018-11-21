@@ -31,7 +31,7 @@ class MilosaSocialMediaAggregatorExtension extends Extension implements PrependE
         );
 
         $loader->load('milosa_social.xml');
-        $configuration = new Configuration($this->getAlias(), $container->getParameter('kernel.debug'), $this->plugins);
+        $configuration = new Configuration($this->plugins);
         $config = $this->processConfiguration($configuration, $configs);
 
         foreach ($this->plugins as $plugin) {
