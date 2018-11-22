@@ -6,14 +6,8 @@
 
 <services>
     <defaults autowire="true" autoconfigure="true" public="false" />
-
-
-
-    <service id="milosa_social_media_aggregator.aggregator" class="Milosa\SocialMediaAggregatorBundle\Aggregator\SocialMediaAggregator" public="true" />
-    <service id="Milosa\SocialMediaAggregatorBundle\Aggregator\SocialMediaAggregator" alias="milosa_social_media_aggregator.aggregator" public="true" />
-
-    <service id="milosa_social_media_aggregator.controller.api_controller" class="Milosa\SocialMediaAggregatorBundle\Controller\ApiController" public="true">
-
-    </service>
+    <service id="milosa_social_media_aggregator.aggregator" class="Milosa\SocialMediaAggregatorBundle\Aggregator\SocialMediaAggregator" />
+    <service id="Milosa\SocialMediaAggregatorBundle\Aggregator\SocialMediaAggregator" alias="milosa_social_media_aggregator.aggregator" />
+    <service id="milosa_social_media_aggregator.controller.api_controller" class="Milosa\SocialMediaAggregatorBundle\Controller\ApiController" />
 </services>
 </container>
