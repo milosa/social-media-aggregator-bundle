@@ -9,19 +9,6 @@
 
 
 
-
-    <!--<service id="milosa_social_media_aggregator.fetcher.youtube" class="Milosa\SocialMediaAggregatorBundle\Aggregator\Sites\Youtube\YoutubeFetcher">-->
-        <!--<argument type="service">-->
-            <!--<service class="GuzzleHttp\Client" public="false"></service>-->
-        <!--</argument>-->
-        <!--<argument>%milosa_social_media_aggregator.youtube_channel_id%</argument>-->
-        <!--<argument>%milosa_social_media_aggregator.youtube_number_of_items%</argument>-->
-        <!--<argument>%milosa_social_media_aggregator.youtube_api_key%</argument>-->
-    <!--</service>-->
-    <service id="twig.extension.date" class="Twig_Extensions_Extension_Date">
-        <tag name="twig.extension"/>
-    </service>
-
     <service id="milosa_social_media_aggregator.aggregator" class="Milosa\SocialMediaAggregatorBundle\Aggregator\SocialMediaAggregator" public="true" />
     <service id="Milosa\SocialMediaAggregatorBundle\Aggregator\SocialMediaAggregator" alias="milosa_social_media_aggregator.aggregator" public="true" />
 

@@ -17,16 +17,17 @@
     "matthiasnoback/symfony-config-test": "^4.0",
     "phpspec/prophecy": "~1.0",
     "phpstan/phpstan": "^0.10.5",
-    "symfony/webpack-encore-pack": "^1.0"
+    "symfony/webpack-encore-pack": "^1.0",
+    "phpstan/phpstan-symfony": "^0.10.2"
   },
   "require": {
     "php": "^7.2",
+    "ext-json": "*",
     "twig/twig" : "^2.4",
     "symfony/twig-bundle": "^4.0",
     "symfony/dependency-injection": "^4.0",
     "symfony/framework-bundle": "^4.0",
     "symfony/cache": "^4.0",
-    "twig/extensions": "^1.5",
     "symfony/flex": "^1.1"
   },
   "autoload" : {

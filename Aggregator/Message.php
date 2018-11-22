@@ -69,11 +69,6 @@ class Message implements JsonSerializable
     private $id;
 
     /**
-     * @var Media[]
-     */
-    private $media = [];
-
-    /**
      * @var string
      */
     private $parsedBody;
@@ -83,12 +78,6 @@ class Message implements JsonSerializable
      */
     private $network;
 
-    /**
-     * Message constructor.
-     *
-     * @param string|null $fetchSource
-     * @param string|null $template
-     */
     public function __construct(string $fetchSource = null, string $template = null)
     {
         if ($template !== null) {
