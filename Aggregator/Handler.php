@@ -7,9 +7,9 @@ namespace Milosa\SocialMediaAggregatorBundle\Aggregator;
 class Handler
 {
     /**
-     * @var Fetcher
+     * @var Fetcher[]
      */
-    private $fetcher;
+    private $fetchers;
 
     /**
      * @var string
@@ -18,17 +18,19 @@ class Handler
 
     public function __construct(Fetcher $fetcher, string $factory)
     {
-        $this->fetcher = $fetcher;
+        $this->fetchers[] = $fetcher;
         $this->factory = $factory;
     }
 
     public function getMessages(): array
     {
-        $messagesJson = $this->fetcher->fetch();
         $return = [];
-        if (\count($messagesJson) !== 0) {
-            foreach ($messagesJson as $messageJson) {
-                $return[] = $this->factory::createMessage($messageJson);
+        foreach ($this->fetchers as $fetcher) {
+            $messagesJson = $fetcher->fetch();
+            if (\count($messagesJson) !== 0) {
+                foreach ($messagesJson as $messageJson) {
+                    $return[] = $this->factory::createMessage($messageJson);
+                }
             }
         }
 
