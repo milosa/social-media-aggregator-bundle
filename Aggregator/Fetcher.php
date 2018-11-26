@@ -18,30 +18,27 @@ abstract class Fetcher
     /**
      * @var array
      */
-    protected $settings;
+    protected $config;
+
     /**
      * @var array
      */
-    protected $authData;
-
-    protected $requiredAuthData;
-
     protected $requiredSettings;
 
-    public function __construct(array $settings = [], array $authData = [])
+    /**
+     * @var ClientWrapper
+     */
+    protected $client;
+
+    public function __construct(ClientWrapper $client, array $config = [])
     {
-        $this->settings = $settings;
-        $this->authData = $authData;
+        $this->config = $config;
+        $this->client = $client;
     }
 
-    protected function validateAuthData(): void
+    protected function validateConfig(): void
     {
-        $this->validate($this->requiredAuthData, $this->authData, ['single' => 'Required authentication data \'%s\' is missing', 'multiple' => 'Required authentication data \'%s\' are missing']);
-    }
-
-    protected function validateSettings(): void
-    {
-        $this->validate($this->requiredSettings, $this->settings, ['single' => 'Required setting \'%s\' is missing', 'multiple' => 'Required settings \'%s\' are missing']);
+        $this->validate($this->requiredSettings, $this->config, ['single' => 'Required setting \'%s\' is missing', 'multiple' => 'Required settings \'%s\' are missing']);
     }
 
     private function validate(array $requiredKeys, array $toValidate, array $errors): void

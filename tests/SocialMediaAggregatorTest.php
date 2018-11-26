@@ -48,7 +48,7 @@ class SocialMediaAggregatorTest extends TestCase
     {
         $handler = $this->prophesize(Handler::class)
             ->willBeConstructedWith([
-                $this->prophesize(Fetcher::class)->reveal(),
+                [$this->prophesize(Fetcher::class)->reveal()],
                 MessageFactory::class,
             ]);
 

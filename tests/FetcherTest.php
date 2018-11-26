@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Milosa\SocialMediaAggregatorBundle\tests;
 
+use Milosa\SocialMediaAggregatorBundle\Aggregator\ClientWrapper;
 use Milosa\SocialMediaAggregatorBundle\Aggregator\Fetcher;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Cache\Adapter\AdapterInterface;
@@ -12,7 +13,7 @@ class FetcherTest extends TestCase
 {
     public function testSetCache(): void
     {
-        $fetcher = new TestFetcher();
+        $fetcher = new TestFetcher($this->prophesize(ClientWrapper::class)->reveal());
         $cache = $this->createMock(AdapterInterface::class);
         $fetcher->setCache($cache);
 
@@ -21,7 +22,7 @@ class FetcherTest extends TestCase
 
     public function testInjectSource(): void
     {
-        $fetcher = new TestFetcher();
+        $fetcher = new TestFetcher($this->prophesize(ClientWrapper::class)->reveal());
         $messages = [new \stdClass(), new \stdClass()];
         $result = $fetcher->testableInjectSource($messages, 'test_source');
 
@@ -40,7 +41,7 @@ class FetcherTest extends TestCase
      */
     public function testOmittingOneRequiredSettingThrowsException(): void
     {
-        $fetcher = new ConstructorArgumentsTestFetcher();
+        $fetcher = new ConstructorArgumentsTestFetcher($this->prophesize(ClientWrapper::class)->reveal());
         $fetcher->addRequiredSetting('test_setting');
 
         $fetcher->testValidateSettings();
@@ -52,7 +53,7 @@ class FetcherTest extends TestCase
      */
     public function testOmittingMultipleRequiredSettingThrowsException(): void
     {
-        $fetcher = new ConstructorArgumentsTestFetcher();
+        $fetcher = new ConstructorArgumentsTestFetcher($this->prophesize(ClientWrapper::class)->reveal());
         $fetcher->addRequiredSetting('test_setting');
         $fetcher->addRequiredSetting('test_setting2');
 
@@ -61,57 +62,17 @@ class FetcherTest extends TestCase
 
     public function testAddingSettings(): void
     {
-        $fetcher = new ConstructorArgumentsTestFetcher(['number_of_messages' => 2]);
+        $fetcher = new ConstructorArgumentsTestFetcher($this->prophesize(ClientWrapper::class)->reveal(), ['number_of_messages' => 2]);
 
         $this->assertEquals(2, $fetcher->getSetting('number_of_messages'));
     }
 
     public function testAddingRequiredSettings(): void
     {
-        $fetcher = new ConstructorArgumentsTestFetcher(['number_of_messages' => 2]);
+        $fetcher = new ConstructorArgumentsTestFetcher($this->prophesize(ClientWrapper::class)->reveal(), ['number_of_messages' => 2]);
         $fetcher->addRequiredSetting('number_of_messages');
 
         $this->assertEquals(2, $fetcher->getSetting('number_of_messages'));
-    }
-
-    /**
-     * @expectedException \UnexpectedValueException
-     * @expectedExceptionMessage Required authentication data 'test_auth' is missing
-     */
-    public function testOmittingOneRequiredAuthDataThrowsException(): void
-    {
-        $fetcher = new ConstructorArgumentsTestFetcher();
-        $fetcher->addRequiredAuth('test_auth');
-
-        $fetcher->testValidateAuthData();
-    }
-
-    /**
-     * @expectedException \UnexpectedValueException
-     * @expectedExceptionMessage Required authentication data 'test_auth, test_auth2' are missing
-     */
-    public function testOmittingMultipleRequiredAuthDataThrowsException(): void
-    {
-        $fetcher = new ConstructorArgumentsTestFetcher();
-        $fetcher->addRequiredAuth('test_auth');
-        $fetcher->addRequiredAuth('test_auth2');
-
-        $fetcher->testValidateAuthData();
-    }
-
-    public function testAddingAuthData(): void
-    {
-        $fetcher = new ConstructorArgumentsTestFetcher([], ['test_auth' => 123]);
-
-        $this->assertEquals(123, $fetcher->getAuthData('test_auth'));
-    }
-
-    public function testAddingRequiredAuthData(): void
-    {
-        $fetcher = new ConstructorArgumentsTestFetcher([], ['test_auth' => 123]);
-        $fetcher->addRequiredAuth('test_auth');
-
-        $this->assertEquals(123, $fetcher->getAuthData('test_auth'));
     }
 }
 
@@ -146,12 +107,12 @@ class ConstructorArgumentsTestFetcher extends Fetcher
 
     public function testValidateSettings(): void
     {
-        $this->validateSettings();
+        $this->validateConfig();
     }
 
     public function getSetting(string $name)
     {
-        return $this->settings[$name];
+        return $this->config[$name];
     }
 
     public function addRequiredSetting(string $name): void

@@ -19,7 +19,7 @@ class HandlerTest extends TestCase
         $fetcherProphecy->fetch()->willReturn([])->shouldBeCalledTimes(1);
 
         $handler = new Handler(
-            $fetcherProphecy->reveal(),
+            [$fetcherProphecy->reveal()],
             SpyFactory::class
         );
 
@@ -33,7 +33,7 @@ class HandlerTest extends TestCase
         $fetcherProphecy->fetch()->willReturn(['something'])->shouldBeCalledTimes(1);
 
         $handler = new Handler(
-            $fetcherProphecy->reveal(),
+            [$fetcherProphecy->reveal()],
             SpyFactory::class
         );
 
@@ -47,7 +47,7 @@ class HandlerTest extends TestCase
         $fetcherProphecy->fetch()->willReturn(['something', 'something_else'])->shouldBeCalledTimes(1);
 
         $handler = new Handler(
-            $fetcherProphecy->reveal(),
+            [$fetcherProphecy->reveal()],
             SpyFactory::class
         );
 

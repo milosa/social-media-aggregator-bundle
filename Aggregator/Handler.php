@@ -16,9 +16,13 @@ class Handler
      */
     private $factory;
 
-    public function __construct(Fetcher $fetcher, string $factory)
+    /**
+     * @param Fetcher[] $fetchers
+     * @param string    $factory
+     */
+    public function __construct(array $fetchers, string $factory)
     {
-        $this->fetchers[] = $fetcher;
+        $this->fetchers = $fetchers;
         $this->factory = $factory;
     }
 
