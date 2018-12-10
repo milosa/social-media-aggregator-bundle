@@ -8,15 +8,6 @@
     "doctrine/instantiator": {
         "version": "1.1.0"
     },
-    "guzzlehttp/guzzle": {
-        "version": "6.3.3"
-    },
-    "guzzlehttp/promises": {
-        "version": "v1.3.1"
-    },
-    "guzzlehttp/psr7": {
-        "version": "1.4.2"
-    },
     "jean85/pretty-package-versions": {
         "version": "1.2"
     },
@@ -113,9 +104,6 @@
     "psr/container": {
         "version": "1.0.0"
     },
-    "psr/http-message": {
-        "version": "1.0.1"
-    },
     "psr/log": {
         "version": "1.0.2"
     },
@@ -172,6 +160,9 @@
             "version": "3.3",
             "ref": "b5026d7ffdb43b4d66f4cc091b1e6f94e6023986"
         }
+    },
+    "symfony/contracts": {
+        "version": "v1.0.1"
     },
     "symfony/debug": {
         "version": "v4.1.6"
@@ -239,6 +230,9 @@
             "ref": "369b5b29dc52b2c190002825ae7ec24ab6f962dd"
         }
     },
+    "symfony/var-exporter": {
+        "version": "v4.2.0"
+    },
     "symfony/webpack-encore-pack": {
         "version": "1.0",
         "recipe": {
@@ -253,15 +247,6 @@
     },
     "theseer/tokenizer": {
         "version": "1.1.0"
-    },
-    "twig/extensions": {
-        "version": "1.0",
-        "recipe": {
-            "repo": "github.com/symfony/recipes",
-            "branch": "master",
-            "version": "1.0",
-            "ref": "ddb2e0a77773b7fd75d8d649545f174e664500ab"
-        }
     },
     "twig/twig": {
         "version": "v2.5.0"

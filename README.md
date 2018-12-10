@@ -11,9 +11,11 @@ Symfony Bundle to combine messages from different social media platforms into on
   * Youtube
 * Twig integration*
 * Sorting of messages*
-  * Sorting by date*
+  * Sorting by date (default)
   * Sorting by platform (e.g. first show youtube items, then show twitter)*
 * Caching
+* Render messages with PHP or React
+* Multiple searches for each platform
 
 *= Not implemented yet.
   
@@ -44,10 +46,20 @@ In your Symfony application, find kernel.php. Replace the `registerBundles` meth
         }
 
 ## Usage
-
 This bundle needs plugins in order to do something.
 
 ## Plugins
-
 * [Twitter Plugin](https://github.com/milosa/social-media-aggregator-twitter-plugin)
 * [Youtube Plugin](https://github.com/milosa/social-media-aggregator-youtube-plugin)
+
+## React rendering (experimental)
+To use the React Rendering, do the following:
+* Make sure you have webpack encore installed.
+* Install plugins as desired (described above)
+* Run the command `php bin/console milosa-social:prepare-javascript` This will (by default) put the javascript files from the plugins in `<project-root>/assets/milosa-social`.
+    * If the directory already exists, you have to add `--overwrite=true` to the command to overwrite it.
+* Put an entry for `./assets/milosa-social/js/app.js` in your webpack config
+* Build with webpack (encore).
+
+Make sure you have the API route and controller from this bundle loaded. 
+The javascript will render the HTML-element with id `aggregator-app` as feed.

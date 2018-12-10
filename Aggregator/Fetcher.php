@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Milosa\SocialMediaAggregatorBundle\Aggregator;
 
 use Symfony\Component\Cache\Adapter\AdapterInterface;
-use function count;
 
 abstract class Fetcher
 {
@@ -44,11 +43,11 @@ abstract class Fetcher
     private function validate(array $requiredKeys, array $toValidate, array $errors): void
     {
         $missingKeys = array_diff_key(array_flip($requiredKeys), $toValidate);
-        $missingCount = count($missingKeys);
+        $missingCount = \count($missingKeys);
 
         if ($missingCount !== 0) {
             $message = $missingCount === 1 ? $errors['single'] : $errors['multiple'];
-            throw new \UnexpectedValueException(sprintf($message, implode(array_flip($missingKeys), ', ')));
+            throw new \UnexpectedValueException(sprintf($message, implode(', ', array_flip($missingKeys))));
         }
     }
 

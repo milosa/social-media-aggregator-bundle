@@ -23,9 +23,16 @@ export default class AggregatorApp extends Component {
     }
 
     render() {
-        return <MessageList
+        const { messages } = this.state;
+
+        if(messages.length === 0)
+        {
+            return <h1>Loading</h1>;
+        }
+
+        return (<MessageList
             {...this.state}
-        />;
+        />);
     }
 
 }

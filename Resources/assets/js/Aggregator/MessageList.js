@@ -1,23 +1,33 @@
-import React from 'react';
-import Message from './Message';
+import React, { Component, Suspense } from 'react';
+import networks from '../Components/networks';
 import uuidv4 from 'uuid/v4';
 
-export default function MessageList(props) {
-    const { messages } = props;
-    if(messages.length === 0)
-    {
-        return <h2>No messages</h2>;
-    }
-    console.log(messages);
-    return (
-        <ul>
-            {messages.map((message) => (
-                <Message
-                    message={message}
-                    key={uuidv4()}
-                />
-                ))};
-        </ul>
+export default class MessageList extends Component {
 
-    )
+    renderElement(key, props) {
+        if (!networks[key]) {
+            console.error('Network %s not supported!', key);
+            return;
+        }
+        return React.createElement(networks[key], props);
+    }
+
+    render() {
+        const { messages } = this.props;
+        if(messages.length === 0) return <div>Loading...</div>;
+        const renderedMessages = messages.map(message => {
+            return (
+                <div key={uuidv4()}>
+                    {this.renderElement(message.network, { message: message })}
+                </div>
+            );
+
+        });
+
+        return (
+            <div className="App">
+                <Suspense fallback={<h2>Loading messages</h2>}>{renderedMessages}</Suspense>
+            </div>
+        );
+    }
 }

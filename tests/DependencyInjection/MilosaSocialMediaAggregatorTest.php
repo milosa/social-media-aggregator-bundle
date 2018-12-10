@@ -40,7 +40,6 @@ class MilosaSocialMediaAggregatorTest extends TestCase
 
         $this->assertTrue($plugin->loadIsCalled);
         $this->assertTrue($plugin->getPluginNameIsCalled);
-        $this->assertTrue($plugin->getTwigPathIsCalled);
         $this->assertTrue($plugin->addConfigurationIsCalled);
     }
 
@@ -71,7 +70,6 @@ class MilosaSocialMediaAggregatorTest extends TestCase
 class PluginSpy implements MilosaSocialMediaAggregatorPlugin
 {
     public $loadIsCalled = false;
-    public $getTwigPathIsCalled = false;
     public $getPluginNameIsCalled = false;
     public $addConfigurationIsCalled = false;
 
@@ -80,13 +78,6 @@ class PluginSpy implements MilosaSocialMediaAggregatorPlugin
         $this->getPluginNameIsCalled = true;
 
         return 'test_plugin';
-    }
-
-    public function getTwigPath(): string
-    {
-        $this->getTwigPathIsCalled = true;
-
-        return __DIR__;
     }
 
     public function addConfiguration(ArrayNodeDefinition $pluginNode): void
@@ -110,5 +101,10 @@ class PluginSpy implements MilosaSocialMediaAggregatorPlugin
 
     public function configureCaching(array $config, ContainerBuilder $container): void
     {
+    }
+
+    public function getResourcesPath(): string
+    {
+        return '';
     }
 }

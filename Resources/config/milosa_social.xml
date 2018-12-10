@@ -9,5 +9,11 @@
     <service id="milosa_social_media_aggregator.aggregator" class="Milosa\SocialMediaAggregatorBundle\Aggregator\SocialMediaAggregator" />
     <service id="Milosa\SocialMediaAggregatorBundle\Aggregator\SocialMediaAggregator" alias="milosa_social_media_aggregator.aggregator" />
     <service id="milosa_social_media_aggregator.controller.api_controller" class="Milosa\SocialMediaAggregatorBundle\Controller\ApiController" />
+    <service id="milosa_social_media_aggregator.command.prepare_javascript" class="Milosa\SocialMediaAggregatorBundle\Command\PrepareJavascriptCommand">
+        <argument type="service" id="filesystem" />
+        <argument>%milosa_social_media_aggregator.plugins_resources_paths%</argument>
+        <tag name="console.command" command="milosa-social:prepare-javascript" />
+    </service>
+
 </services>
 </container>

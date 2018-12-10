@@ -33,19 +33,23 @@ class MilosaSocialMediaAggregatorExtension extends Extension implements PrependE
         $loader->load('milosa_social.xml');
         $configuration = new Configuration($this->plugins);
         $config = $this->processConfiguration($configuration, $configs);
+        $pluginResourcesPaths = [];
 
         foreach ($this->plugins as $plugin) {
-            $container->addObjectResource(new \ReflectionClass(get_class($plugin)));
+            $container->addObjectResource(new \ReflectionClass(\get_class($plugin)));
             $plugin->load($config, $container);
+            $pluginResourcesPaths[] = $plugin->getResourcesPath();
         }
+
+        $container->setParameter('milosa_social_media_aggregator.plugins_resources_paths', $pluginResourcesPaths);
     }
 
     public function prepend(ContainerBuilder $container)
     {
         foreach ($this->plugins as $plugin) {
-            if (is_dir($plugin->getTwigPath())) {
+            if (is_dir($plugin->getResourcesPath())) {
                 $container->prependExtensionConfig('twig', [
-                    'paths' => [$plugin->getTwigPath() => 'MilosaSocialMediaAggregator'],
+                    'paths' => [$plugin->getResourcesPath().'/views' => 'MilosaSocialMediaAggregator'],
                 ]);
             }
         }
