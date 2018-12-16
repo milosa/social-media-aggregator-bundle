@@ -38,7 +38,7 @@ class MilosaSocialMediaAggregatorExtension extends Extension implements PrependE
         foreach ($this->plugins as $plugin) {
             $container->addObjectResource(new \ReflectionClass(\get_class($plugin)));
             $plugin->load($config, $container);
-            $pluginResourcesPaths[] = $plugin->getResourcesPath();
+            $pluginResourcesPaths[$plugin->getPluginName()] = $plugin->getResourcesPath();
         }
 
         $container->setParameter('milosa_social_media_aggregator.plugins_resources_paths', $pluginResourcesPaths);

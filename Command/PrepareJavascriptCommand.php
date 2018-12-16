@@ -46,9 +46,9 @@ class PrepareJavascriptCommand extends Command
 
         /** @var KernelInterface $kernel */
         $kernel = $this->getApplication()->getKernel();
-        $targetDir = rtrim($input->getOption('target-dir'), \DIRECTORY_SEPARATOR);
+        $targetDir = $kernel->getProjectDir().\DIRECTORY_SEPARATOR.rtrim($input->getOption('target-dir'), \DIRECTORY_SEPARATOR);
 
-        if ($this->filesystem->exists($kernel->getProjectDir().\DIRECTORY_SEPARATOR.$targetDir)) {
+        if ($this->filesystem->exists($targetDir)) {
             if (!$input->getOption('overwrite')) {
                 throw new RuntimeException(sprintf('Directory %s already exists', $targetDir));
             }
@@ -87,16 +87,16 @@ class PrepareJavascriptCommand extends Command
         $pluginLines = [];
         $fullTargetDir = $targetDir.\DIRECTORY_SEPARATOR.'js'.\DIRECTORY_SEPARATOR.'Components';
 
-        foreach ($this->pluginPaths as $pluginPath) {
+        foreach ($this->pluginPaths as $pluginName => $pluginPath) {
             $pluginJsDir = $pluginPath.\DIRECTORY_SEPARATOR.'js';
             if ($this->filesystem->exists($pluginJsDir)) {
-                $pluginFiles = scandir($pluginJsDir);
-                if (\count($pluginFiles) !== 3) {
+
+                $pluginFileName = $pluginName.'.js';
+                if (!$this->filesystem->exists($pluginJsDir.\DIRECTORY_SEPARATOR.$pluginFileName)) {
                     continue;
                 }
 
-                $pluginFileName = $pluginFiles[2];
-                $pluginName = mb_substr($pluginFileName, 0, -3);
+
                 $pluginConstEntry[] = $this->generateConstLine($pluginName);
                 $pluginLines[] = $this->generateImportLine($pluginName, $pluginFileName);
 
@@ -109,7 +109,7 @@ class PrepareJavascriptCommand extends Command
 
     private function generateConstLine(string $pluginName): string
     {
-        return mb_strtolower($pluginName).': '.$pluginName;
+        return mb_strtolower($pluginName).': '.ucfirst($pluginName);
     }
 
     private function generateImportLine(string $pluginName, string $pluginFileName): string

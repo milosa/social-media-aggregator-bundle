@@ -16,6 +16,7 @@
             <directory>Aggregator/</directory>
             <directory>Controller/</directory>
             <directory>DependencyInjection/</directory>
+            <directory>Command/</directory>
             <exclude>
                 <directory>vendor/</directory>
                 <directory>tests/</directory>
