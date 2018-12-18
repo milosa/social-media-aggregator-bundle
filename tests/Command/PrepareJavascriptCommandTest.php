@@ -9,7 +9,6 @@ use Milosa\SocialMediaAggregatorBundle\MilosaSocialMediaAggregatorBundle;
 use Milosa\SocialMediaAggregatorBundle\MilosaSocialMediaAggregatorPlugin;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
-use Psr\Log\NullLogger;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Loader\LoaderInterface;
@@ -119,7 +118,6 @@ class TestAppKernel extends Kernel
 
     protected function build(ContainerBuilder $container)
     {
-        $container->register('logger', NullLogger::class);
     }
 }
 
@@ -137,21 +135,17 @@ class TestPlugin extends Bundle implements MilosaSocialMediaAggregatorPlugin
 
     public function addConfiguration(ArrayNodeDefinition $pluginNode): void
     {
-        // TODO: Implement addConfiguration() method.
     }
 
     public function load(array $config, ContainerBuilder $container): void
     {
-        // TODO: Implement load() method.
     }
 
     public function setContainerParameters(array $config, ContainerBuilder $container): void
     {
-        // TODO: Implement setContainerParameters() method.
     }
 
     public function configureCaching(array $config, ContainerBuilder $container): void
     {
-        // TODO: Implement configureCaching() method.
     }
 }
