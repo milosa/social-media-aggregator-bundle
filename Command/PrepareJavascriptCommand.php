@@ -90,12 +90,10 @@ class PrepareJavascriptCommand extends Command
         foreach ($this->pluginPaths as $pluginName => $pluginPath) {
             $pluginJsDir = $pluginPath.\DIRECTORY_SEPARATOR.'js';
             if ($this->filesystem->exists($pluginJsDir)) {
-
                 $pluginFileName = $pluginName.'.js';
                 if (!$this->filesystem->exists($pluginJsDir.\DIRECTORY_SEPARATOR.$pluginFileName)) {
                     continue;
                 }
-
 
                 $pluginConstEntry[] = $this->generateConstLine($pluginName);
                 $pluginLines[] = $this->generateImportLine($pluginName, $pluginFileName);
@@ -114,7 +112,7 @@ class PrepareJavascriptCommand extends Command
 
     private function generateImportLine(string $pluginName, string $pluginFileName): string
     {
-        return sprintf('import %s from "./networks/%s";', $pluginName, $pluginFileName);
+        return sprintf('import %s from "./networks/%s";', ucfirst($pluginName), ucfirst($pluginFileName));
     }
 
     /**

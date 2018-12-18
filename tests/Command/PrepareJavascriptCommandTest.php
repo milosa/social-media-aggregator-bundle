@@ -67,7 +67,7 @@ class PrepareJavascriptCommandTest extends TestCase
         $fileSystem->mirror(Argument::any(), Argument::any(), Argument::exact(null), Argument::exact(['override' => true, 'copy_on_windows' => true]))->shouldBeCalled();
         $fileSystem->exists(Argument::exact('test_plugin_path'.\DIRECTORY_SEPARATOR.'js'.\DIRECTORY_SEPARATOR.'testplugin.js'))->willReturn(true)->shouldBeCalled();
         $expectedPluginFileContents =
-'import testplugin from "./networks/testplugin.js";
+'import Testplugin from "./networks/Testplugin.js";
 
 const networks = {testplugin: Testplugin};
 
