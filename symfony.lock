@@ -8,6 +8,9 @@
     "doctrine/instantiator": {
         "version": "1.1.0"
     },
+    "guzzlehttp/psr7": {
+        "version": "1.5.2"
+    },
     "jean85/pretty-package-versions": {
         "version": "1.2"
     },
@@ -104,11 +107,17 @@
     "psr/container": {
         "version": "1.0.0"
     },
+    "psr/http-message": {
+        "version": "1.0.1"
+    },
     "psr/log": {
         "version": "1.0.2"
     },
     "psr/simple-cache": {
         "version": "1.0.1"
+    },
+    "ralouphie/getallheaders": {
+        "version": "2.0.5"
     },
     "sebastian/code-unit-reverse-lookup": {
         "version": "1.0.1"
