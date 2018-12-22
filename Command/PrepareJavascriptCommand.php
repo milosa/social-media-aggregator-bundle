@@ -35,7 +35,6 @@ class PrepareJavascriptCommand extends Command
         $this->setDescription('Loads javascript modules from modules into temporary directory so they can be bundled with Webpack.')
             ->addOption('target-dir', null, InputOption::VALUE_REQUIRED, 'The directory used to store the files', 'assets'.\DIRECTORY_SEPARATOR.'milosa-social')
             ->addOption('overwrite', null, InputOption::VALUE_REQUIRED, 'Overwrite content of target directory if it already exists', false)
-            ->addOption('no-cleanup', null, InputOption::VALUE_NONE, 'Do not remove the temporary directory')
         ;
     }
 
@@ -102,6 +101,10 @@ class PrepareJavascriptCommand extends Command
             }
         }
 
+        if (\count($pluginLines) === 0) {
+            throw new RuntimeException('No plugins found.');
+        }
+
         $this->generatePluginJsFile($fullTargetDir, $pluginConstEntry, $pluginLines);
     }
 
@@ -117,10 +120,12 @@ class PrepareJavascriptCommand extends Command
 
     /**
      * @param string $mainBundleJavascriptLocation
+     *
+     * @throws \RuntimeException
      */
     private function checkMainBundleJavascript(string $mainBundleJavascriptLocation): void
     {
-        if (!is_dir($mainBundleJavascriptLocation)) {
+        if (!$this->filesystem->exists($mainBundleJavascriptLocation)) {
             throw new RuntimeException(sprintf('Main Bundle assets not found in path %s',
                 $mainBundleJavascriptLocation));
         }

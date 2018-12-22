@@ -39,7 +39,6 @@ class PrepareJavascriptCommandTest extends TestCase
     /**
      * @expectedException \RuntimeException
      * @expectedExceptionMessageRegExp /.*milosa-social already exists$/
-     * @
      */
     public function testWhenOverwriteIsDisabledThrowsExceptionIfDirectoryExists(): void
     {
@@ -54,12 +53,55 @@ class PrepareJavascriptCommandTest extends TestCase
         $tester->execute([]);
     }
 
+    /**
+     * @expectedException \RuntimeException
+     * @expectedExceptionMessage No plugins found.
+     */
+    public function testWhenNoPluginsFoundThrowsException(): void
+    {
+        $application = new Application($this->kernel);
+        $fileSystem = $this->prophesize(Filesystem::class);
+        $absolutePath = $this->kernel->getProjectDir().\DIRECTORY_SEPARATOR.'assets'.\DIRECTORY_SEPARATOR.'milosa-social';
+        $fileSystem->exists(Argument::exact($absolutePath))->willReturn(false);
+        $fileSystem->exists(Argument::containingString('Resources'.\DIRECTORY_SEPARATOR.'assets'))->willReturn(true);
+        $fileSystem->mirror(Argument::containingString('Resources'.\DIRECTORY_SEPARATOR.'assets'), Argument::exact($absolutePath), Argument::exact(null), Argument::exact(['override' => true, 'copy_on_windows' => true]))->shouldBeCalled();
+        $fileSystem->mkdir(Argument::exact($absolutePath))->shouldBeCalled();
+        $fileSystem->exists(Argument::exact('test_plugin_path'.\DIRECTORY_SEPARATOR.'js'))->willReturn(true);
+        $fileSystem->exists(Argument::exact('test_plugin_path'.\DIRECTORY_SEPARATOR.'js'.\DIRECTORY_SEPARATOR.'testplugin.js'))->willReturn(false);
+
+        $command = new PrepareJavascriptCommand($fileSystem->reveal(), ['testplugin' => 'test_plugin_path']);
+        $application->add($command);
+        $tester = new CommandTester($application->find('milosa-social:prepare-javascript'));
+        $tester->execute(['--overwrite' => true]);
+    }
+
+    /**
+     * @expectedException \RuntimeException
+     * @expectedExceptionMessageRegExp /Main Bundle assets not found in path.*$/
+     */
+    public function testWhenNoMainBundleAssetsThrowsException(): void
+    {
+        $application = new Application($this->kernel);
+        $fileSystem = $this->prophesize(Filesystem::class);
+        $absolutePath = $this->kernel->getProjectDir().\DIRECTORY_SEPARATOR.'assets'.\DIRECTORY_SEPARATOR.'milosa-social';
+        $fileSystem->exists(Argument::exact($absolutePath))->willReturn(true);
+        $fileSystem->exists(Argument::containingString('Resources'.\DIRECTORY_SEPARATOR.'assets'))->willReturn(false);
+        $fileSystem->remove(Argument::exact($absolutePath))->shouldBeCalled();
+        $fileSystem->mkdir(Argument::exact($absolutePath))->shouldBeCalled();
+
+        $command = new PrepareJavascriptCommand($fileSystem->reveal(), ['testplugin' => 'test_plugin_path']);
+        $application->add($command);
+        $tester = new CommandTester($application->find('milosa-social:prepare-javascript'));
+        $tester->execute(['--overwrite' => true]);
+    }
+
     public function testWhenOverwriteIsEnabledAndDirectoryExistsDeletesDirectory(): void
     {
         $application = new Application($this->kernel);
         $fileSystem = $this->prophesize(Filesystem::class);
         $absolutePath = $this->kernel->getProjectDir().\DIRECTORY_SEPARATOR.'assets'.\DIRECTORY_SEPARATOR.'milosa-social';
         $fileSystem->exists(Argument::exact($absolutePath))->willReturn(true);
+        $fileSystem->exists(Argument::containingString('Resources'.\DIRECTORY_SEPARATOR.'assets'))->willReturn(true);
         $fileSystem->exists(Argument::exact('test_plugin_path'.\DIRECTORY_SEPARATOR.'js'))->willReturn(true);
         $fileSystem->remove(Argument::exact($absolutePath))->shouldBeCalled();
         $fileSystem->mkdir(Argument::exact($absolutePath))->shouldBeCalled();
