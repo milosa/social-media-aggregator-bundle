@@ -8,6 +8,9 @@ use Symfony\Component\Cache\Adapter\AdapterInterface;
 
 abstract class Fetcher
 {
+    /**
+     * @var object[]
+     */
     protected $data;
 
     /**

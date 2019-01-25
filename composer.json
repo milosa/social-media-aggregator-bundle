@@ -19,7 +19,9 @@
     "phpstan/phpstan": "^0.10.5",
     "symfony/webpack-encore-pack": "^1.0",
     "phpstan/phpstan-symfony": "^0.10.2",
-    "symfony/console": "^4.2"
+    "symfony/console": "^4.2",
+    "vimeo/psalm": "^3.0",
+    "psalm/plugin-phpunit": "^0.3.0"
   },
   "require": {
     "php": "^7.2",

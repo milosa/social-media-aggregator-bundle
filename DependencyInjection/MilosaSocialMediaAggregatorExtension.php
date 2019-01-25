@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Milosa\SocialMediaAggregatorBundle\DependencyInjection;
 
+use function is_dir;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\Extension;
 use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
-use function is_dir;
 
 class MilosaSocialMediaAggregatorExtension extends Extension implements PrependExtensionInterface
 {
@@ -44,7 +44,7 @@ class MilosaSocialMediaAggregatorExtension extends Extension implements PrependE
         $container->setParameter('milosa_social_media_aggregator.plugins_resources_paths', $pluginResourcesPaths);
     }
 
-    public function prepend(ContainerBuilder $container)
+    public function prepend(ContainerBuilder $container): void
     {
         foreach ($this->plugins as $plugin) {
             if (is_dir($plugin->getResourcesPath())) {

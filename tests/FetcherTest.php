@@ -80,7 +80,7 @@ class TestFetcher extends Fetcher
 {
     public function fetch(): array
     {
-        // TODO: Implement fetch() method.
+        return [];
     }
 
     public function getCache(): AdapterInterface
@@ -98,9 +98,10 @@ class ConstructorArgumentsTestFetcher extends Fetcher
 {
     public function fetch(): array
     {
+        return [];
     }
 
-    public function testValidateAuthData()
+    public function testValidateAuthData(): void
     {
         $this->validateAuthData();
     }
@@ -125,7 +126,7 @@ class ConstructorArgumentsTestFetcher extends Fetcher
         $this->requiredAuthData[] = $name;
     }
 
-    public function getAuthData(string $name)
+    public function getAuthData(string $name): string
     {
         return $this->authData[$name];
     }

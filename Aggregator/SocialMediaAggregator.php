@@ -44,7 +44,7 @@ class SocialMediaAggregator
 
     private function sortMessages(array $messages): array
     {
-        usort($messages, function ($a, $b) {
+        usort($messages, function (Message $a, Message $b): int {
             /**
              * @var $a Message
              * @var $b Message

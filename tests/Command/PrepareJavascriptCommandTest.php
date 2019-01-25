@@ -20,18 +20,22 @@ use Symfony\Component\HttpKernel\Kernel;
 
 class PrepareJavascriptCommandTest extends TestCase
 {
+    /**
+     * @var Filesystem
+     */
     private $fs;
+
     /** @var TestAppKernel */
     private $kernel;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->fs = new Filesystem();
         $this->kernel = new TestAppKernel('test', true);
         $this->fs->mkdir($this->kernel->getProjectDir());
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         $this->fs->remove($this->kernel->getProjectDir());
     }
@@ -139,7 +143,7 @@ class TestAppKernel extends Kernel
         parent::__construct($environment, $debug);
     }
 
-    public function registerBundles()
+    public function registerBundles(): array
     {
         return [
             new MilosaSocialMediaAggregatorBundle([
@@ -148,17 +152,17 @@ class TestAppKernel extends Kernel
         ];
     }
 
-    public function getProjectDir()
+    public function getProjectDir(): string
     {
         return 'fake_dir'.\DIRECTORY_SEPARATOR.'test';
     }
 
-    public function registerContainerConfiguration(LoaderInterface $loader)
+    public function registerContainerConfiguration(LoaderInterface $loader): void
     {
         $loader->load(__DIR__.\DIRECTORY_SEPARATOR.'config.yml');
     }
 
-    protected function build(ContainerBuilder $container)
+    protected function build(ContainerBuilder $container): void
     {
     }
 }

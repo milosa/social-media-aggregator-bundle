@@ -54,7 +54,7 @@ class Message implements JsonSerializable
     private $authorThumbnail;
 
     /**
-     * @var string
+     * @var ?string
      */
     private $fetchSource;
 

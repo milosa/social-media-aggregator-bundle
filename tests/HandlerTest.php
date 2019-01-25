@@ -71,7 +71,7 @@ class HandlerTest extends TestCase
         return $this->prophesize(MessageFactory::class);
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         SpyFactory::resetCalls();
     }
@@ -79,6 +79,9 @@ class HandlerTest extends TestCase
 
 class SpyFactory implements MessageFactory
 {
+    /**
+     * @var int
+     */
     public static $createMessageCalled = 0;
 
     public static function createMessage(string $json): Message
@@ -95,6 +98,6 @@ class SpyFactory implements MessageFactory
 
     public static function getName(): string
     {
-        // TODO: Implement getName() method.
+        return '';
     }
 }

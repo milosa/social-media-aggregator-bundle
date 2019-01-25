@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Milosa\SocialMediaAggregatorBundle\Command;
 
+use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Exception\RuntimeException;
 use Symfony\Component\Console\Input\InputInterface;
@@ -15,8 +16,16 @@ use Symfony\Component\HttpKernel\KernelInterface;
 
 class PrepareJavascriptCommand extends Command
 {
+    /**
+     * @var Filesystem
+     */
     private $filesystem;
+
+    /**
+     * @var string
+     */
     protected static $defaultName = 'milosa-social:prepare-javascript';
+
     /**
      * @var string[]
      */
@@ -30,7 +39,7 @@ class PrepareJavascriptCommand extends Command
         $this->pluginPaths = $pluginPaths;
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this->setDescription('Loads javascript modules from modules into temporary directory so they can be bundled with Webpack.')
             ->addOption('target-dir', null, InputOption::VALUE_REQUIRED, 'The directory used to store the files', 'assets'.\DIRECTORY_SEPARATOR.'milosa-social')
@@ -38,13 +47,16 @@ class PrepareJavascriptCommand extends Command
         ;
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): void
     {
         $io = new SymfonyStyle($input, $output);
         $io->title('Milosa Social Media Aggregator');
 
+        /** @var Application $app */
+        $app = $this->getApplication();
+
         /** @var KernelInterface $kernel */
-        $kernel = $this->getApplication()->getKernel();
+        $kernel = $app->getKernel();
         $targetDir = $kernel->getProjectDir().\DIRECTORY_SEPARATOR.rtrim($input->getOption('target-dir'), \DIRECTORY_SEPARATOR);
 
         if ($this->filesystem->exists($targetDir)) {

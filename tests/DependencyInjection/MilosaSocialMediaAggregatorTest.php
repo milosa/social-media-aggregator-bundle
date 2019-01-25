@@ -15,8 +15,6 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class MilosaSocialMediaAggregatorTest extends TestCase
 {
-    private $config;
-
     public function testLoad(): void
     {
         $container = $this->createContainer();
@@ -58,19 +56,23 @@ class MilosaSocialMediaAggregatorTest extends TestCase
 
         return $container;
     }
-
-    public function tearDown()
-    {
-        parent::tearDown();
-
-        $this->config = null;
-    }
 }
 
 class PluginSpy implements MilosaSocialMediaAggregatorPlugin
 {
+    /**
+     * @var bool
+     */
     public $loadIsCalled = false;
+
+    /**
+     * @var bool
+     */
     public $getPluginNameIsCalled = false;
+
+    /**
+     * @var bool
+     */
     public $addConfigurationIsCalled = false;
 
     public function getPluginName(): string
@@ -80,6 +82,9 @@ class PluginSpy implements MilosaSocialMediaAggregatorPlugin
         return 'test_plugin';
     }
 
+    /**
+     * @param ArrayNodeDefinition $pluginNode
+     */
     public function addConfiguration(ArrayNodeDefinition $pluginNode): void
     {
         $this->addConfigurationIsCalled = true;
@@ -90,15 +95,27 @@ class PluginSpy implements MilosaSocialMediaAggregatorPlugin
             ->end();
     }
 
+    /**
+     * @param array            $config
+     * @param ContainerBuilder $container
+     */
     public function load(array $config, ContainerBuilder $container): void
     {
         $this->loadIsCalled = true;
     }
 
+    /**
+     * @param array            $config
+     * @param ContainerBuilder $container
+     */
     public function setContainerParameters(array $config, ContainerBuilder $container): void
     {
     }
 
+    /**
+     * @param array            $config
+     * @param ContainerBuilder $container
+     */
     public function configureCaching(array $config, ContainerBuilder $container): void
     {
     }

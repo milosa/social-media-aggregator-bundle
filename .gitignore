@@ -75,3 +75,4 @@ yarn-error.log
 ###< symfony/webpack-encore-pack ###
 
 /Resources/public/build/dev
+/fake_dir
