@@ -41,7 +41,7 @@ class PrepareJavascriptCommand extends Command
 
     protected function configure(): void
     {
-        $this->setDescription('Loads javascript modules from modules into temporary directory so they can be bundled with Webpack.')
+        $this->setDescription('Loads javascript modules from plugins into temporary directory so they can be bundled with Webpack.')
             ->addOption('target-dir', null, InputOption::VALUE_REQUIRED, 'The directory used to store the files', 'assets'.\DIRECTORY_SEPARATOR.'milosa-social')
             ->addOption('overwrite', null, InputOption::VALUE_REQUIRED, 'Overwrite content of target directory if it already exists', false)
         ;
