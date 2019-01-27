@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Milosa\SocialMediaAggregatorBundle\tests\Command;
 
-use Milosa\SocialMediaAggregatorBundle\Command\PrepareJavascriptCommand;
+use Milosa\SocialMediaAggregatorBundle\Command\LoadPluginAssetsCommand;
 use Milosa\SocialMediaAggregatorBundle\MilosaSocialMediaAggregatorBundle;
 use Milosa\SocialMediaAggregatorBundle\MilosaSocialMediaAggregatorPlugin;
 use PHPUnit\Framework\TestCase;
@@ -18,7 +18,7 @@ use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Symfony\Component\HttpKernel\Kernel;
 
-class PrepareJavascriptCommandTest extends TestCase
+class LoadPluginAssetsCommandTest extends TestCase
 {
     /**
      * @var Filesystem
@@ -37,7 +37,7 @@ class PrepareJavascriptCommandTest extends TestCase
 
     protected function tearDown(): void
     {
-        $this->fs->remove($this->kernel->getProjectDir());
+        $this->fs->remove('fake_dir');
     }
 
     /**
@@ -51,9 +51,9 @@ class PrepareJavascriptCommandTest extends TestCase
         $fileSystem = $this->prophesize(Filesystem::class);
         $fileSystem->exists(Argument::exact($kernel->getProjectDir().\DIRECTORY_SEPARATOR.'assets'.\DIRECTORY_SEPARATOR.'milosa-social'))->willReturn(true);
 
-        $command = new PrepareJavascriptCommand($fileSystem->reveal(), []);
+        $command = new LoadPluginAssetsCommand($fileSystem->reveal(), []);
         $application->add($command);
-        $tester = new CommandTester($application->find('milosa-social:prepare-javascript'));
+        $tester = new CommandTester($application->find('milosa-social:load-plugin-assets'));
         $tester->execute([]);
     }
 
@@ -73,9 +73,9 @@ class PrepareJavascriptCommandTest extends TestCase
         $fileSystem->exists(Argument::exact('test_plugin_path'.\DIRECTORY_SEPARATOR.'js'))->willReturn(true);
         $fileSystem->exists(Argument::exact('test_plugin_path'.\DIRECTORY_SEPARATOR.'js'.\DIRECTORY_SEPARATOR.'testplugin.js'))->willReturn(false);
 
-        $command = new PrepareJavascriptCommand($fileSystem->reveal(), ['testplugin' => 'test_plugin_path']);
+        $command = new LoadPluginAssetsCommand($fileSystem->reveal(), ['testplugin' => 'test_plugin_path']);
         $application->add($command);
-        $tester = new CommandTester($application->find('milosa-social:prepare-javascript'));
+        $tester = new CommandTester($application->find('milosa-social:load-plugin-assets'));
         $tester->execute(['--overwrite' => true]);
     }
 
@@ -93,9 +93,9 @@ class PrepareJavascriptCommandTest extends TestCase
         $fileSystem->remove(Argument::exact($absolutePath))->shouldBeCalled();
         $fileSystem->mkdir(Argument::exact($absolutePath))->shouldBeCalled();
 
-        $command = new PrepareJavascriptCommand($fileSystem->reveal(), ['testplugin' => 'test_plugin_path']);
+        $command = new LoadPluginAssetsCommand($fileSystem->reveal(), ['testplugin' => 'test_plugin_path']);
         $application->add($command);
-        $tester = new CommandTester($application->find('milosa-social:prepare-javascript'));
+        $tester = new CommandTester($application->find('milosa-social:load-plugin-assets'));
         $tester->execute(['--overwrite' => true]);
     }
 
@@ -107,10 +107,12 @@ class PrepareJavascriptCommandTest extends TestCase
         $fileSystem->exists(Argument::exact($absolutePath))->willReturn(true);
         $fileSystem->exists(Argument::containingString('Resources'.\DIRECTORY_SEPARATOR.'assets'))->willReturn(true);
         $fileSystem->exists(Argument::exact('test_plugin_path'.\DIRECTORY_SEPARATOR.'js'))->willReturn(true);
+        $fileSystem->exists(Argument::exact('test_plugin_path'.\DIRECTORY_SEPARATOR.'plugin_scss'))->willReturn(true);
         $fileSystem->remove(Argument::exact($absolutePath))->shouldBeCalled();
         $fileSystem->mkdir(Argument::exact($absolutePath))->shouldBeCalled();
         $fileSystem->mirror(Argument::any(), Argument::any(), Argument::exact(null), Argument::exact(['override' => true, 'copy_on_windows' => true]))->shouldBeCalled();
         $fileSystem->exists(Argument::exact('test_plugin_path'.\DIRECTORY_SEPARATOR.'js'.\DIRECTORY_SEPARATOR.'testplugin.js'))->willReturn(true)->shouldBeCalled();
+        $fileSystem->exists(Argument::exact('test_plugin_path'.\DIRECTORY_SEPARATOR.'plugin_scss'.\DIRECTORY_SEPARATOR.'testplugin.scss'))->willReturn(true)->shouldBeCalled();
         $expectedPluginFileContents =
 'import Testplugin from "./networks/Testplugin.js";
 
@@ -122,9 +124,9 @@ export default networks;';
 
         $fileSystem->mirror(Argument::any(), Argument::any(), Argument::exact(null), Argument::exact(['override' => true, 'copy_on_windows' => true]))->shouldBeCalled();
 
-        $command = new PrepareJavascriptCommand($fileSystem->reveal(), ['testplugin' => 'test_plugin_path']);
+        $command = new LoadPluginAssetsCommand($fileSystem->reveal(), ['testplugin' => 'test_plugin_path']);
         $application->add($command);
-        $tester = new CommandTester($application->find('milosa-social:prepare-javascript'));
+        $tester = new CommandTester($application->find('milosa-social:load-plugin-assets'));
         $tester->execute(['--overwrite' => true]);
 
         $this->assertContains('Removing directory', $tester->getDisplay());

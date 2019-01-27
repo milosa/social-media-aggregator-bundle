@@ -14,7 +14,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpKernel\KernelInterface;
 
-class PrepareJavascriptCommand extends Command
+class LoadPluginAssetsCommand extends Command
 {
     /**
      * @var Filesystem
@@ -24,7 +24,7 @@ class PrepareJavascriptCommand extends Command
     /**
      * @var string
      */
-    protected static $defaultName = 'milosa-social:prepare-javascript';
+    protected static $defaultName = 'milosa-social:load-plugin-assets';
 
     /**
      * @var string[]
@@ -41,7 +41,7 @@ class PrepareJavascriptCommand extends Command
 
     protected function configure(): void
     {
-        $this->setDescription('Loads javascript modules from plugins into temporary directory so they can be bundled with Webpack.')
+        $this->setDescription('Loads assets from plugins into temporary directory so they can be bundled with Webpack.')
             ->addOption('target-dir', null, InputOption::VALUE_REQUIRED, 'The directory used to store the files', 'assets'.\DIRECTORY_SEPARATOR.'milosa-social')
             ->addOption('overwrite', null, InputOption::VALUE_REQUIRED, 'Overwrite content of target directory if it already exists', false)
         ;
@@ -96,20 +96,32 @@ class PrepareJavascriptCommand extends Command
     {
         $pluginConstEntry = [];
         $pluginLines = [];
-        $fullTargetDir = $targetDir.\DIRECTORY_SEPARATOR.'js'.\DIRECTORY_SEPARATOR.'Components';
+        $fullJsTargetDir = $targetDir.\DIRECTORY_SEPARATOR.'js'.\DIRECTORY_SEPARATOR.'Components';
+        $fullScssTargetDir = $targetDir.\DIRECTORY_SEPARATOR.'scss'.\DIRECTORY_SEPARATOR.'Components';
 
         foreach ($this->pluginPaths as $pluginName => $pluginPath) {
             $pluginJsDir = $pluginPath.\DIRECTORY_SEPARATOR.'js';
+            $pluginScssDir = $pluginPath.\DIRECTORY_SEPARATOR.'plugin_scss';
+
             if ($this->filesystem->exists($pluginJsDir)) {
-                $pluginFileName = $pluginName.'.js';
-                if (!$this->filesystem->exists($pluginJsDir.\DIRECTORY_SEPARATOR.$pluginFileName)) {
+                $pluginJsFileName = $pluginName.'.js';
+                if (!$this->filesystem->exists($pluginJsDir.\DIRECTORY_SEPARATOR.$pluginJsFileName)) {
                     continue;
                 }
 
                 $pluginConstEntry[] = $this->generateConstLine($pluginName);
-                $pluginLines[] = $this->generateImportLine($pluginName, $pluginFileName);
+                $pluginLines[] = $this->generateImportLine($pluginName, $pluginJsFileName);
 
-                $this->copyPluginFile($pluginJsDir, $fullTargetDir, $io);
+                $this->copyPluginJsFile($pluginJsDir, $fullJsTargetDir, $io);
+            }
+
+            if ($this->filesystem->exists($pluginScssDir)) {
+                $pluginScssFileName = $pluginName.'.scss';
+                if (!$this->filesystem->exists($pluginScssDir.\DIRECTORY_SEPARATOR.$pluginScssFileName)) {
+                    continue;
+                }
+
+                $this->copyPluginScssFile($pluginScssDir, $fullScssTargetDir, $io);
             }
         }
 
@@ -117,7 +129,7 @@ class PrepareJavascriptCommand extends Command
             throw new RuntimeException('No plugins found.');
         }
 
-        $this->generatePluginJsFile($fullTargetDir, $pluginConstEntry, $pluginLines);
+        $this->generatePluginJsFile($fullJsTargetDir, $pluginConstEntry, $pluginLines);
     }
 
     private function generateConstLine(string $pluginName): string
@@ -159,11 +171,24 @@ class PrepareJavascriptCommand extends Command
      * @param string       $fullTargetDir
      * @param SymfonyStyle $io
      */
-    private function copyPluginFile(string $pluginJsDir, string $fullTargetDir, SymfonyStyle $io): void
+    private function copyPluginJsFile(string $pluginJsDir, string $fullTargetDir, SymfonyStyle $io): void
     {
         $this->writelnIfVerbose($io,
             sprintf('Copying directory <info>%s</info> to <info>%s</info>', $pluginJsDir, $fullTargetDir));
         $this->filesystem->mirror($pluginJsDir, $fullTargetDir.\DIRECTORY_SEPARATOR.'networks', null,
+            ['override' => true, 'copy_on_windows' => true]);
+    }
+
+    /**
+     * @param string       $pluginJsDir
+     * @param string       $fullTargetDir
+     * @param SymfonyStyle $io
+     */
+    private function copyPluginScssFile(string $pluginScssDir, string $fullTargetDir, SymfonyStyle $io): void
+    {
+        $this->writelnIfVerbose($io,
+            sprintf('Copying directory <info>%s</info> to <info>%s</info>', $pluginScssDir, $fullTargetDir));
+        $this->filesystem->mirror($pluginScssDir, $fullTargetDir, null,
             ['override' => true, 'copy_on_windows' => true]);
     }
 
