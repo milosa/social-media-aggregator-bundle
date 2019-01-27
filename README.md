@@ -56,7 +56,7 @@ This bundle needs plugins in order to do something.
 To use the React Rendering, do the following:
 * Make sure you have webpack encore installed.
 * Install plugins as desired (described above)
-* Run the command `php bin/console milosa-social:prepare-javascript` This will (by default) put the javascript files from the plugins in `<project-root>/assets/milosa-social`.
+* Run the command `php bin/console milosa-social:load-plugin-assets` This will (by default) put the assets (js and scss) from the plugins in `<project-root>/assets/milosa-social`.
     * If the directory already exists, you have to add `--overwrite=true` to the command to overwrite it.
 * Put an entry for `./assets/milosa-social/js/app.js` in your webpack config
 * Build with webpack (encore).
