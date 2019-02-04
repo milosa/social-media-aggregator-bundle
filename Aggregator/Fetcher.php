@@ -55,7 +55,7 @@ abstract class Fetcher
     }
 
     /**
-     * @return Message[]
+     * @return string[]
      */
     abstract public function fetch(): array;
 
