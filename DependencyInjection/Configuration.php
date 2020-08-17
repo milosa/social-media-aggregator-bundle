@@ -28,9 +28,9 @@ class Configuration implements ConfigurationInterface
 
     public function getConfigTreeBuilder(): TreeBuilder
     {
-        $treeBuilder = new TreeBuilder();
+        $treeBuilder = new TreeBuilder('milosa_social_media_aggregator');
 
-        $rootNode = $treeBuilder->root('milosa_social_media_aggregator');
+        $rootNode = $treeBuilder->getRootNode();
 
         $this->createPluginsNode($rootNode);
 

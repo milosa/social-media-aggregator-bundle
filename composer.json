@@ -12,16 +12,16 @@
     }
   ],
   "require-dev": {
-    "phpunit/phpunit": "^7.1",
-    "matthiasnoback/symfony-dependency-injection-test": "^3.0",
+    "phpunit/phpunit": "^9.2",
+    "matthiasnoback/symfony-dependency-injection-test": "^4.1",
     "matthiasnoback/symfony-config-test": "^4.0",
     "phpspec/prophecy": "~1.0",
-    "phpstan/phpstan": "^0.10.5",
-    "symfony/webpack-encore-pack": "^1.0",
-    "phpstan/phpstan-symfony": "^0.10.2",
-    "symfony/console": "^4.2",
-    "vimeo/psalm": "^3.0",
-    "psalm/plugin-phpunit": "^0.3.0"
+    "phpstan/phpstan": "^0.12.37",
+    "symfony/webpack-encore-bundle": "^1.0",
+    "symfony/console": "^5.1",
+    "vimeo/psalm": "^3.13",
+    "psalm/plugin-phpunit": "^0.10.0",
+    "phpspec/prophecy-phpunit": "^2.0"
   },
   "require": {
     "php": "^7.2",

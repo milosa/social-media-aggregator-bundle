@@ -47,7 +47,7 @@ class LoadPluginAssetsCommand extends Command
         ;
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output): void
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
         $io->title('Milosa Social Media Aggregator');
@@ -74,6 +74,8 @@ class LoadPluginAssetsCommand extends Command
         $this->handlePlugins($targetDir, $io);
 
         $io->text(sprintf('Add an entry for <info>%s</info> to your webpack config file.', $kernel->getProjectDir().\DIRECTORY_SEPARATOR.'assets'.\DIRECTORY_SEPARATOR.'milosa-social'.\DIRECTORY_SEPARATOR.'js'.\DIRECTORY_SEPARATOR.'app.js'));
+
+        return 0;
     }
 
     private function copyMainBundleJavascript(string $targetDir, SymfonyStyle $io): void

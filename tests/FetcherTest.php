@@ -7,10 +7,12 @@ namespace Milosa\SocialMediaAggregatorBundle\tests;
 use Milosa\SocialMediaAggregatorBundle\Aggregator\ClientWrapper;
 use Milosa\SocialMediaAggregatorBundle\Aggregator\Fetcher;
 use PHPUnit\Framework\TestCase;
+use Prophecy\PhpUnit\ProphecyTrait;
 use Symfony\Component\Cache\Adapter\AdapterInterface;
 
 class FetcherTest extends TestCase
 {
+    use ProphecyTrait;
     public function testSetCache(): void
     {
         $fetcher = new TestFetcher($this->prophesize(ClientWrapper::class)->reveal());
@@ -35,24 +37,20 @@ class FetcherTest extends TestCase
             ], $result);
     }
 
-    /**
-     * @expectedException \UnexpectedValueException
-     * @expectedExceptionMessage Required setting 'test_setting' is missing
-     */
     public function testOmittingOneRequiredSettingThrowsException(): void
     {
+        $this->expectExceptionMessage("Required setting 'test_setting' is missing");
+        $this->expectException(\UnexpectedValueException::class);
         $fetcher = new ConstructorArgumentsTestFetcher($this->prophesize(ClientWrapper::class)->reveal());
         $fetcher->addRequiredSetting('test_setting');
 
         $fetcher->testValidateSettings();
     }
 
-    /**
-     * @expectedException \UnexpectedValueException
-     * @expectedExceptionMessage Required settings 'test_setting, test_setting2' are missing
-     */
     public function testOmittingMultipleRequiredSettingThrowsException(): void
     {
+        $this->expectExceptionMessage("Required settings 'test_setting, test_setting2' are missing");
+        $this->expectException(\UnexpectedValueException::class);
         $fetcher = new ConstructorArgumentsTestFetcher($this->prophesize(ClientWrapper::class)->reveal());
         $fetcher->addRequiredSetting('test_setting');
         $fetcher->addRequiredSetting('test_setting2');

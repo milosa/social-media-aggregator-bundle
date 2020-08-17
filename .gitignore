@@ -76,3 +76,9 @@ yarn-error.log
 
 /Resources/public/build/dev
 /fake_dir
+###> symfony/webpack-encore-bundle ###
+/node_modules/
+/public/build/
+npm-debug.log
+yarn-error.log
+###< symfony/webpack-encore-bundle ###

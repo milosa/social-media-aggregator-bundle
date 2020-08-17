@@ -9,6 +9,7 @@ use Milosa\SocialMediaAggregatorBundle\MilosaSocialMediaAggregatorBundle;
 use Milosa\SocialMediaAggregatorBundle\MilosaSocialMediaAggregatorPlugin;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
+use Prophecy\PhpUnit\ProphecyTrait;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Loader\LoaderInterface;
@@ -20,6 +21,7 @@ use Symfony\Component\HttpKernel\Kernel;
 
 class LoadPluginAssetsCommandTest extends TestCase
 {
+    use ProphecyTrait;
     /**
      * @var Filesystem
      */
@@ -40,12 +42,10 @@ class LoadPluginAssetsCommandTest extends TestCase
         $this->fs->remove('fake_dir');
     }
 
-    /**
-     * @expectedException \RuntimeException
-     * @expectedExceptionMessageRegExp /.*milosa-social already exists$/
-     */
     public function testWhenOverwriteIsDisabledThrowsExceptionIfDirectoryExists(): void
     {
+        $this->expectException(\RuntimeException::class);
+        $this->expectExceptionMessageMatches("/.*milosa-social already exists$/");
         $kernel = new TestAppKernel('test', true);
         $application = new Application($kernel);
         $fileSystem = $this->prophesize(Filesystem::class);
@@ -57,12 +57,10 @@ class LoadPluginAssetsCommandTest extends TestCase
         $tester->execute([]);
     }
 
-    /**
-     * @expectedException \RuntimeException
-     * @expectedExceptionMessage No plugins found.
-     */
     public function testWhenNoPluginsFoundThrowsException(): void
     {
+        $this->expectExceptionMessage("No plugins found.");
+        $this->expectException(\RuntimeException::class);
         $application = new Application($this->kernel);
         $fileSystem = $this->prophesize(Filesystem::class);
         $absolutePath = $this->kernel->getProjectDir().\DIRECTORY_SEPARATOR.'assets'.\DIRECTORY_SEPARATOR.'milosa-social';
@@ -79,12 +77,10 @@ class LoadPluginAssetsCommandTest extends TestCase
         $tester->execute(['--overwrite' => true]);
     }
 
-    /**
-     * @expectedException \RuntimeException
-     * @expectedExceptionMessageRegExp /Main Bundle assets not found in path.*$/
-     */
     public function testWhenNoMainBundleAssetsThrowsException(): void
     {
+        $this->expectExceptionMessageMatches("/Main Bundle assets not found in path.*$/");
+        $this->expectException(\RuntimeException::class);
         $application = new Application($this->kernel);
         $fileSystem = $this->prophesize(Filesystem::class);
         $absolutePath = $this->kernel->getProjectDir().\DIRECTORY_SEPARATOR.'assets'.\DIRECTORY_SEPARATOR.'milosa-social';
@@ -129,7 +125,7 @@ export default networks;';
         $tester = new CommandTester($application->find('milosa-social:load-plugin-assets'));
         $tester->execute(['--overwrite' => true]);
 
-        $this->assertContains('Removing directory', $tester->getDisplay());
+        $this->assertStringContainsString('Removing directory', $tester->getDisplay());
     }
 
     public function getKernel(): TestAppKernel

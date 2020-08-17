@@ -10,15 +10,17 @@ use Milosa\SocialMediaAggregatorBundle\Aggregator\Message;
 use Milosa\SocialMediaAggregatorBundle\Aggregator\MessageFactory;
 use Milosa\SocialMediaAggregatorBundle\Aggregator\SocialMediaAggregator;
 use PHPUnit\Framework\TestCase;
+use Prophecy\PhpUnit\ProphecyTrait;
 
 class SocialMediaAggregatorTest extends TestCase
 {
+    use ProphecyTrait;
     /**
      * @var SocialMediaAggregator
      */
     private $aggregator;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->aggregator = new SocialMediaAggregator();
     }
@@ -28,12 +30,10 @@ class SocialMediaAggregatorTest extends TestCase
         $this->assertCount(0, $this->aggregator->getHandlers());
     }
 
-    /**
-     * @expectedException \RuntimeException
-     * @expectedExceptionMessage No handlers available
-     */
     public function testWithoutHandlersItThrowsException(): void
     {
+        $this->expectExceptionMessage("No handlers available");
+        $this->expectException(\RuntimeException::class);
         $this->aggregator->getMessages();
     }
 

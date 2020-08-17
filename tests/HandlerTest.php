@@ -9,10 +9,12 @@ use Milosa\SocialMediaAggregatorBundle\Aggregator\Handler;
 use Milosa\SocialMediaAggregatorBundle\Aggregator\Message;
 use Milosa\SocialMediaAggregatorBundle\Aggregator\MessageFactory;
 use PHPUnit\Framework\TestCase;
+use Prophecy\PhpUnit\ProphecyTrait;
 use Prophecy\Prophecy\ObjectProphecy;
 
 class HandlerTest extends TestCase
 {
+    use ProphecyTrait;
     public function testWhenFetcherReturnsEmptyArrayNoCallsToCreateMessageAreMade(): void
     {
         $fetcherProphecy = $this->getFetcherProphecy();
