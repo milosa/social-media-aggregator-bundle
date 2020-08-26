@@ -15,6 +15,7 @@ use Prophecy\Prophecy\ObjectProphecy;
 class HandlerTest extends TestCase
 {
     use ProphecyTrait;
+
     public function testWhenFetcherReturnsEmptyArrayNoCallsToCreateMessageAreMade(): void
     {
         $fetcherProphecy = $this->getFetcherProphecy();
@@ -57,17 +58,11 @@ class HandlerTest extends TestCase
         $this->assertEquals(2, SpyFactory::$createMessageCalled);
     }
 
-    /**
-     * @return ObjectProphecy
-     */
     private function getFetcherProphecy(): ObjectProphecy
     {
         return $this->prophesize(Fetcher::class);
     }
 
-    /**
-     * @return ObjectProphecy
-     */
     private function getFactoryProphecy(): ObjectProphecy
     {
         return $this->prophesize(MessageFactory::class);

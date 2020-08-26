@@ -13,6 +13,7 @@ use Symfony\Component\Cache\Adapter\AdapterInterface;
 class FetcherTest extends TestCase
 {
     use ProphecyTrait;
+
     public function testSetCache(): void
     {
         $fetcher = new TestFetcher($this->prophesize(ClientWrapper::class)->reveal());

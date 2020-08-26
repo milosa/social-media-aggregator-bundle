@@ -45,7 +45,7 @@ class LoadPluginAssetsCommandTest extends TestCase
     public function testWhenOverwriteIsDisabledThrowsExceptionIfDirectoryExists(): void
     {
         $this->expectException(\RuntimeException::class);
-        $this->expectExceptionMessageMatches("/.*milosa-social already exists$/");
+        $this->expectExceptionMessageMatches('/.*milosa-social already exists$/');
         $kernel = new TestAppKernel('test', true);
         $application = new Application($kernel);
         $fileSystem = $this->prophesize(Filesystem::class);
@@ -59,7 +59,7 @@ class LoadPluginAssetsCommandTest extends TestCase
 
     public function testWhenNoPluginsFoundThrowsException(): void
     {
-        $this->expectExceptionMessage("No plugins found.");
+        $this->expectExceptionMessage('No plugins found.');
         $this->expectException(\RuntimeException::class);
         $application = new Application($this->kernel);
         $fileSystem = $this->prophesize(Filesystem::class);
@@ -79,7 +79,7 @@ class LoadPluginAssetsCommandTest extends TestCase
 
     public function testWhenNoMainBundleAssetsThrowsException(): void
     {
-        $this->expectExceptionMessageMatches("/Main Bundle assets not found in path.*$/");
+        $this->expectExceptionMessageMatches('/Main Bundle assets not found in path.*$/');
         $this->expectException(\RuntimeException::class);
         $application = new Application($this->kernel);
         $fileSystem = $this->prophesize(Filesystem::class);

@@ -32,7 +32,7 @@ class SocialMediaAggregatorTest extends TestCase
 
     public function testWithoutHandlersItThrowsException(): void
     {
-        $this->expectExceptionMessage("No handlers available");
+        $this->expectExceptionMessage('No handlers available');
         $this->expectException(\RuntimeException::class);
         $this->aggregator->getMessages();
     }

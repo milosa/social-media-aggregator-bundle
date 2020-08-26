@@ -40,7 +40,7 @@ class MilosaSocialMediaAggregatorBundle extends Bundle
         }
     }
 
-    public function getContainerExtension() : ExtensionInterface
+    public function getContainerExtension(): ExtensionInterface
     {
         if ($this->extension === null) {
             $this->extension = new MilosaSocialMediaAggregatorExtension($this->plugins);
@@ -50,8 +50,6 @@ class MilosaSocialMediaAggregatorBundle extends Bundle
     }
 
     /**
-     * @param MilosaSocialMediaAggregatorPlugin $plugin
-     *
      * @throws \Symfony\Component\Config\Definition\Exception\InvalidConfigurationException
      *
      * @return void
@@ -60,10 +58,7 @@ class MilosaSocialMediaAggregatorBundle extends Bundle
     {
         foreach ($this->plugins as $registeredPlugin) {
             if ($registeredPlugin->getPluginName() === $plugin->getPluginName()) {
-                throw new InvalidConfigurationException(sprintf(
-                    'Trying to connect two plugins with same name: %s',
-                    $plugin->getPluginName()
-                ));
+                throw new InvalidConfigurationException(sprintf('Trying to connect two plugins with same name: %s', $plugin->getPluginName()));
             }
         }
 

@@ -90,10 +90,6 @@ class LoadPluginAssetsCommand extends Command
         $io->success('Copied main bundle javascripts');
     }
 
-    /**
-     * @param string       $targetDir
-     * @param SymfonyStyle $io
-     */
     private function handlePlugins(string $targetDir, SymfonyStyle $io): void
     {
         $pluginConstEntry = [];
@@ -145,22 +141,15 @@ class LoadPluginAssetsCommand extends Command
     }
 
     /**
-     * @param string $mainBundleJavascriptLocation
-     *
      * @throws \RuntimeException
      */
     private function checkMainBundleJavascript(string $mainBundleJavascriptLocation): void
     {
         if (!$this->filesystem->exists($mainBundleJavascriptLocation)) {
-            throw new RuntimeException(sprintf('Main Bundle assets not found in path %s',
-                $mainBundleJavascriptLocation));
+            throw new RuntimeException(sprintf('Main Bundle assets not found in path %s', $mainBundleJavascriptLocation));
         }
     }
 
-    /**
-     * @param SymfonyStyle $io
-     * @param string       $message
-     */
     private function writelnIfVerbose(SymfonyStyle $io, string $message): void
     {
         if (OutputInterface::VERBOSITY_VERBOSE <= $io->getVerbosity()) {
@@ -168,11 +157,6 @@ class LoadPluginAssetsCommand extends Command
         }
     }
 
-    /**
-     * @param string       $pluginJsDir
-     * @param string       $fullTargetDir
-     * @param SymfonyStyle $io
-     */
     private function copyPluginJsFile(string $pluginJsDir, string $fullTargetDir, SymfonyStyle $io): void
     {
         $this->writelnIfVerbose($io,
@@ -182,9 +166,7 @@ class LoadPluginAssetsCommand extends Command
     }
 
     /**
-     * @param string       $pluginJsDir
-     * @param string       $fullTargetDir
-     * @param SymfonyStyle $io
+     * @param string $pluginJsDir
      */
     private function copyPluginScssFile(string $pluginScssDir, string $fullTargetDir, SymfonyStyle $io): void
     {
@@ -194,11 +176,6 @@ class LoadPluginAssetsCommand extends Command
             ['override' => true, 'copy_on_windows' => true]);
     }
 
-    /**
-     * @param string $fullTargetDir
-     * @param array  $pluginConstEntries
-     * @param array  $pluginLines
-     */
     private function generatePluginJsFile(string $fullTargetDir, array $pluginConstEntries, array $pluginLines): void
     {
         $pluginConst = 'const networks = {'.implode(",\n", $pluginConstEntries).'};';

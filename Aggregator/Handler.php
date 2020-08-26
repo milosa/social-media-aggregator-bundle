@@ -18,7 +18,6 @@ class Handler
 
     /**
      * @param Fetcher[] $fetchers
-     * @param string    $factory
      */
     public function __construct(array $fetchers, string $factory)
     {

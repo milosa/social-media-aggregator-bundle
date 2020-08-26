@@ -82,9 +82,6 @@ class PluginSpy implements MilosaSocialMediaAggregatorPlugin
         return 'test_plugin';
     }
 
-    /**
-     * @param ArrayNodeDefinition $pluginNode
-     */
     public function addConfiguration(ArrayNodeDefinition $pluginNode): void
     {
         $this->addConfigurationIsCalled = true;
@@ -95,27 +92,15 @@ class PluginSpy implements MilosaSocialMediaAggregatorPlugin
             ->end();
     }
 
-    /**
-     * @param array            $config
-     * @param ContainerBuilder $container
-     */
     public function load(array $config, ContainerBuilder $container): void
     {
         $this->loadIsCalled = true;
     }
 
-    /**
-     * @param array            $config
-     * @param ContainerBuilder $container
-     */
     public function setContainerParameters(array $config, ContainerBuilder $container): void
     {
     }
 
-    /**
-     * @param array            $config
-     * @param ContainerBuilder $container
-     */
     public function configureCaching(array $config, ContainerBuilder $container): void
     {
     }

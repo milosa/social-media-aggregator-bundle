@@ -87,65 +87,41 @@ class Message implements JsonSerializable
         $this->fetchSource = $fetchSource;
     }
 
-    /**
-     * @return string
-     */
     public function getTemplate(): string
     {
         return $this->template;
     }
 
-    /**
-     * @param string $template
-     */
     public function setTemplate(string $template): void
     {
         $this->template = $template;
     }
 
-    /**
-     * @return string
-     */
     public function getBody(): string
     {
         return $this->body;
     }
 
-    /**
-     * @param string $body
-     */
     public function setBody(string $body): void
     {
         $this->body = $body;
     }
 
-    /**
-     * @return string
-     */
     public function getURL(): string
     {
         return $this->URL;
     }
 
-    /**
-     * @param string $URL
-     */
     public function setURL(string $URL): void
     {
         $this->URL = $URL;
     }
 
-    /**
-     * @return \DateTime
-     */
     public function getDate(): \DateTime
     {
         return $this->date;
     }
 
-    /**
-     * @param \DateTime $date
-     */
     public function setDate(\DateTime $date): void
     {
         $this->date = $date;
@@ -166,25 +142,16 @@ class Message implements JsonSerializable
         $this->authorDescription = $authorDescription;
     }
 
-    /**
-     * @return string
-     */
     public function getAuthor(): string
     {
         return $this->author;
     }
 
-    /**
-     * @return string
-     */
     public function getAuthorURL(): string
     {
         return $this->authorURL;
     }
 
-    /**
-     * @return string
-     */
     public function getAuthorDescription(): string
     {
         return $this->authorDescription;
@@ -195,9 +162,6 @@ class Message implements JsonSerializable
         $this->screenName = $screenName;
     }
 
-    /**
-     * @return string
-     */
     public function getScreenName(): string
     {
         return $this->screenName;
