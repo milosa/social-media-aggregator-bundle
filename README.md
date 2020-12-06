@@ -1,4 +1,5 @@
 # Social media aggregator
+![CI](https://github.com/milosa/social-media-aggregator-bundle/workflows/CI/badge.svg)
 [![Build Status](https://travis-ci.org/milosa/social-media-aggregator-bundle.svg?branch=master)](https://travis-ci.org/milosa/social-media-aggregator-bundle)
 [![Coverage Status](https://coveralls.io/repos/github/milosa/social-media-aggregator-bundle/badge.svg?branch=master)](https://coveralls.io/github/milosa/social-media-aggregator-bundle?branch=master)
 
