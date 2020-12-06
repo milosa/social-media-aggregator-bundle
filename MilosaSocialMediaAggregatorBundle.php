@@ -51,8 +51,6 @@ class MilosaSocialMediaAggregatorBundle extends Bundle
 
     /**
      * @throws \Symfony\Component\Config\Definition\Exception\InvalidConfigurationException
-     *
-     * @return void
      */
     protected function registerPlugin(MilosaSocialMediaAggregatorPlugin $plugin): void
     {

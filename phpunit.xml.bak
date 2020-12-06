@@ -1,0 +1,27 @@
+<phpunit
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/7.0/phpunit.xsd"
+        backupGlobals="true"
+        bootstrap="vendor/autoload.php"
+>
+
+    <testsuites>
+        <testsuite name="Social Media Aggregator test suite">
+            <directory>./tests/</directory>
+        </testsuite>
+    </testsuites>
+
+    <filter>
+        <whitelist>
+            <directory>Aggregator/</directory>
+            <directory>Controller/</directory>
+            <directory>DependencyInjection/</directory>
+            <directory>Command/</directory>
+            <exclude>
+                <directory>vendor/</directory>
+                <directory>tests/</directory>
+            </exclude>
+        </whitelist>
+    </filter>
+
+</phpunit>
