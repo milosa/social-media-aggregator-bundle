@@ -9,10 +9,29 @@
     <service id="milosa_social_media_aggregator.aggregator" class="Milosa\SocialMediaAggregatorBundle\Aggregator\SocialMediaAggregator" />
     <service id="Milosa\SocialMediaAggregatorBundle\Aggregator\SocialMediaAggregator" alias="milosa_social_media_aggregator.aggregator" />
     <service id="milosa_social_media_aggregator.controller.api_controller" class="Milosa\SocialMediaAggregatorBundle\Controller\ApiController" />
-    <service id="milosa_social_media_aggregator.command.prepare_javascript" class="Milosa\SocialMediaAggregatorBundle\Command\LoadPluginAssetsCommand">
-        <argument type="service" id="filesystem" />
-        <argument>%milosa_social_media_aggregator.plugins_resources_paths%</argument>
-        <tag name="console.command" command="milosa-social:prepare-javascript" />
+<!--    <service id="milosa_social_media_aggregator.command.prepare_javascript" class="Milosa\SocialMediaAggregatorBundle\Command\LoadPluginAssetsCommand">-->
+<!--        <argument type="service" id="filesystem" />-->
+<!--        <argument>%milosa_social_media_aggregator.plugins_resources_paths%</argument>-->
+<!--        <tag name="console.command" command="milosa-social:prepare-javascript" />-->
+<!--    </service>-->
+
+    <!-- Twitter -->
+    <service id="milosa_social_media_aggregator.handler.twitter" class="Milosa\SocialMediaAggregatorBundle\Aggregator\Handler">
+        <argument index="1" type="string">Milosa\SocialMediaAggregatorBundle\Aggregator\Platform\Twitter\TwitterMessageFactory</argument>
+        <tag name="milosa_social_media_aggregator.handler" />
+    </service>
+    <service id="milosa_social_media_aggregator.fetcher.twitter.abstract" abstract="true" class="Milosa\SocialMediaAggregatorBundle\Aggregator\Platform\Twitter\TwitterFetcher">
+        <argument type="service" id="milosa_social_media_aggregator.client.twitter"/>
+    </service>
+
+    <service id="milosa_social_media_aggregator.client.twitter" class="Milosa\SocialMediaAggregatorBundle\Aggregator\Platform\Twitter\TwitterClient">
+        <argument type="collection">
+            <argument key="consumer_key">%milosa_social_media_aggregator.twitter_consumer_key%</argument>
+            <argument key="consumer_secret">%milosa_social_media_aggregator.twitter_consumer_secret%</argument>
+            <argument key="token">%milosa_social_media_aggregator.twitter_oauth_token%</argument>
+            <argument key="token_secret">%milosa_social_media_aggregator.twitter_oauth_token_secret%</argument>
+            <argument key="base_uri">https://api.twitter.com/1.1/</argument>
+        </argument>
     </service>
 
 </services>
