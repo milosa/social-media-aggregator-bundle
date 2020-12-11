@@ -26,6 +26,15 @@
     "felixfbecker/language-server-protocol": {
         "version": "v1.2.0"
     },
+    "guzzlehttp/guzzle": {
+        "version": "6.5.5"
+    },
+    "guzzlehttp/oauth-subscriber": {
+        "version": "0.3.0"
+    },
+    "guzzlehttp/promises": {
+        "version": "1.4.0"
+    },
     "guzzlehttp/psr7": {
         "version": "1.5.2"
     },
@@ -299,11 +308,17 @@
     "symfony/polyfill-intl-grapheme": {
         "version": "v1.18.1"
     },
+    "symfony/polyfill-intl-idn": {
+        "version": "v1.20.0"
+    },
     "symfony/polyfill-intl-normalizer": {
         "version": "v1.18.1"
     },
     "symfony/polyfill-mbstring": {
         "version": "v1.9.0"
+    },
+    "symfony/polyfill-php72": {
+        "version": "v1.20.0"
     },
     "symfony/polyfill-php73": {
         "version": "v1.18.1"

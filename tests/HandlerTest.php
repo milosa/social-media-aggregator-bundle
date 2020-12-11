@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Milosa\SocialMediaAggregatorTests;
+namespace Milosa\SocialMediaAggregator\Tests;
 
 use Milosa\SocialMediaAggregatorBundle\Aggregator\Fetcher;
 use Milosa\SocialMediaAggregatorBundle\Aggregator\Handler;

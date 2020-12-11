@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Milosa\SocialMediaAggregatorTests\DependencyInjection;
+namespace Milosa\SocialMediaAggregator\Tests\DependencyInjection;
 
 use Matthias\SymfonyConfigTest\PhpUnit\ConfigurationTestCaseTrait;
 use Milosa\SocialMediaAggregatorBundle\DependencyInjection\Configuration;
