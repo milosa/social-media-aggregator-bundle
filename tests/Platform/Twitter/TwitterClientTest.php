@@ -8,8 +8,8 @@ use GuzzleHttp\Client;
 use Milosa\SocialMediaAggregatorBundle\Aggregator\Platform\Twitter\TwitterClient;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
-use Psr\Http\Message\ResponseInterface;
 use Prophecy\PhpUnit\ProphecyTrait;
+use Psr\Http\Message\ResponseInterface;
 
 class TwitterClientTest extends TestCase
 {

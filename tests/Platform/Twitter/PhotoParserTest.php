@@ -24,7 +24,7 @@ class PhotoParserTest extends TestCase
 
     public function testSettingInvalidSizeThrowsException(): void
     {
-        $this->expectExceptionMessage("Invalid size given");
+        $this->expectExceptionMessage('Invalid size given');
         $this->expectException(\InvalidArgumentException::class);
 
         PhotoParser::setSize('foo');

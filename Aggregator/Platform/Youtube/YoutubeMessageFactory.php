@@ -22,8 +22,6 @@ class YoutubeMessageFactory implements MessageFactory
 
     /**
      * @param $result
-     *
-     * @return YoutubeMessage
      */
     private static function createFromDecodedJson($result): YoutubeMessage
     {

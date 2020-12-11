@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Milosa\SocialMediaAggregatorBundle;
 
 use Milosa\SocialMediaAggregatorBundle\DependencyInjection\MilosaSocialMediaAggregatorExtension;
-use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
@@ -15,7 +14,6 @@ class MilosaSocialMediaAggregatorBundle extends Bundle
     public function build(ContainerBuilder $container)
     {
         parent::build($container);
-
     }
 
     public function boot()

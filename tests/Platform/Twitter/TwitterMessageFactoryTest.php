@@ -19,7 +19,7 @@ class TwitterMessageFactoryTest extends TestCase
 
     public function testInvalidJsonThrowsException(): void
     {
-        $this->expectExceptionMessage("Invalid JSON");
+        $this->expectExceptionMessage('Invalid JSON');
         $this->expectException(\InvalidArgumentException::class);
         TwitterMessageFactory::createMessage('string');
     }

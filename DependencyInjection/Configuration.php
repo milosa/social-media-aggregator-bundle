@@ -10,7 +10,6 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
 
 class Configuration implements ConfigurationInterface
 {
-
     public function getConfigTreeBuilder(): TreeBuilder
     {
         $treeBuilder = new TreeBuilder('milosa_social_media_aggregator');
@@ -37,9 +36,6 @@ class Configuration implements ConfigurationInterface
 //        }
 
         $networksNode->append($this->getTwitterNodeDefinition());
-
-
-
     }
 
     public function getTwitterNodeDefinition(): ArrayNodeDefinition
@@ -77,5 +73,4 @@ class Configuration implements ConfigurationInterface
 
         return $twitterNode;
     }
-
 }

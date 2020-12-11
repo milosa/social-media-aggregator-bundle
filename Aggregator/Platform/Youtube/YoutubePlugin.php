@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Milosa\SocialMediaAggregatorBundle\Youtube;
 
-use Milosa\SocialMediaAggregatorBundle\MilosaSocialMediaAggregatorPlugin;
 use Milosa\SocialMediaAggregatorBundle\Aggregator\Platform\Youtube\DependencyInjection\YoutubePluginExtension;
+use Milosa\SocialMediaAggregatorBundle\MilosaSocialMediaAggregatorPlugin;
 use function realpath;
 use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;

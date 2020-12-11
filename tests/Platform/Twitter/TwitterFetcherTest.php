@@ -8,16 +8,16 @@ use Milosa\SocialMediaAggregatorBundle\Aggregator\Platform\Twitter\TwitterClient
 use Milosa\SocialMediaAggregatorBundle\Aggregator\Platform\Twitter\TwitterFetcher;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
+use Prophecy\PhpUnit\ProphecyTrait;
 use Psr\Cache\CacheItemInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamInterface;
 use Symfony\Component\Cache\Adapter\AdapterInterface;
-use Prophecy\PhpUnit\ProphecyTrait;
 
 class TwitterFetcherTest extends TestCase
 {
     use ProphecyTrait;
-    
+
     public function testWhenCallingFetchWithTypeProfileItMakesCorrectAPICall(): void
     {
         $stream = $this->prophesize(StreamInterface::class);

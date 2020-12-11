@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace Milosa\SocialMediaAggregatorBundle\DependencyInjection;
 
-use Symfony\Component\Cache\Adapter\FilesystemAdapter;
-use Symfony\Component\DependencyInjection\ChildDefinition;
-use Symfony\Component\DependencyInjection\Definition;
-use Symfony\Component\DependencyInjection\Reference;
 use function is_dir;
+use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 use Symfony\Component\Config\FileLocator;
+use Symfony\Component\DependencyInjection\ChildDefinition;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Extension\Extension;
 use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
+use Symfony\Component\DependencyInjection\Reference;
 
 class MilosaSocialMediaAggregatorExtension extends Extension implements PrependExtensionInterface
 {
@@ -40,7 +40,6 @@ class MilosaSocialMediaAggregatorExtension extends Extension implements PrependE
 //        }
 
 //        $container->setParameter('milosa_social_media_aggregator.plugins_resources_paths', $pluginResourcesPaths);
-
     }
 
     private function setTwitterParameters(array $config, ContainerBuilder $container): void

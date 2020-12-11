@@ -25,11 +25,6 @@ class TwitterMessageFactory implements MessageFactory
         return $message;
     }
 
-    /**
-     * @param object $result
-     *
-     * @return string
-     */
     private static function runParsers(object $result): string
     {
         $parsedText = HashTagParser::parse($result->full_text);
@@ -42,11 +37,6 @@ class TwitterMessageFactory implements MessageFactory
         return  URLParser::parse($parsedText, $result->entities->urls);
     }
 
-    /**
-     * @param object $result
-     *
-     * @return TwitterMessage
-     */
     private static function createFromDecodedJson(object $result): TwitterMessage
     {
         $message = new TwitterMessage($result->fetchSource ?? 'API', 'twitter.twig');

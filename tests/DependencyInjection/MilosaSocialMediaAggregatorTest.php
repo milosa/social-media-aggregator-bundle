@@ -63,8 +63,8 @@ class MilosaSocialMediaAggregatorTest extends TestCase
                             ],
                         ],
                     ],
-                ]
-            ]
-        ] ;
+                ],
+            ],
+        ];
     }
 }
