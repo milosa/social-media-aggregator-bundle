@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace Milosa\SocialMediaAggregatorBundle\Controller;
 
 use Milosa\SocialMediaAggregatorBundle\Aggregator\SocialMediaAggregator;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 
-class ApiController extends Controller
+class ApiController extends AbstractController
 {
     /**
      * @var SocialMediaAggregator
