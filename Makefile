@@ -14,9 +14,8 @@ install-dev:
 install-lowest:
 	docker-compose run --rm php make in-docker-install-lowest
 
-test: docker-up
-	docker-compose run --rm php make in-docker-test
-	@$(MAKE) docker-down
+test:
+	sh -c "${QA_DOCKER_COMMAND} vendor/bin/phpunit --verbose"
 
 psalm: ensure
 	sh -c "${QA_DOCKER_COMMAND} vendor/bin/psalm --show-info=false"
@@ -49,14 +48,6 @@ cs-full-check: ensure
 # Special operations
 ##
 
-docker-up:
-	docker-compose up -d
-	# wait for ES to boot
-	until curl -s -X GET "http://localhost/" > /dev/null; do sleep 1; done
-
-docker-down:
-	docker-compose down
-
 ##
 # Private targets
 ##
@@ -77,15 +68,9 @@ in-docker-install-lowest:
 
 in-docker-test:
 	SYMFONY_DEPRECATIONS_HELPER=weak vendor/bin/phpunit --verbose
-	SYMFONY_DEPRECATIONS_HELPER=weak vendor/bin/phpunit --verbose --configuration phpunit/sqlite.xml
-	SYMFONY_DEPRECATIONS_HELPER=weak vendor/bin/phpunit --verbose --configuration phpunit/pgsql.xml
-	SYMFONY_DEPRECATIONS_HELPER=weak vendor/bin/phpunit --verbose --configuration phpunit/mysql.xml
 
 in-docker-test-coverage:
 	SYMFONY_DEPRECATIONS_HELPER=weak phpdbg -qrr vendor/bin/phpunit --verbose --coverage-php build/cov/coverage-phpunit.cov
-	SYMFONY_DEPRECATIONS_HELPER=weak phpdbg -qrr vendor/bin/phpunit --verbose --configuration phpunit/sqlite.xml --coverage-php build/cov/coverage-phpunit-sqlite.cov
-	SYMFONY_DEPRECATIONS_HELPER=weak phpdbg -qrr vendor/bin/phpunit --verbose --configuration phpunit/pgsql.xml --coverage-php build/cov/coverage-phpunit-pgsql.cov
-	SYMFONY_DEPRECATIONS_HELPER=weak phpdbg -qrr vendor/bin/phpunit --verbose --configuration phpunit/mysql.xml --coverage-php build/cov/coverage-phpunit-mysql.cov
 
 ensure:
 	mkdir -p ${HOME}/.composer /tmp/tmp-phpqa-$(shell id -u)
