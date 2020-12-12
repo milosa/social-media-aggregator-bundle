@@ -20,9 +20,6 @@ class YoutubeMessageFactory implements MessageFactory
         return self::createFromDecodedJson($result);
     }
 
-    /**
-     * @param $result
-     */
     private static function createFromDecodedJson($result): YoutubeMessage
     {
         $message = new YoutubeMessage($result->fetchSource ?? 'API', 'youtube.twig');
