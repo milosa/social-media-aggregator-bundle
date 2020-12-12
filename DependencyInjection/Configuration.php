@@ -36,6 +36,7 @@ class Configuration implements ConfigurationInterface
 //        }
 
         $networksNode->append($this->getTwitterNodeDefinition());
+        $networksNode->append($this->getYoutubeNodeDefinition());
     }
 
     public function getTwitterNodeDefinition(): ArrayNodeDefinition
@@ -72,5 +73,37 @@ class Configuration implements ConfigurationInterface
             ->end();
 
         return $twitterNode;
+    }
+
+    public function getYoutubeNodeDefinition(): ArrayNodeDefinition
+    {
+        $youtubeNode = new ArrayNodeDefinition('youtube');
+        $youtubeNode
+            ->addDefaultsIfNotSet()
+            ->children()
+                ->arrayNode('auth_data')
+                ->addDefaultsIfNotSet()
+                ->isRequired()
+                ->children()
+                    ->scalarNode('api_key')->defaultNull()->end()
+                ->end()
+            ->end()
+            ->arrayNode('sources')
+                ->isRequired()
+                ->requiresAtLeastOneElement()
+                ->arrayPrototype()
+                    ->children()
+                        ->enumNode('search_type')->values(['channel'])->defaultValue('profile')->end()
+                        ->scalarNode('search_term')->isRequired()->end()
+                        ->integerNode('number_of_videos')->defaultValue(10)->end()
+                    ->end()
+                ->end()
+            ->end()
+            ->booleanNode('enable_cache')->defaultFalse()->end()
+            ->integerNode('cache_lifetime')->info('Cache lifetime in seconds')->defaultValue(3600)->end()
+            ->scalarNode('template')->defaultValue('youtube.twig')->end()
+        ->end();
+
+        return $youtubeNode;
     }
 }

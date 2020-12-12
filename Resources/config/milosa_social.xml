@@ -34,5 +34,21 @@
         </argument>
     </service>
 
+    <!-- Youtube -->
+
+    <service id="milosa_social_media_aggregator.client.youtube" class="Milosa\SocialMediaAggregatorBundle\Aggregator\Platform\Youtube\YoutubeClient">
+        <argument type="collection">
+            <argument key="api_key">%milosa_social_media_aggregator.youtube_api_key%</argument>
+        </argument>
+    </service>
+
+    <service id="milosa_social_media_aggregator.fetcher.youtube.abstract" abstract="true" class="Milosa\SocialMediaAggregatorBundle\Aggregator\Platform\Youtube\YoutubeFetcher">
+        <argument type="service" id="milosa_social_media_aggregator.client.youtube"/>
+    </service>
+
+    <service id="milosa_social_media_aggregator.handler.youtube" class="Milosa\SocialMediaAggregatorBundle\Aggregator\Handler">
+        <argument index="1" type="string">Milosa\SocialMediaAggregatorBundle\Aggregator\Platform\Youtube\YoutubeMessageFactory</argument>
+        <tag name="milosa_social_media_aggregator.handler" />
+    </service>
 </services>
 </container>

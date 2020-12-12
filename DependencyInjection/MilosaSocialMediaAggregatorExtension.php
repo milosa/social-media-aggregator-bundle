@@ -4,18 +4,16 @@ declare(strict_types=1);
 
 namespace Milosa\SocialMediaAggregatorBundle\DependencyInjection;
 
-use function is_dir;
 use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ChildDefinition;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Extension\Extension;
-use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 use Symfony\Component\DependencyInjection\Reference;
 
-class MilosaSocialMediaAggregatorExtension extends Extension implements PrependExtensionInterface
+class MilosaSocialMediaAggregatorExtension extends Extension
 {
     public function load(array $configs, ContainerBuilder $container): void
     {
@@ -33,13 +31,10 @@ class MilosaSocialMediaAggregatorExtension extends Extension implements PrependE
         $this->configureTwitterCaching($config, $container);
         $this->registerTwitterHandler($container);
 
-//        foreach ($this->plugins as $plugin) {
-//            $container->addObjectResource(new \ReflectionClass(\get_class($plugin)));
-//            $plugin->load($config, $container);
-//            $pluginResourcesPaths[$plugin->getPluginName()] = $plugin->getResourcesPath();
-//        }
-
-//        $container->setParameter('milosa_social_media_aggregator.plugins_resources_paths', $pluginResourcesPaths);
+        $this->setYoutubeParameters($config, $container);
+        $this->addYoutubeFetchers($config, $container);
+        $this->configureYoutubeCaching($config, $container);
+        $this->registerYoutubeHandler($container);
     }
 
     private function setTwitterParameters(array $config, ContainerBuilder $container): void
@@ -48,6 +43,11 @@ class MilosaSocialMediaAggregatorExtension extends Extension implements PrependE
         $container->setParameter('milosa_social_media_aggregator.twitter_consumer_secret', $config['networks']['twitter']['auth_data']['consumer_secret']);
         $container->setParameter('milosa_social_media_aggregator.twitter_oauth_token', $config['networks']['twitter']['auth_data']['oauth_token']);
         $container->setParameter('milosa_social_media_aggregator.twitter_oauth_token_secret', $config['networks']['twitter']['auth_data']['oauth_token_secret']);
+    }
+
+    public function setYoutubeParameters(array $config, ContainerBuilder $container): void
+    {
+        $container->setParameter('milosa_social_media_aggregator.youtube_api_key', $config['networks']['youtube']['auth_data']['api_key']);
     }
 
     private function addTwitterFetchers(array $config, ContainerBuilder $container): void
@@ -74,6 +74,29 @@ class MilosaSocialMediaAggregatorExtension extends Extension implements PrependE
         $handlerDefinition->setArgument(0, $fetchers);
     }
 
+    private function addYoutubeFetchers(array $config, ContainerBuilder $container): void
+    {
+        $fetchers = [];
+
+        foreach ($config['networks']['youtube']['sources'] as $source) {
+            $fetcher = new ChildDefinition('milosa_social_media_aggregator.fetcher.youtube.abstract');
+
+            $fetcherSettings = [
+                'search_term' => $source['search_term'],
+                'number_of_videos' => $source['number_of_videos'],
+                'search_type' => $source['search_type'],
+            ];
+
+            $fetcher->setArgument(1, $fetcherSettings);
+            $container->setDefinition('milosa_social_media_aggregator.fetcher.youtube.'.$source['search_term'], $fetcher);
+
+            $fetchers[] = $fetcher;
+        }
+
+        $handlerDefinition = $container->findDefinition('milosa_social_media_aggregator.handler.youtube');
+        $handlerDefinition->setArgument(0, $fetchers);
+    }
+
     private function configureTwitterCaching(array $config, ContainerBuilder $container): void
     {
         if ($config['networks']['twitter']['enable_cache'] === true) {
@@ -89,15 +112,19 @@ class MilosaSocialMediaAggregatorExtension extends Extension implements PrependE
         }
     }
 
-    public function prepend(ContainerBuilder $container): void
+    public function configureYoutubeCaching(array $config, ContainerBuilder $container): void
     {
-//        foreach ($this->plugins as $plugin) {
-//            if (is_dir($plugin->getResourcesPath())) {
-//                $container->prependExtensionConfig('twig', [
-//                    'paths' => [$plugin->getResourcesPath().'/views' => 'MilosaSocialMediaAggregator'],
-//                ]);
-//            }
-//        }
+        if ($config['networks']['youtube']['enable_cache'] === true) {
+            $cacheDefinition = new Definition(FilesystemAdapter::class, [
+                'milosa_social',
+                $config['networks']['youtube']['cache_lifetime'],
+                '%kernel.cache_dir%',
+            ]);
+
+            $container->setDefinition('milosa_social_media_aggregator.youtube_cache', $cacheDefinition)->addTag('cache.pool');
+            $fetcherDefinition = $container->getDefinition('milosa_social_media_aggregator.fetcher.youtube.abstract');
+            $fetcherDefinition->addMethodCall('setCache', [new Reference('milosa_social_media_aggregator.youtube_cache')]);
+        }
     }
 
     private function registerTwitterHandler(ContainerBuilder $container): void
@@ -106,7 +133,13 @@ class MilosaSocialMediaAggregatorExtension extends Extension implements PrependE
         $aggregatorDefinition->addMethodCall('addHandler', [new Reference('milosa_social_media_aggregator.handler.twitter')]);
     }
 
-    public function getConfiguration(array $config, ContainerBuilder $container)
+    private function registerYoutubeHandler(ContainerBuilder $container): void
+    {
+        $aggregatorDefinition = $container->getDefinition('milosa_social_media_aggregator.aggregator');
+        $aggregatorDefinition->addMethodCall('addHandler', [new Reference('milosa_social_media_aggregator.handler.youtube')]);
+    }
+
+    public function getConfiguration(array $config, ContainerBuilder $container): Configuration
     {
         return new Configuration();
     }
