@@ -84,3 +84,4 @@ yarn-error.log
 ###< symfony/webpack-encore-bundle ###
 /.phpunit.result.cache
 .phpunit.result.cache
+/config/
