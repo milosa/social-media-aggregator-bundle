@@ -47,15 +47,13 @@ Encore
     .cleanupOutputBeforeBuild()
     .configureBabel(function(babelConfig) {
         // add additional presets
-        babelConfig.presets.push('stage-3');
-        babelConfig.presets.push('env');
+        // babelConfig.presets.push('@babel/react');
 
-        babelConfig.plugins.push('transform-object-rest-spread');
-        babelConfig.plugins.push('syntax-dynamic-import');
 
         // no plugins are added by default, but you can add some
         // babelConfig.plugins.push('styled-jsx/babel');
     })
+    .disableSingleRuntimeChunk()
 ;
 
 module.exports = Encore.getWebpackConfig();

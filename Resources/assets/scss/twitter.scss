@@ -1,0 +1,9 @@
+.time:before
+{
+  content: "\00b7";
+}
+.author-name, .author-name a {
+  font-size: 0.8rem;
+  color: gray;
+  margin: 0;
+}

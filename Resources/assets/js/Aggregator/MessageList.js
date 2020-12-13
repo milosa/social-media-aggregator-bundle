@@ -1,6 +1,6 @@
 import React, { Component, Suspense } from 'react';
-import networks from '../Components/networks';
-import uuidv4 from 'uuid/v4';
+import networks from './networks';
+import { v4 as uuidv4 } from 'uuid';
 
 export default class MessageList extends Component {
 
