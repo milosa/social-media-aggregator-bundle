@@ -4,7 +4,7 @@
 
 Symfony Bundle to combine messages from different social media platforms into one feed. 
 
-![Explanation of Milosa Social Media Aggregator](doc/milosa_social_media_aggregator_explanation.png)
+![Explanation of Milosa Social Media Aggregator](Resources/doc/milosa_social_media_aggregator_explanation.png)
 
 ## Features
 * Easy way to get messages from various social media platforms. Such as:
