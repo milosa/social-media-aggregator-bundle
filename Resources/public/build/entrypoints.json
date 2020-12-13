@@ -2,10 +2,10 @@
   "entrypoints": {
     "app": {
       "css": [
-        "/build/app.e91370db.css"
+        "/bundles/milosasocialmediaaggregator/build/app.e91370db.css"
       ],
       "js": [
-        "/build/app.4cc468b7.js"
+        "/bundles/milosasocialmediaaggregator/build/app.79c422ac.js"
       ]
     }
   }

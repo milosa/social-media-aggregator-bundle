@@ -4,9 +4,9 @@ Encore
     // directory where compiled assets will be stored
     .setOutputPath(Encore.isProduction() ? 'Resources/public/build/' : 'Resources/public/build/dev/')
     // public path used by the web server to access the output path
-    .setPublicPath(Encore.isProduction() ? '/build' : '/build/dev')
+    .setPublicPath(Encore.isProduction() ? '/bundles/milosasocialmediaaggregator/build/' : '/bundles/milosasocialmediaaggregator/build/dev')
     // only needed for CDN's or sub-directory deploy
-    //.setManifestKeyPrefix('build/')
+    .setManifestKeyPrefix('/bundles/milosasocialmediaaggregator/build/')
 
     /*
      * ENTRY CONFIG

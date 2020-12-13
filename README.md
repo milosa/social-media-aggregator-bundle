@@ -24,3 +24,27 @@ Symfony Bundle to combine messages from different social media platforms into on
 ## Installation
 
 `composer require milosa/social-media-aggregator-bundle`
+
+## React
+
+To use React:
+
+* Run `php bin/console assets:install public` in your application, to copy the JS and CSS files from the bundle to your project.
+* Add the following to your applications `framework.yaml` file:
+  ```yaml
+  framework:
+      assets:
+        packages:
+            milosasocialmediaaggregator:
+                # this package uses its own manifest (the default file is ignored)
+                json_manifest_path: "%kernel.project_dir%/public/bundles/milosasocialmediaaggregator/build/manifest.json"
+  ```
+* Add the following tags to your page:
+  ```html
+  <link rel="stylesheet" type="text/css" href="{{ asset('/bundles/milosasocialmediaaggregator/build/app.css', 'milosasocialmediaaggregator') }}">
+  <script src="{{ asset('/bundles/milosasocialmediaaggregator/build/app.js', 'milosasocialmediaaggregator') }}"></script>
+  ```
+  and
+  ```html
+  <div id="aggregator-app"></div>
+  ```
