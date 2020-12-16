@@ -45,15 +45,7 @@ class SocialMediaAggregator
     private function sortMessages(array $messages): array
     {
         usort($messages, function (Message $a, Message $b): int {
-            /**
-             * @var $a Message
-             * @var $b Message
-             */
-            if ($a->getDate() === $b->getDate()) {
-                return 0;
-            }
-
-            return $a->getDate() < $b->getDate() ? 1 : -1;
+            return $a->getDate() <=> $b->getDate();
         });
 
         return $messages;
