@@ -25,6 +25,10 @@ Symfony Bundle to combine messages from different social media platforms into on
 
 `composer require milosa/social-media-aggregator-bundle`
 
+## Configuration
+
+Todo
+
 ## React
 
 To use React:
